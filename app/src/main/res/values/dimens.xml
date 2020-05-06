@@ -1,0 +1,52 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- MAIN ACTIVITY DIMENS -->
+    <dimen name="logo_height">200dip</dimen>
+    <dimen name="logo_width">200dip</dimen>
+    <dimen name="logo_top_margin">75dip</dimen>
+    <dimen name="margin">5dip</dimen>
+    <dimen name="half_margin">10dip</dimen>
+    <dimen name="large_margin">15dip</dimen>
+    <dimen name="big_margin">20dip</dimen>
+    <dimen name="very_big_margin">50dip</dimen>
+    <dimen name="top_margin">10dip</dimen>
+    <dimen name="bottom_margin">10dip</dimen>
+    <dimen name="start_margin">40dip</dimen>
+    <dimen name="end_margin">40dip</dimen>
+
+    <dimen name="title_size">63sp</dimen>
+    <dimen name="text_size_description">11sp</dimen>
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="text_size_button">13sp</dimen>
+    <dimen name="text_size_mini">8sp</dimen>
+
+    <!-- NavigationView Header -->
+    <dimen name="nav_header_height">230dp</dimen>
+    <dimen name="nav_header_text_size">12sp</dimen>
+
+    <!-- Restaurant Card Activity dimens -->
+    <dimen name="card_align_margin">3dip</dimen>
+    <dimen name="card_top_margin">4dip</dimen>
+    <dimen name="card_start_margin">10dip</dimen>
+    <dimen name="card_fab_image_size">32dip</dimen>
+
+    <!-- Item recycler view -->
+    <dimen name="recycler_padding">1dip</dimen>
+    <dimen name="recycler_image_width">75dip</dimen>
+    <dimen name="recycler_image_height">75dip</dimen>
+    <dimen name="recycler_image_margin">5dip</dimen>
+    <dimen name="recycler_text_margin">10dp</dimen>
+
+    <!-- Settings Activity dimens -->
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="margin_start">10dp</dimen>
+    <dimen name="text_margin">20dp</dimen>
+    <dimen name="search_query_margin">10dp</dimen>
+    <dimen name="button_margin_top">30dp</dimen>
+    <dimen name="button_margin">16dp</dimen>
+
+    <dimen name="design_bottom_navigation_height" tools:override="true">65dp</dimen>
+</resources>
