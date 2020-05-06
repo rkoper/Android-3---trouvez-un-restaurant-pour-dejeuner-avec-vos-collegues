@@ -1,16 +1,19 @@
 package com.m.sofiane.go4lunch.models.pojoMaps;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * created by Sofiane M. 2020-01-31
  */
-public class Result {
-
+public class Result implements Serializable {
 
 
     @SerializedName("results")
@@ -322,4 +325,5 @@ public class Result {
     public void setPriceLevel(Integer priceLevel) {
         this.priceLevel = priceLevel;
     }
+
 }

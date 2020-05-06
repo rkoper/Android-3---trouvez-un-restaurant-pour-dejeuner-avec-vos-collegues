@@ -65,7 +65,7 @@ public class ListFragment extends Fragment implements
 
     GoogleApiClient mGoogleApiClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private int PROXIMITY_RADIUS = 30;
+    private int PROXIMITY_RADIUS = 50;
     private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
     private ListAdapter mAdapter;;
@@ -101,8 +101,8 @@ public class ListFragment extends Fragment implements
         this.configureRecyclerView(view);
         buildGoogleApiClient();
         return view;
-    }
 
+    }
 
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
@@ -185,6 +185,14 @@ public class ListFragment extends Fragment implements
 
     @Override
     public void onConnected(Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this::onLocationChanged);
+        }
     }
 
     @Override
@@ -235,8 +243,8 @@ public class ListFragment extends Fragment implements
 
                                     listData.add(l);
 
-                                    }
                                 }
+                            }
                             ArrayList<String> mTest = new ArrayList<>();
                             for (int i = 0; i < listData.size(); i++) {
                                 mTest.add(listData.get(i).getNameOfResto());

@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -35,8 +34,6 @@ import com.m.sofiane.go4lunch.fragment.MapFragment;
 import com.m.sofiane.go4lunch.fragment.MyChoiceFragment;
 import com.m.sofiane.go4lunch.fragment.SettingsFragment;
 import com.m.sofiane.go4lunch.fragment.WorkFragment;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-import com.m.sofiane.go4lunch.utils.myuserhelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,43 +55,34 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.activity_main_drawer_isOpen)
     NavigationView mNavigationView;
 
-    final Fragment mListFragment = new ListFragment();
-   final  Fragment mWorkFragment = new WorkFragment();
-    final Fragment mMapFragment = new MapFragment();
-    final Fragment mFavFragment = new FavoriteFragment();
-    final Fragment mSettingsFragment = new SettingsFragment();
-   final Fragment mChoiceFragment = new MyChoiceFragment();
 
-    final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = mMapFragment;
+    private static final String DEFAUT_PHOTO = "https://www.123-stickers.com/7507-7924-thickbox/sticker-dark-vador-star-wars-profil.jpg";
 
-
+    Fragment mListFragment = new ListFragment();
+    Fragment mWorkFragment = new WorkFragment();
+    Fragment mMapFragment = new MapFragment();
+    Fragment mFavFragment = new FavoriteFragment();
+    Fragment mSettingsFragment = new SettingsFragment();
+    Fragment mChoiceFragment = new MyChoiceFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFragment();
-        InitToolBar();
+        InitToolBar(false);
         InitBottomNav(false);
-      //  loadFragment(mMapFragment);
+        loadFragment(new MapFragment());
         InitDrawerLayout();
+        //Profile profile = Profile.getCurrentProfile();
+        //    ButterKnife.bind(this);
         loadUserProfil();
+        //  initLogOut();
         initFavorite();
+        //   initMessage();
         initSettings();
-         initMyChoice();
+        initMyChoice();
         createFireStoreUser();
 
-
-    }
-
-    private void initFragment() {
-        fm.beginTransaction().add(R.id.fragment_container, mChoiceFragment, "6").hide(mChoiceFragment).commit();
-        fm.beginTransaction().add(R.id.fragment_container, mSettingsFragment, "5").hide(mSettingsFragment).commit();
-        fm.beginTransaction().add(R.id.fragment_container, mFavFragment, "4").hide(mFavFragment).commit();
-        fm.beginTransaction().add(R.id.fragment_container, mWorkFragment, "3").hide(mWorkFragment).commit();
-        fm.beginTransaction().add(R.id.fragment_container, mListFragment, "2").hide(mListFragment).commit();
-        fm.beginTransaction().add(R.id.fragment_container,mMapFragment, "1").commit();
     }
 
 
@@ -118,10 +106,15 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView mBottomNavigationView = findViewById(R.id.activity_main_bottom_navigation);
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         mBottomNavigationView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+        //   mBottomNavigationView.getItemIconSize();
+        // mBottomNavigationView.getItemTextAppearanceActive();
+        // mBottomNavigationView.getItemTextAppearanceInactive();
+        //  mBottomNavigationView.getForegroundGravity();
+        // mBottomNavigationView.getTextAlignment();
+
     }
 
-
-    public void InitToolBar() {
+    public void InitToolBar(boolean isHidden) {
 
         mToolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(mToolbar);
@@ -143,27 +136,49 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        mNavigationView = findViewById(R.id.activity_main_drawer_isOpen);
+        View llbottom = findViewById(R.id.LLbottom);
+        View lltop = findViewById(R.id.LLTop);
         switch (item.getItemId()) {
 
             case R.id.map:
-                fm.beginTransaction().hide(active).show(mMapFragment).commit();
-                active = mMapFragment;
-                return true;
+                loadFragment(new MapFragment());
+                lltop.setBackgroundResource(R.drawable.gradientmap);
+                llbottom.setBackgroundResource(R.drawable.gradientmap);
+                break;
 
             case R.id.list:
-                fm.beginTransaction().hide(active).show(mListFragment).commit();
-                active = mListFragment;
-                return true;
+                loadFragment(mListFragment);
+                lltop.setBackgroundResource(R.drawable.gradientlist);
+                llbottom.setBackgroundResource(R.drawable.gradientlist);
+                break;
 
             case R.id.group:
-                fm.beginTransaction().hide(active).show(mWorkFragment).commit();
-                active = mWorkFragment;
-                return true;
-        }
-        return false;
-    }
+                loadFragment(mWorkFragment);
+                lltop.setBackgroundResource(R.drawable.gradientwork);
+                llbottom.setBackgroundResource(R.drawable.gradientwork);
+                break;
 
+            case R.id.drawer_lunch:
+                loadFragment(mChoiceFragment);
+                lltop.setBackgroundResource(R.drawable.gradientfull);
+                llbottom.setBackgroundResource(R.drawable.gradientfull);
+                break;
+
+            case R.id.drawer_fav:
+                loadFragment(mFavFragment);
+                lltop.setBackgroundResource(R.drawable.gradientfull);
+                llbottom.setBackgroundResource(R.drawable.gradientfull);
+                break;
+
+            case R.id.drawer_settings:
+                loadFragment(mSettingsFragment);
+                lltop.setBackgroundResource(R.drawable.gradientfull);
+                llbottom.setBackgroundResource(R.drawable.gradientfull);
+                break;
+
+        }
+        return true;
+    }
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -207,26 +222,79 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
             return true;
         });
+    }
+
+    public void createFireStoreUser(){
+        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        Uri mProfilPhotoUri = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+        String mProfilPhoto = mProfilPhotoUri.toString();
+        String mProfilId = FirebaseAuth.getInstance().getUid();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> mDataMap = new HashMap<>();
+        mDataMap.put("NameUser", mProfilName);
+        mDataMap.put("PhotoUser", mProfilPhoto);
+
+        db.collection("myUser")
+                .document("1")
+                .collection("myUserList")
+                .document(mProfilId)
+                .set( (mDataMap))
+                .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!")
+
+                )
+                .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+
+
+    }
+
+    /*
+    public void loadUserProfil(Profile profile) {
+        String mName = "";
+        String mEmail = "";
+        Uri mProfilPic;
+
+        GoogleSignInAccount mGoogleData = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (mGoogleData != null) {
+            mName = mGoogleData.getGivenName();
+            mEmail = mGoogleData.getEmail();
+            if (mGoogleData.getPhotoUrl()==null)
+            {mProfilPic = Uri.parse(DEFAUT_PHOTO);}
+            else {
+            mProfilPic = mGoogleData.getPhotoUrl();}
+
+        } else {
+            mName = profile.getName();
+            mProfilPic = profile.getProfilePictureUri(150, 150);
         }
 
-        public void createFireStoreUser(){
-            String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            Uri mProfilPhotoUri = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-            String mProfilPhoto = mProfilPhotoUri.toString();
+            NavigationView mNavigationView = (NavigationView) findViewById(R.id.activity_main_drawer_isOpen);
+            View headerView = mNavigationView.getHeaderView(0);
 
-            Map<String, Object> mDataMap = new HashMap<>();
-            mDataMap.put("NameUser", mProfilName);
-            mDataMap.put("PhotoUser", mProfilPhoto);
+            TextView navUsername = (TextView) headerView.findViewById(R.id.profiltextname);
+            navUsername.setText(mName);
 
-            myuserhelper.createmyuser(mDataMap);
+            TextView navUserMail = (TextView) headerView.findViewById(R.id.profiltextmail);
+            navUserMail.setText(mEmail);
 
 
+            ImageView navProfilPic = (ImageView) headerView.findViewById(R.id.profilimage);
+            Glide.with(this).load(mProfilPic).apply(RequestOptions.circleCropTransform()).into(navProfilPic);
+
+         //   writeInFirestoreDataBase();
+
+
+            });
         }
-
+*/
 
     public void initFavorite(){
         NavigationView mNavigationView = findViewById(R.id.activity_main_drawer_isOpen);
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
+
+                    //  Toast.makeText(this, "ALLo", Toast.LENGTH_LONG).show();
                     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     mDrawerLayout.closeDrawers();
                     loadFragment(mFavFragment);
@@ -236,25 +304,24 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         );}
 
 
-    public void initMyChoice() {
+    public void initMyChoice(){
         NavigationView mNavigationView = findViewById(R.id.activity_main_drawer_isOpen);
         mNavigationView.getMenu().findItem(R.id.drawer_lunch).setOnMenuItemClickListener(menuItem -> {
 
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            mDrawerLayout.closeDrawers();
-            loadFragment(mChoiceFragment);
+                    //    Toast.makeText(this, "ALLo", Toast.LENGTH_LONG).show();
+                    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    mDrawerLayout.closeDrawers();
+                    loadFragment(mChoiceFragment);
 
-            return true;
-        });
-
-
-    }
+                    return true;
+                }
+        );}
 
     public void initSettings(){
         NavigationView mNavigationView = findViewById(R.id.activity_main_drawer_isOpen);
         mNavigationView.getMenu().findItem(R.id.drawer_settings).setOnMenuItemClickListener(menuItem -> {
 
-
+                    //    Toast.makeText(this, "ALLo", Toast.LENGTH_LONG).show();
                     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                     mDrawerLayout.closeDrawers();
                     loadFragment(mSettingsFragment);
@@ -263,9 +330,24 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
                 }
         );}
 
+    public  void initMessage(){
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("M1", "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+
+                    // Log and toast
+                    //     String msg = getString("Token: ", token);
+                    Log.d("MOK", token);
+                    Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
+                });
+    }
 }
-
-
 
 

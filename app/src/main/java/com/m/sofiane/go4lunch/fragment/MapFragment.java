@@ -49,7 +49,9 @@ import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.OkHttpClient;
@@ -339,6 +341,11 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             String placeId = mCall.getPlaceId();
 
             LatLng latLng = new LatLng(lat, lng);
+
+            ListFragment fragment = new ListFragment();
+            final Bundle bundle = new Bundle();
+            bundle.putString("user_name", "test");
+            fragment.setArguments(bundle);
 
             mHashForLatLng.put(placeName, latLng);
             mHashForPlaceID.put(placeName, placeId);
