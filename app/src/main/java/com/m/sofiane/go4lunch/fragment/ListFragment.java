@@ -65,7 +65,7 @@ public class ListFragment extends Fragment implements
 
     GoogleApiClient mGoogleApiClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private int PROXIMITY_RADIUS = 50;
+    private int PROXIMITY_RADIUS = 30;
     private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
     private ListAdapter mAdapter;;
@@ -101,7 +101,6 @@ public class ListFragment extends Fragment implements
         this.configureRecyclerView(view);
         buildGoogleApiClient();
         return view;
-
     }
 
     private void uploadToolbar() {
@@ -207,11 +206,15 @@ public class ListFragment extends Fragment implements
 
         mCurrentLocation = mLastLocation;
 
-        build_retrofit_and_get_response("restaurant");
+
+        if (listData.isEmpty()){
+        build_retrofit_and_get_response("restaurant");}
 
     }
 
     private void build_retrofit_and_get_response(String type) {
+
+
         String url = "https://maps.googleapis.com/maps/";
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -266,7 +269,7 @@ public class ListFragment extends Fragment implements
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-        mAdapter.notifyDataSetChanged();
+     //   mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -297,5 +300,30 @@ public class ListFragment extends Fragment implements
     @Override
     public void searchQueryListChanges(String val) {
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

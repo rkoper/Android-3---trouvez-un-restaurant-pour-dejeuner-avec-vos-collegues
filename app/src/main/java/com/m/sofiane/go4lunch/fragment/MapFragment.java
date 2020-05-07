@@ -82,6 +82,14 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     @BindView(R.id.menu_search)
     MenuItem mSearch;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,6 +97,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         setHasOptionsMenu(true);
         loadMap();
         uploadToolbar();
+
+        setRetainInstance(true);
         return view;
 
     }
@@ -254,6 +264,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
 
     private void build_retrofit_and_get_response(String type) {
+
+        // ATTENTION
         String url = "https://maps.googleapis.com/maps/";
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -307,17 +319,17 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                     Prediction mCall = place.body().getPredictions().get(i);
                     String mKeyName = mCall.getTerms().get(0).getValue();
                     Log.e("SEACH API", mKeyName);
-                   String mSearchPlaceID = mCall.getPlaceId();
+                    String mSearchPlaceID = mCall.getPlaceId();
 
 
-                LatLng mLatLagSearch =  mHashForLatLng.get(mKeyName);
+                    LatLng mLatLagSearch =  mHashForLatLng.get(mKeyName);
 
-                if (mLatLagSearch==null)
-                    return;
+                    if (mLatLagSearch==null)
+                        return;
 
-                else {
-                    Log.e("SEACH API SEACH KEY ", mKeyName );
-                    Log.e("SEACH API SEACH LATLNG ", String.valueOf(mLatLagSearch));}
+                    else {
+                        Log.e("SEACH API SEACH KEY ", mKeyName );
+                        Log.e("SEACH API SEACH LATLNG ", String.valueOf(mLatLagSearch));}
 
                     markerAllRestaurant(mLatLagSearch, mSearchPlaceID, mKeyName);
                     upDateMarker(mLatLagSearch, mSearchPlaceID, mKeyName);
@@ -363,8 +375,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     private void mapCamera() {
         mLatLng = new LatLng(mLatitude, mLongitude);
-     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12));
-         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     private void markerMyPosition() {
@@ -377,14 +389,14 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     private void markerAllRestaurant(LatLng latLng, String placeId, String placename) {
         MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng);
-            markerOptions.snippet(placeId);
-            markerOptions.title(placename);
+        markerOptions.position(latLng);
+        markerOptions.snippet(placeId);
+        markerOptions.title(placename);
 
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
-            mRestoMarker = mMap.addMarker(markerOptions);
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
+        mRestoMarker = mMap.addMarker(markerOptions);
 
-            Onclick();
+        Onclick();
     }
 
     private void upDateMarker(LatLng latLng, String placeId, String placename){
