@@ -98,7 +98,9 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        build_retrofit_and_get_response();
+
+        findLocation();
+
 
 
         setContentView(R.layout.activity_main);
@@ -112,6 +114,11 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         retrieveUserData();
         createFireStoreUser();
 
+
+
+    }
+
+    private void findLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
@@ -146,7 +153,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             longitude = 0.0;
         }
 
-Log.e()
+        Log.e("LOC IN MAIN------>", latitude+"/"+longitude );
+
+        Singleton.getInstance().setLatitude(latitude);
+        Singleton.getInstance().setLongitude(longitude);
+
+        build_retrofit_and_get_response(latitude, longitude, "restaurant");
 
     }
 
@@ -320,7 +332,7 @@ Log.e()
                 .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
     }
 
-    private void build_retrofit_and_get_response() {
+    private void build_retrofit_and_get_response(double latitude, double longitude, String type) {
 
         // ATTENTION
         String url = "https://maps.googleapis.com/maps/";
@@ -336,7 +348,7 @@ Log.e()
 
         googleInterface service = retrofit.create(googleInterface.class);
 
-        Call<Result> call = service.getNearbyPlaces("48.89128,2.33967", 50, "restaurant");
+        Call<Result> call = service.getNearbyPlaces((latitude+","+longitude), 30, type);
 
         call.enqueue(new Callback<Result>() {
             @SuppressLint({"RestrictedApi", "LongLogTag"})

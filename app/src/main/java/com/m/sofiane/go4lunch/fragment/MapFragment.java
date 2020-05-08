@@ -1,11 +1,9 @@
 package com.m.sofiane.go4lunch.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,24 +13,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,113 +46,89 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.navigation.NavigationView;
+import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.activity.subactivity;
-import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
-import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
-import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.services.googleInterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.OnItemSelected;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener  {
 
-
-    int PROXIMITY_RADIUS = 1;
     private SupportMapFragment mMFragment;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    Location mLastLocation;
-    LocationRequest mLocationRequest;
-    Marker mCurrLocationMarker,mRestoMarker;
-    Double mLatitude,mLongitude;
+    Marker mRestoMarker;
     LatLng mLatLng;
-    HashMap<String, LatLng> mHashForLatLng= new HashMap<>();
-    HashMap<String, String> mHashForPlaceID= new HashMap<>();
-
+    LatLng mLatLngForAll;
+    String token = "21051984";
     @BindView(R.id.menu_search)
     MenuItem mSearch;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
-
-
-
-    }
-
+    int AUTOCOMPLETE_REQUEST_CODE = 1;
+    String apiKey = BuildConfig.APIKEY;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, null);
+
         setHasOptionsMenu(true);
         loadMap();
         uploadToolbar();
         setRetainInstance(true);
-        return view;
 
+        String apiKey = BuildConfig.APIKEY;
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getContext(), apiKey);
+        }
+
+        return view;
     }
+
+    public static LatLng getCoordinate(double lat0, double lng0, long dy, long dx) {
+        double lat = lat0 + (180 / Math.PI) * (dy / 6378137);
+        double lng = lng0 + (180 / Math.PI) * (dx / 6378137) / Math.cos(lat0);
+        return new LatLng(lat, lng);
+    }
+
+
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
+        ImageButton imageButton = getActivity().findViewById(R.id.imageButton);
+        imageButton.setVisibility(View.VISIBLE);
 
-    }
+        imageButton.setOnClickListener(v -> {
+            Toast.makeText(getActivity(),"Hello",Toast. LENGTH_SHORT).show();
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
-
-        inflater.inflate(R.menu.activity_main_menu, menu);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        setSearchTextColour(searchView);
-
-        searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
-        searchView.setOnCloseListener(() -> {
-            mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
-            return false;
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.e("TAG", "onQueryTextSubmit: "+query );
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("TAG", "onQueryTextChange: "+newText );
-
-                build_retrofit_and_get_responseForSearch(newText);
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void setSearchTextColour(SearchView searchView) {
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = (EditText) searchView.findViewById(searchPlateId);
-        searchPlate.setTextColor(getResources().getColor(R.color.Red));
-        searchPlate.setBackgroundResource(R.color.tw__solid_white);
-    }
 
 
     private void loadMap() {
@@ -161,7 +141,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             mMFragment = SupportMapFragment.newInstance();
             mFragmentTransaction.replace(R.id.containermap, mMFragment).commit();
         }
-
         mMFragment.getMapAsync(this);
         CheckGooglePlayServices();
     }
@@ -206,8 +185,37 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             mMap.setMinZoomPreference(5.0f);
             mMap.setMaxZoomPreference(20.0f);
         }
+
+        loadDatawithSingleTon();
     }
 
+    private void loadDatawithSingleTon() {
+        initMyPosition();
+        initRestaurantPosition();
+    }
+
+    private void initRestaurantPosition() {
+        for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
+            Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
+            Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
+            mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
+
+
+            String placeId = Singleton.getInstance().getArrayList().get(i).getPlaceId();
+            markerAllRestaurant(mLatLngForAll, placeId);
+
+        }
+    }
+
+    private void initMyPosition() {
+        Double mLat = Singleton.getInstance().getmLatitude();
+        Double mLng = Singleton.getInstance().getmLongitude();
+
+        Log.e("LOC in Map---------", mLat + "/" + mLng);
+
+        mLatLng = new LatLng(mLat, mLng);
+        loadMapCamera(mLatLng);
+    }
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -218,171 +226,45 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         mGoogleApiClient.connect();
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        System.out.println( "Map --------->" + Singleton.getInstance().getArrayList());
-        ArrayList<Result> results = Singleton.getInstance().getArrayList().get(0).getList();
-        System.out.println( "Map 1 --------->" + Singleton.getInstance().getArrayList().get(0).getName());
-        System.out.println( "Map 2  --------->" + Singleton.getInstance().getArrayList().get(1).getName());
-        System.out.println( "Map 3--------->" + Singleton.getInstance().getArrayList().get(2).getName());
-        System.out.println( "Map 4 --------->" + Singleton.getInstance().getArrayList().get(3).getName());
-        // retrieveDataForMarker(results);
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-    }
-
-
-    private void build_retrofit_and_get_responseForSearch(String newText) {
-        String url = "https://maps.googleapis.com/maps/";
-
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        googleInterface service = retrofit.create(googleInterface.class);
-
-        Call<AutoComplete> call = service.getNearbyPlacesAutoComplete(mLatitude + "," + mLongitude, newText);
-
-        call.enqueue(new Callback<AutoComplete>() {
-            @SuppressLint({"RestrictedApi", "LongLogTag"})
-            @Override
-            public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
-                for (int i = 0; i < place.body().getPredictions().size(); i++) {
-                    Prediction mCall = place.body().getPredictions().get(i);
-                    String mKeyName = mCall.getTerms().get(0).getValue();
-                    Log.e("SEACH API", mKeyName);
-                    String mSearchPlaceID = mCall.getPlaceId();
-
-
-                    LatLng mLatLagSearch =  mHashForLatLng.get(mKeyName);
-
-                    if (mLatLagSearch==null)
-                        return;
-
-                    else {
-                        Log.e("SEACH API SEACH KEY ", mKeyName );
-                        Log.e("SEACH API SEACH LATLNG ", String.valueOf(mLatLagSearch));}
-
-                    markerAllRestaurant(mLatLagSearch, mSearchPlaceID, mKeyName);
-                    upDateMarker(mLatLagSearch, mSearchPlaceID, mKeyName);
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AutoComplete> call, Throwable t) {
-            } });
-    }
-
-    private void retrieveDataForMarker(ArrayList<Result> results) {
-        mMap.clear();
-        for (int i = 0; i < results.size(); i++) {
-
-            Result mCall = results.get(i);
-            Double lat = mCall.getGeometry().getLocation().getLat();
-            Double lng = mCall.getGeometry().getLocation().getLng();
-            String placeName = mCall.getName();
-            String placeId = mCall.getPlaceId();
-
-            LatLng latLng = new LatLng(lat, lng);
-
-            ListFragment fragment = new ListFragment();
-            final Bundle bundle = new Bundle();
-            bundle.putString("user_name", "test");
-            fragment.setArguments(bundle);
-
-            mHashForLatLng.put(placeName, latLng);
-            mHashForPlaceID.put(placeName, placeId);
-
-
-            if (latLng == null || placeName == null || placeId == null)
-            { Toast.makeText(getActivity(), "Data Error", Toast.LENGTH_LONG).show(); }
-
-            markerAllRestaurant(latLng, placeId, placeName);
-            markerMyPosition();
-            mapCamera();
-
-
-        }}
-
-    private void mapCamera() {
-        mLatLng = new LatLng(mLatitude, mLongitude);
+    private void loadMapCamera(LatLng mLatLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
     }
 
-    private void markerMyPosition() {
+    private void markerAllRestaurant(LatLng mLatLngForAll, String placeId) {
         MarkerOptions markerOptions = new MarkerOptions();
-        mLatLng = new LatLng(mLatitude, mLongitude);
-        markerOptions.position(mLatLng);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icgreen32));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-    }
-
-    private void markerAllRestaurant(LatLng latLng, String placeId, String placename) {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
+        markerOptions.position(mLatLngForAll);
         markerOptions.snippet(placeId);
-        markerOptions.title(placename);
-
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
         mRestoMarker = mMap.addMarker(markerOptions);
 
         Onclick();
     }
 
-    private void upDateMarker(LatLng latLng, String placeId, String placename){
-        mMap.clear();
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.snippet(placeId);
-        markerOptions.title(placename);
-
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
-        mRestoMarker = mMap.addMarker(markerOptions);
-
-        Onclick();
-    }
-
-    public void Onclick () {
+    public void Onclick() {
         mMap.setOnMarkerClickListener(marker -> {
-            mRestoMarker.setVisible(false);
             Intent intent = new Intent(getContext(), subactivity.class);
             String mId = marker.getSnippet();
             intent.putExtra("I", mId);
             getContext().startActivity(intent);
             return false;
-        });}
+        });
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
-
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onConnected(@Nullable Bundle bundle) {
+
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onConnectionSuspended(int i) {
+
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
 
 
 

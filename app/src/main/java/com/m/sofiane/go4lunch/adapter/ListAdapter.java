@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.google.android.gms.maps.model.LatLng;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.pojoMaps.OpeningHours;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
+import com.m.sofiane.go4lunch.services.Singleton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,12 +62,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     ArrayList<String> mTest;
     FragmentManager fragmentManager;
     CharSequence mKeyName = "";
+    Location location;
 
 
-    public ListAdapter(ArrayList<Result> mData, Context mContext, Location mCurrentLocation, FragmentManager fragmentManager, CharSequence mKeyName, ArrayList<String> mTest ) {
+    public ListAdapter(ArrayList<Result> mData, Context mContext, FragmentManager fragmentManager, CharSequence mKeyName, ArrayList<String> mTest ) {
         this.mData = mData;
         this.mContext = mContext;
-        this.mCurrentLocation = mCurrentLocation;
         this.fragmentManager = fragmentManager;
         this.mKeyName = mKeyName;
         this.mTest = mTest;
@@ -170,9 +173,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             locationA.setLatitude(mLatitude);
             locationA.setLongitude(mLongitude);
 
+            Double mLat = Singleton.getInstance().getmLatitude();
+            Double mLng = Singleton.getInstance().getmLongitude();
+
+
+            Location locationB = new Location("B");
+            locationB.setLatitude(mLat);
+            locationB.setLongitude(mLng);
+
             mDistance =String.valueOf(
                     (Math.round
-                            (locationA.distanceTo(mCurrentLocation))));
+                            (locationA.distanceTo(locationB))));
 
             h.R_prox.setText(mDistance+ "m");
         }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public final class Singleton {
             private static Singleton uniqInstance;
             public ArrayList<Result> results = new ArrayList<Result>();;
+            public double mLatitude;
+            public double mLongitude;
             private Singleton() {
             }
             public static Singleton getInstance() {
@@ -26,5 +28,31 @@ public final class Singleton {
                 return this.results;
 
             }
+
+    public void setLatitude(double mLatitude)
+    {
+        this.mLatitude = mLatitude;
+
+        System.out.println( "lat --------->" + mLatitude);
+
+    }
+    public double getmLatitude()
+    {
+        return this.mLatitude;
+
+    }
+
+    public void setLongitude(double mLongitude)
+    {
+        this.mLongitude = mLongitude;
+
+        System.out.println( "long --------->" + mLongitude);
+
+    }
+    public double getmLongitude()
+    {
+        return this.mLongitude;
+
+    }
 
 }

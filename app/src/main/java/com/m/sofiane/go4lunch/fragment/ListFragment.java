@@ -3,6 +3,7 @@ package com.m.sofiane.go4lunch.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,14 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,8 +35,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.adapter.ListAdapter;
@@ -39,16 +51,19 @@ import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
+import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 import com.m.sofiane.go4lunch.utils.searchImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.OnItemSelected;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -59,25 +74,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 
-public class ListFragment extends Fragment implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener, searchImpl {
+public class ListFragment extends Fragment implements searchImpl {
 
-    GoogleApiClient mGoogleApiClient;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private int PROXIMITY_RADIUS = 1;
+
     private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
     private ListAdapter mAdapter;;
-    Location mLastLocation;
-    LocationRequest mLocationRequest;
-    Double mLatitude,mLongitude;
-    Location mCurrentLocation;
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
     ArrayList<String> mTest;
-
-
 
     @BindView(R.id.List_recyclerView)
     RecyclerView recyclerView;
@@ -93,19 +98,19 @@ public class ListFragment extends Fragment implements
         isBackFromB=false;
         setHasOptionsMenu(true);
         uploadToolbar();
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermissions();
-        }
-
+        build_retrofit_and_get_response();
         this.configureRecyclerView(view);
-        buildGoogleApiClient();
+
         return view;
     }
+
 
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
+        ImageButton imageButton = getActivity().findViewById(R.id.imageButton);
+        imageButton.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -151,7 +156,7 @@ public class ListFragment extends Fragment implements
     private void configureRecyclerView(View view) {
         this.listData = new ArrayList<>();
         this.mData = new ArrayList<>();
-        this.mAdapter = new ListAdapter(this.mData, getContext(), mCurrentLocation, mFragmentManager, mKeyName, mTest );
+        this.mAdapter = new ListAdapter(this.mData, getContext(), mFragmentManager, mKeyName, mTest );
         mRecyclerView = view.findViewById(R.id.List_recyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -159,83 +164,10 @@ public class ListFragment extends Fragment implements
 
     }
 
-    public boolean checkPermissions() {
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(Objects.requireNonNull(getContext()))
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this::onLocationChanged);
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        mLatitude = location.getLatitude();
-        mLongitude = location.getLongitude();
-
-        mCurrentLocation = mLastLocation;
-
-
-        if (listData.isEmpty()){
-        build_retrofit_and_get_response("restaurant");}
-
-    }
-
-    private void build_retrofit_and_get_response(String type) {
-
-
-        String url = "https://maps.googleapis.com/maps/";
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        googleInterface service = retrofit.create(googleInterface.class);
-
-        Call<Result> call = service.getNearbyPlacesForList(mLatitude + "," + mLongitude, PROXIMITY_RADIUS, type);
-
-        call.enqueue(new Callback<Result>() {
-            @SuppressLint({"RestrictedApi", "LongLogTag"})
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-
-                ArrayList<Result> mData = response.body().getList();
+    private void build_retrofit_and_get_response() {
+                ArrayList<Result> mData = Singleton.getInstance().getArrayList();
 
                 mychoiceHelper.getMyChoice()
                         .addOnCompleteListener(task -> {
@@ -253,43 +185,20 @@ public class ListFragment extends Fragment implements
                                 mTest.add(listData.get(i).getNameOfResto());
                                 Log.e("TEEEEEET", mTest.toString());
 
-                                mAdapter = new ListAdapter(mData, getContext(), mCurrentLocation, mFragmentManager, mKeyName, mTest);
+                                mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
                                 mRecyclerView.setAdapter(mAdapter);
                             }
                         });
-            }
-
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-
-            }
-        });
-    }
-
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-     //   mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onProviderEnabled(String s) {
+    public void searchQueryMapSubmit(String query) {
+
     }
 
     @Override
-    public void onProviderDisabled(String s) {
-    }
+    public void searchQueryMapChanges(String newText) {
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-    }
-
-    @Override
-    public void searchQueryMapSubmit(String val) {
-    }
-
-    @Override
-    public void searchQueryMapChanges(String val) {
     }
 
     @Override
@@ -302,28 +211,5 @@ public class ListFragment extends Fragment implements
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 }

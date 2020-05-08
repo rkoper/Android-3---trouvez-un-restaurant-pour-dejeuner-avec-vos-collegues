@@ -2244,6 +2244,7 @@ id button_sign_in
 id buttonworld
 id cancel_action
 id cancel_button
+id card_view
 id center
 id center_horizontal
 id center_vertical
@@ -2305,6 +2306,7 @@ id dropdown_menu
 id dynamic
 id edit_phone_number
 id edit_query
+id edittext_autocomplete
 id email
 id email_button
 id email_footer_tos_and_pp_text
@@ -2352,6 +2354,7 @@ id icon_group
 id icon_only
 id ifRoom
 id image
+id imageButton
 id imageButtonFav
 id info
 id inline
@@ -2380,6 +2383,7 @@ id map
 id masked
 id media_actions
 id menu_search
+id menu_search_formap
 id message
 id messenger_send_button
 id middle
@@ -2694,6 +2698,7 @@ layout activity_login
 layout activity_main
 layout activity_main_nav_header
 layout activity_maps
+layout autocomplete_edittext
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout com_facebook_activity_layout
@@ -2841,6 +2846,7 @@ layout tw__activity_oauth
 layout webview
 menu activity_main_menu
 menu activity_main_menu_drawer
+menu activity_main_menu_for_map
 menu bottom_nav_menu
 menu nav_bottom_for_drawer
 mipmap ic_launcher
