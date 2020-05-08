@@ -40,8 +40,13 @@ public class MyChoiceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
         readFireStore(view);
-
+        uploadToolbar();
         return view;
+    }
+
+    private void uploadToolbar() {
+        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        mTitleText.setText(" My Choice");
     }
 
     private void readFireStore(View view) {

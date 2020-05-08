@@ -69,8 +69,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         this.mKeyName = mKeyName;
         this.mTest = mTest;
 
-        Log.e("ADAPTER ID", String.valueOf(mTest));
-        Log.e("ADAPTER NAME", String.valueOf(mKeyName));
+     //   Log.e("ADAPTER ID", String.valueOf(mTest));
+       // Log.e("ADAPTER NAME", String.valueOf(mKeyName));
 
     }
     @NonNull

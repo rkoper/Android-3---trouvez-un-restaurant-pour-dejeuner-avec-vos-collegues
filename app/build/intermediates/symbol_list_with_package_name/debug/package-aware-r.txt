@@ -2014,6 +2014,7 @@ drawable gradientlist
 drawable gradientmap
 drawable gradientwork
 drawable ic_action_name
+drawable ic_baseline_home_24
 drawable ic_calendar_black_24dp
 drawable ic_call_black_24dp
 drawable ic_cancel_black_24dp
@@ -2128,6 +2129,7 @@ id FUNCTION
 id Fav_recyclerView
 id LLTop
 id LLbottom
+id Layout
 id List_recyclerView
 id META
 id MychoiceAdress
@@ -2255,6 +2257,7 @@ id circular
 id clear_text
 id clip_horizontal
 id clip_vertical
+id clock
 id collapseActionView
 id com_facebook_body_frame
 id com_facebook_button_xout
@@ -2341,6 +2344,7 @@ id heading
 id hideable
 id home
 id homeAsUp
+id homedrawer
 id horizontal
 id hybrid
 id icon
@@ -2838,6 +2842,7 @@ layout webview
 menu activity_main_menu
 menu activity_main_menu_drawer
 menu bottom_nav_menu
+menu nav_bottom_for_drawer
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals fui_error_weak_password

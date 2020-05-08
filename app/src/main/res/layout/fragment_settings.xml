@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Switch
-        android:id="@+id/switchNotif"
+    <LinearLayout
+        android:id="@+id/clock"
         android:layout_width="match_parent"
-        android:layout_height="142dp"
-        android:gravity="center"
-        android:text="Switch" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-282dp">
 
-    <TimePicker
-        android:id="@+id/ClockNotif"
-        android:layout_width="match_parent"
-        android:layout_height="311dp"
-        android:background="@color/Red"
-        android:headerBackground="@color/Red"
-        android:numbersSelectorColor="@color/Red" />
+        <Switch
+            android:id="@+id/switchNotif"
+            android:layout_width="309dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="85sp"
+            android:gravity="center"
+            android:text="Switch" />
 
-    <Button
-        android:id="@+id/buttonTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Time Picker" />
+        <TimePicker
+            android:id="@+id/ClockNotif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Red"
+            android:headerBackground="@color/Red"
+            android:numbersSelectorColor="@color/Red"
+            tools:ignore="MissingConstraints" />
 
+        <Button
+            android:id="@+id/buttonTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time Picker"
+            tools:ignore="MissingConstraints" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

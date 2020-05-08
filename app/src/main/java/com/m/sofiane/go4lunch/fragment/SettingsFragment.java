@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -19,9 +20,12 @@ import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.work.WorkManager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.notificationService;
 
@@ -29,6 +33,8 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.view.View.GONE;
 
 /**
  * created by Sofiane M. 23/04/2020
@@ -46,25 +52,27 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.buttonTime)
     Button mButtonTime;
 
+
     int h;
     int m;
-    
-    
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, null);
-
-//        picker.setIs24HourView(true);
-        
-
-
+        uploadToolbar(view);
         ButterKnife.bind(this, view);
           initSwitch();
         initButton();
         return view;
     }
 
+    private void uploadToolbar(View view) {
+        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        mTitleText.setText("My Settings");
+
+    }
     @SuppressLint("ResourceAsColor")
     private void initButton() {
         picker.setVisibility(View.INVISIBLE);

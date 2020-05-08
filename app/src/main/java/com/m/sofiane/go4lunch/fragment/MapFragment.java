@@ -47,6 +47,7 @@ import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
+import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
 
-    int PROXIMITY_RADIUS = 30;
+    int PROXIMITY_RADIUS = 1;
     private SupportMapFragment mMFragment;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -88,7 +89,9 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         super.onCreate(savedInstanceState);
 
 
+
     }
+
 
     @Nullable
     @Override
@@ -97,7 +100,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         setHasOptionsMenu(true);
         loadMap();
         uploadToolbar();
-
         setRetainInstance(true);
         return view;
 
@@ -192,16 +194,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
@@ -228,71 +220,24 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     @Override
     public void onConnected(Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        // mLocationRequest.setInterval(100000);
-        // mLocationRequest.setFastestInterval(100000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        System.out.println( "Map --------->" + Singleton.getInstance().getArrayList());
+        ArrayList<Result> results = Singleton.getInstance().getArrayList().get(0).getList();
+        System.out.println( "Map 1 --------->" + Singleton.getInstance().getArrayList().get(0).getName());
+        System.out.println( "Map 2  --------->" + Singleton.getInstance().getArrayList().get(1).getName());
+        System.out.println( "Map 3--------->" + Singleton.getInstance().getArrayList().get(2).getName());
+        System.out.println( "Map 4 --------->" + Singleton.getInstance().getArrayList().get(3).getName());
+        // retrieveDataForMarker(results);
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this::onLocationChanged);
-
-        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
     }
 
-    @SuppressLint("LongLogTag")
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("onLocationChanged", "entered");
-
-        mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
-
-        mLatitude = location.getLatitude();
-        mLongitude = location.getLongitude();
-
-
-
-        build_retrofit_and_get_response("restaurant");
     }
 
-
-    private void build_retrofit_and_get_response(String type) {
-
-        // ATTENTION
-        String url = "https://maps.googleapis.com/maps/";
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        googleInterface service = retrofit.create(googleInterface.class);
-
-        Call<Result> call = service.getNearbyPlaces(mLatitude + "," + mLongitude, PROXIMITY_RADIUS, type);
-
-        call.enqueue(new Callback<Result>() {
-            @SuppressLint({"RestrictedApi", "LongLogTag"})
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-
-                retrieveDataForMarker(response);
-            }
-
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-            } });
-    }
 
     private void build_retrofit_and_get_responseForSearch(String newText) {
         String url = "https://maps.googleapis.com/maps/";
@@ -342,11 +287,11 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             } });
     }
 
-    private void retrieveDataForMarker(Response<Result> response) {
+    private void retrieveDataForMarker(ArrayList<Result> results) {
         mMap.clear();
-        for (int i = 0; i < response.body().getList().size(); i++) {
+        for (int i = 0; i < results.size(); i++) {
 
-            Result mCall = response.body().getList().get(i);
+            Result mCall = results.get(i);
             Double lat = mCall.getGeometry().getLocation().getLat();
             Double lng = mCall.getGeometry().getLocation().getLng();
             String placeName = mCall.getName();

@@ -37,7 +37,6 @@
         <activity android:name=".activity.webviewactivity" />
 
 
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"

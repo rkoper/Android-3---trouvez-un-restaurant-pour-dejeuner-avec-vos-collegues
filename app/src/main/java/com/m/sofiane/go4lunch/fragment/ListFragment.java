@@ -65,7 +65,7 @@ public class ListFragment extends Fragment implements
 
     GoogleApiClient mGoogleApiClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private int PROXIMITY_RADIUS = 30;
+    private int PROXIMITY_RADIUS = 1;
     private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
     private ListAdapter mAdapter;;

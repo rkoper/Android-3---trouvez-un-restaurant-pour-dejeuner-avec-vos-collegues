@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/so/.gradle/caches/transforms-2/files-2.1/df7dd1f1723aca614bb5bb7724d5e01d/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.facebook.android:facebook-android-sdk:4.42.0] /Users/so/.gradle/caches/transforms-2/files-2.1/454ff3447119ea188f9f47f141f19598/jetified-facebook-android-sdk-4.42.0/AndroidManifest.xml:21:1-31:12
 MERGED from [com.twitter.sdk.android:twitter-core:3.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/f9f1bbc776c6f5cb7d3a48ba9d0a8aba/jetified-twitter-core-3.3.0/AndroidManifest.xml:18:1-35:12
@@ -112,27 +112,27 @@ MERGED from [androidx.sqlite:sqlite:2.0.0] /Users/so/.gradle/caches/transforms-2
 MERGED from [com.google.android.datatransport:transport-api:2.2.0] /Users/so/.gradle/caches/transforms-2/files-2.1/ab078fb7568ac501da448e6ef758105a/jetified-transport-api-2.2.0/AndroidManifest.xml:15:1-22:12
 MERGED from [com.android.volley:volley:1.1.1] /Users/so/.gradle/caches/transforms-2/files-2.1/d1d89da8af9c3d11bcfed5cd0c4e696f/jetified-volley-1.1.1/AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.firebase:protolite-well-known-types:17.0.0] /Users/so/.gradle/caches/transforms-2/files-2.1/7f369fc91de48fbea319a2914c6b8e26/jetified-protolite-well-known-types-17.0.0/AndroidManifest.xml:2:1-11:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
-INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
 	package
 		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:4:5-37
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
 	xmlns:tools
 		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-57:12
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:1-56:12
 		INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:6:5-48:19
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:6:5-47:19
 MERGED from [com.facebook.android:facebook-android-sdk:4.42.0] /Users/so/.gradle/caches/transforms-2/files-2.1/454ff3447119ea188f9f47f141f19598/jetified-facebook-android-sdk-4.42.0/AndroidManifest.xml:28:5-29:19
 MERGED from [com.facebook.android:facebook-android-sdk:4.42.0] /Users/so/.gradle/caches/transforms-2/files-2.1/454ff3447119ea188f9f47f141f19598/jetified-facebook-android-sdk-4.42.0/AndroidManifest.xml:28:5-29:19
 MERGED from [com.twitter.sdk.android:twitter-core:3.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/f9f1bbc776c6f5cb7d3a48ba9d0a8aba/jetified-twitter-core-3.3.0/AndroidManifest.xml:27:5-33:19
@@ -292,22 +292,22 @@ ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:37
 	android:name
 		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:37:19-59
 meta-data#com.facebook.sdk.ApplicationId
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:41:9-44:45
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:40:9-43:45
 MERGED from [com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:19:9-21:63
 MERGED from [com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:19:9-21:63
 	tools:replace
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:44:13-42
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:43:13-42
 	android:value
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:43:13-60
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:42:13-60
 		REJECTED from [com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:21:13-60
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:42:13-58
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:41:13-58
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:5-81
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:5-81
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:22-78
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:22-78
 uses-permission#android.permission.INTERNET
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:5-67
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:5-67
 MERGED from [com.twitter.sdk.android:twitter-core:3.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/f9f1bbc776c6f5cb7d3a48ba9d0a8aba/jetified-twitter-core-3.3.0/AndroidManifest.xml:25:5-67
 MERGED from [com.twitter.sdk.android:twitter-core:3.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/f9f1bbc776c6f5cb7d3a48ba9d0a8aba/jetified-twitter-core-3.3.0/AndroidManifest.xml:25:5-67
 MERGED from [com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:13:5-67
@@ -339,25 +339,25 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.3.0] /U
 MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/so/.gradle/caches/transforms-2/files-2.1/af8b852dc9492850dfd58fa4b08b6b31/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:26:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/so/.gradle/caches/transforms-2/files-2.1/af8b852dc9492850dfd58fa4b08b6b31/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:26:5-67
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:22-64
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:22-64
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:5-80
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:5-80
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:22-77
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:22-77
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:5-81
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:5-81
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:22-78
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:22-78
 uses-permission#android.permision.CALL_PHONE
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:5-68
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:5-68
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:22-65
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:22-65
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:54:5-79
+ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:5-79
 MERGED from [com.google.android.libraries.places:places:2.2.0] /Users/so/.gradle/caches/transforms-2/files-2.1/1e6e0b218ccfeb7492b94f8f5863d2cc/jetified-places-2.2.0/AndroidManifest.xml:9:5-79
 MERGED from [com.google.android.libraries.places:places:2.2.0] /Users/so/.gradle/caches/transforms-2/files-2.1/1e6e0b218ccfeb7492b94f8f5863d2cc/jetified-places-2.2.0/AndroidManifest.xml:9:5-79
 	android:name
-		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:54:22-76
+		ADDED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:22-76
 uses-sdk
 INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml

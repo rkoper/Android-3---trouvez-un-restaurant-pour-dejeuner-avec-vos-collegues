@@ -2,7 +2,6 @@
 package com.m.sofiane.go4lunch.activity;
 
 import android.view.View;
-import android.widget.TextView;
 import androidx.annotation.CallSuper;
 import androidx.annotation.UiThread;
 import androidx.appcompat.widget.Toolbar;
@@ -29,9 +28,7 @@ public class mainactivity_ViewBinding implements Unbinder {
 
     target.mDrawerLayout = Utils.findRequiredViewAsType(source, R.id.drawer_layout, "field 'mDrawerLayout'", DrawerLayout.class);
     target.mToolbar = Utils.findRequiredViewAsType(source, R.id.activity_main_toolbar, "field 'mToolbar'", Toolbar.class);
-    target.mUserText = Utils.findRequiredViewAsType(source, R.id.profiltextnameBis, "field 'mUserText'", TextView.class);
     target.mBottomNavigationView = Utils.findRequiredViewAsType(source, R.id.activity_main_bottom_navigation, "field 'mBottomNavigationView'", BottomNavigationView.class);
-    target.mUserMail = Utils.findRequiredViewAsType(source, R.id.profiltextmailBis, "field 'mUserMail'", TextView.class);
     target.mNavigationView = Utils.findRequiredViewAsType(source, R.id.activity_main_drawer_isOpen, "field 'mNavigationView'", NavigationView.class);
   }
 
@@ -44,9 +41,7 @@ public class mainactivity_ViewBinding implements Unbinder {
 
     target.mDrawerLayout = null;
     target.mToolbar = null;
-    target.mUserText = null;
     target.mBottomNavigationView = null;
-    target.mUserMail = null;
     target.mNavigationView = null;
   }
 }
