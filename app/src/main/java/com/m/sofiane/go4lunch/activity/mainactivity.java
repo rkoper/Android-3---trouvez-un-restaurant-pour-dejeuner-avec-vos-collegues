@@ -109,7 +109,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     //    fm.beginTransaction().add(R.id.fragment_container, mapFragment, "1").commit();
 
         ButterKnife.bind(this);
-
+        InitToolBar(false);
         InitBottomNav(false);
         InitDrawerLayout();
         retrieveUserData();
@@ -187,6 +187,24 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     public void InitBottomNav(boolean isHidden) {
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         mBottomNavigationView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+    }
+
+    public void InitToolBar(boolean isHidden) {
+
+        mToolbar = findViewById(R.id.activity_main_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        View lltop = findViewById(R.id.LLTop);
+        View llbottom = findViewById(R.id.LLbottom);
+        lltop.setBackgroundResource(R.drawable.gradientmap);
+        llbottom.setBackgroundResource(R.drawable.gradientmap);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

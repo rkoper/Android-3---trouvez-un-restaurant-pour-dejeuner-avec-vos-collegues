@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/activity_main_toolbar_For_maps"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@android:color/holo_red_light"
+        android:orientation="vertical"
+        android:theme="@style/ToolBarStyle"
+        app:buttonGravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/LLTop"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/toolbar_title_for_maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_horizontal"
+            android:fontFamily="sans-serif"
+            android:freezesText="false"
+            android:text="I'm Hungry!"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:typeface="sans"
+            tools:layout_editor_absoluteX="206dp"
+            tools:layout_editor_absoluteY="7dp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <fragment
         android:layout_width="match_parent"
@@ -12,4 +40,11 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment">
     </fragment>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_for_maps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 </FrameLayout>

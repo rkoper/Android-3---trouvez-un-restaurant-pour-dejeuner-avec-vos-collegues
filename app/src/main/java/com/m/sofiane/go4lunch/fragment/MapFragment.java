@@ -2,38 +2,28 @@ package com.m.sofiane.go4lunch.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -52,14 +42,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.api.Places;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
-import com.m.sofiane.go4lunch.adapter.ArrayAdapterSearchView;
-import com.m.sofiane.go4lunch.adapter.CustomAdapter;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
-import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
@@ -84,36 +70,40 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     Marker mRestoMarker;
     LatLng mLatLng;
     LatLng mLatLngForAll;
-    String token = "21051984";
     @BindView(R.id.menu_search)
     MenuItem mSearch;
-    ArrayList<Prediction> mT = new ArrayList<>();
-    ArrayList<String> mS = new ArrayList<>();
-    String input;
     View view;
-    int AUTOCOMPLETE_REQUEST_CODE = 1;
     String apiKey = BuildConfig.APIKEY;
-    private ArrayAdapterSearchView searchView;
-    private LinearLayout recycleLayout;
-    private RecyclerView recyclerView;
-    private CustomAdapter adapter;
-    private androidx.appcompat.widget.Toolbar mToolbar1, mToolbar2;
-    private FrameLayout frameLayout;
 
+    SearchMapAdapter mAdapter;
+    ArrayList<String> mS ;
+    RecyclerView mRecyclerView;
+    Context mContext;
+    FragmentManager mFragmentManager;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, null);
+        uploadToolbar();
+        this.configureRecyclerView(view);
         ArrayList<String> mT =new ArrayList<>();
         setHasOptionsMenu(true);
         loadMap();
         setRetainInstance(true);
-        String apiKey = BuildConfig.APIKEY;
-        uploadToolbar();
 
         return view;
+    }
+
+    private void configureRecyclerView(View view) {
+        this.mS = new ArrayList<>();
+        this.mAdapter = new SearchMapAdapter(mS, mFragmentManager, mContext);
+        mRecyclerView = view.findViewById(R.id.recyclerview_for_maps);
+        mRecyclerView.setVisibility(view.INVISIBLE);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
     }
 
     private void uploadToolbar() {
@@ -122,47 +112,26 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     }
 
-    private void initSearch(View view,  ArrayList<String> mT) {
-
-        this.adapter = new CustomAdapter(getContext(), mT);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        if (!mT.isEmpty()) {
-            adapter = new CustomAdapter(getContext(), mT);
-            recyclerView.setAdapter(adapter);
-
-            recycleLayout.setVisibility(View.VISIBLE);
-
-            adapter.setOnItemClickListener(item -> searchView.setQuery(item, false));
-        } else {
-            recycleLayout.setVisibility(View.GONE);
-        }
-
-        System.out.println("MT DATA------------>" + mT.toString());
-    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.activity_main_menu_for_map, menu);
-        MenuItem searchItem = menu.findItem(R.id.search_menu_item);
+        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
 
-        searchView = (ArrayAdapterSearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setLayoutParams(new ActionBar.LayoutParams(Gravity.LEFT));
-        searchView.setOnSearchClickListener(v ->
-                initQuery());
+        inflater.inflate(R.menu.activity_main_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+      //  setSearchTextColour(searchView);
+
+        searchView.setOnSearchClickListener(v -> initQuery(searchView));
         searchView.setOnCloseListener(() -> {
-
-            return true;
+            mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
+            return false;
         });
 
 
     }
 
-    public void initQuery(){
-        frameLayout.setVisibility(View.VISIBLE);
+    public void initQuery(SearchView searchView){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -176,17 +145,19 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                     build_retrofit_and_get_responseForSearch(view, item);}
 
                 else{
-                    recyclerView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
                 }
                 return false;
             }
         });
+    }
 
-        searchView.setOnClickListener(v -> {
-            String length = searchView.getText();
-            searchView.setSelection(length.length());
-        });
-
+    private void setSearchTextColour(SearchView searchView) {
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        EditText searchPlate = (EditText) searchView.findViewById(searchPlateId);
+        searchPlate.setTextColor(getResources().getColor(R.color.Red));
+        searchPlate.setBackgroundResource(R.color.tw__solid_white);
     }
 
     @Override
@@ -225,7 +196,10 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                        mT.add(place.body().getPredictions().get(i).getDescription());
 
 
-                        initSearch(view, mT);
+                        mAdapter = new SearchMapAdapter(mT, mFragmentManager, mContext);
+                        mRecyclerView.setAdapter(mAdapter);
+
+                        mRecyclerView.setVisibility(view.VISIBLE);
                     }
                     Log.e("LIST ID----->", mT.toString());
 

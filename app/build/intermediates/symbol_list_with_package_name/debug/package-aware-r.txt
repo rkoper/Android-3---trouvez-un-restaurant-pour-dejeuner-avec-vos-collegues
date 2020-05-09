@@ -2201,6 +2201,7 @@ id activity_chooser_view_content
 id activity_main_bottom_navigation
 id activity_main_drawer_isOpen
 id activity_main_toolbar
+id activity_main_toolbar_For_maps
 id activity_restaurant_call_text
 id activity_restaurant_card_bottom
 id activity_restaurant_card_option_bar
@@ -2459,7 +2460,9 @@ id place_autocomplete_separator
 id place_distance
 id place_info
 id place_info_2
+id place_info_for_maps
 id place_name
+id place_name_for_maps
 id place_open
 id place_people
 id place_people_count
@@ -2503,6 +2506,7 @@ id progress_bar
 id progress_circular
 id progress_horizontal
 id radio
+id recyclerview_for_maps
 id resend_barrier
 id resend_code
 id right
@@ -2600,6 +2604,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toolbar_title
+id toolbar_title_for_maps
 id top
 id topPanel
 id top_level_view
@@ -2754,6 +2759,7 @@ layout fui_welcome_back_idp_prompt_layout
 layout fui_welcome_back_password_prompt_layout
 layout item_recyclerview
 layout item_recyclerview_fav
+layout item_recyclerview_search_map
 layout item_recyclerview_sub
 layout item_recyclerview_workgo
 layout item_recyclerview_worknotyet
