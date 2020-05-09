@@ -11,23 +11,23 @@
 9-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-11-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:5-81
-11-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:22-78
+11-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:47:5-81
+11-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:47:22-78
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:5-67
-12-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:22-64
+12-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:5-67
+12-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:48:22-64
 13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-13-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:5-80
-13-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:22-77
+13-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:5-80
+13-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:49:22-77
 14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-14-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:5-81
-14-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:22-78
+14-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:5-81
+14-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:50:22-78
 15    <uses-permission android:name="android.permision.CALL_PHONE" />
-15-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:5-68
-15-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:22-65
+15-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:5-68
+15-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:51:22-65
 16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-16-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:5-79
-16-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:53:22-76
+16-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:5-79
+16-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:52:22-76
 17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 17-->[com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:12:5-79
 17-->[com.firebaseui:firebase-ui-auth:6.0.2] /Users/so/.gradle/caches/transforms-2/files-2.1/d454def788af88029b3d06396b62948f/jetified-firebase-ui-auth-6.0.2/AndroidManifest.xml:12:22-76
@@ -56,7 +56,7 @@
 27-->[com.google.android.gms:play-services-measurement:17.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/c286a662b2c14e12c87c511e7fbec4aa/jetified-play-services-measurement-17.3.0/AndroidManifest.xml:26:22-107
 28
 29    <application
-29-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:6:5-47:19
+29-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:6:5-46:19
 30        android:name="androidx.multidex.MultiDexApplication"
 31        android:allowBackup="true"
 31-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:7:9-35
@@ -102,23 +102,23 @@
 52-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:28:19-57
 53        </activity>
 54        <activity android:name="com.m.sofiane.go4lunch.activity.subactivity" />
-54-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:32:9-58
-54-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:32:19-55
+54-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:31:9-58
+54-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:31:19-55
 55
 56        <receiver android:name="com.m.sofiane.go4lunch.services.notificationService" />
-56-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:35:9-66
-56-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:35:19-63
+56-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:34:9-66
+56-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:34:19-63
 57
 58        <activity android:name="com.m.sofiane.go4lunch.activity.webviewactivity" />
-58-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:37:9-62
-58-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:37:19-59
+58-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:36:9-62
+58-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:36:19-59
 59
 60        <meta-data
-60-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:40:9-43:45
+60-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:39:9-42:45
 61            android:name="com.facebook.sdk.ApplicationId"
-61-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:41:13-58
+61-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:40:13-58
 62            android:value="@string/facebook_application_id" />
-62-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:42:13-60
+62-->/Users/so/StudioProjects/Go4Lunch/app/src/main/AndroidManifest.xml:41:13-60
 63
 64        <activity
 64-->[com.twitter.sdk.android:twitter-core:3.3.0] /Users/so/.gradle/caches/transforms-2/files-2.1/f9f1bbc776c6f5cb7d3a48ba9d0a8aba/jetified-twitter-core-3.3.0/AndroidManifest.xml:28:9-32:40

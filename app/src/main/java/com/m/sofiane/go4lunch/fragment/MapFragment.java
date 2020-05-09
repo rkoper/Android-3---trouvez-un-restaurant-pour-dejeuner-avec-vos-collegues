@@ -46,6 +46,7 @@ import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
+import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
@@ -76,9 +77,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     String apiKey = BuildConfig.APIKEY;
 
     SearchMapAdapter mAdapter;
-    ArrayList<String> mS ;
+    ArrayList<Prediction> listdataForSearch ;
     RecyclerView mRecyclerView;
-    Context mContext;
     FragmentManager mFragmentManager;
 
 
@@ -88,7 +88,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         View view = inflater.inflate(R.layout.fragment_map, null);
         uploadToolbar();
         this.configureRecyclerView(view);
-        ArrayList<String> mT =new ArrayList<>();
+        ArrayList<Prediction> mT =new ArrayList<>();
         setHasOptionsMenu(true);
         loadMap();
         setRetainInstance(true);
@@ -97,8 +97,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     private void configureRecyclerView(View view) {
-        this.mS = new ArrayList<>();
-        this.mAdapter = new SearchMapAdapter(mS, mFragmentManager, mContext);
+        this.listdataForSearch = new ArrayList<>();
+        this.mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
         mRecyclerView = view.findViewById(R.id.recyclerview_for_maps);
         mRecyclerView.setVisibility(view.INVISIBLE);
         mRecyclerView.setAdapter(mAdapter);
@@ -120,16 +120,20 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         inflater.inflate(R.menu.activity_main_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-      //  setSearchTextColour(searchView);
+        setSearchTextColour(searchView);
 
-        searchView.setOnSearchClickListener(v -> initQuery(searchView));
+        searchView.setOnSearchClickListener(v -> DoAfterClickOnSearch(mToolbar, searchView));
         searchView.setOnCloseListener(() -> {
             mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
             return false;
         });
-
-
     }
+
+        public void DoAfterClickOnSearch(Toolbar mToolbar, SearchView searchView){
+            mToolbar.setNavigationIcon(null);
+            initQuery(searchView);
+
+        }
 
     public void initQuery(SearchView searchView){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -190,18 +194,18 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 @SuppressLint({"RestrictedApi", "LongLogTag"})
                 @Override
                 public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
-                    ArrayList<String> mT = new ArrayList<>();
+                        listdataForSearch = new ArrayList<>();
                     for (int i = 0; i < place.body().getPredictions().size(); i++) {
                       //  String mS = place.body().getPredictions().get(i).getDescription();
-                       mT.add(place.body().getPredictions().get(i).getDescription());
+                        listdataForSearch.add(place.body().getPredictions().get(i));
 
 
-                        mAdapter = new SearchMapAdapter(mT, mFragmentManager, mContext);
+                        mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
                         mRecyclerView.setAdapter(mAdapter);
 
                         mRecyclerView.setVisibility(view.VISIBLE);
                     }
-                    Log.e("LIST ID----->", mT.toString());
+                    Log.e("LIST ID----->", listdataForSearch.toString());
 
                 }
 

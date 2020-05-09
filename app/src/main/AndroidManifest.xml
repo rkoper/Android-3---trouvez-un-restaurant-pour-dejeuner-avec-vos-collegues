@@ -28,7 +28,6 @@
         <activity android:name=".activity.loginactivity">
 
         </activity>
-
         <activity android:name=".activity.subactivity" />
 
 

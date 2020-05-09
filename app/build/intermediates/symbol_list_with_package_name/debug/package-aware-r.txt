@@ -2236,6 +2236,7 @@ id buttonForClick
 id buttonLike
 id buttonPanel
 id buttonTime
+id button_click_map_search
 id button_continue
 id button_create
 id button_done
@@ -2460,7 +2461,6 @@ id place_autocomplete_separator
 id place_distance
 id place_info
 id place_info_2
-id place_info_for_maps
 id place_name
 id place_name_for_maps
 id place_open

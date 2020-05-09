@@ -112,8 +112,6 @@ public class ListFragment extends Fragment implements searchImpl {
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
-//        ImageButton imageButton = getActivity().findViewById(R.id.imageButton);
-  //      imageButton.setVisibility(View.VISIBLE);
 
     }
 
