@@ -106,13 +106,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         findLocation();
 
         setContentView(R.layout.activity_main);
-    //    fm.beginTransaction().add(R.id.fragment_container, mapFragment, "1").commit();
 
         ButterKnife.bind(this);
         InitToolBar(false);
         InitBottomNav(false);
-        InitDrawerLayout();
         retrieveUserData();
+        InitDrawerLayout();
         createFireStoreUser();
 
 
