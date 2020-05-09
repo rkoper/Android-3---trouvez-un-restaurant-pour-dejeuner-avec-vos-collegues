@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -75,6 +77,8 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.activity_main_drawer_isOpen)
     NavigationView mNavigationView;
 
+    RecyclerView recyclerView;
+
     final Fragment mapFragment = new MapFragment();
     final Fragment listFragment = new ListFragment();
     final Fragment workFragment = new WorkFragment();
@@ -92,7 +96,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     double latitude;
 
     final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = mapFragment;
+  //  Fragment active = mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,20 +105,18 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
         findLocation();
 
-
-
         setContentView(R.layout.activity_main);
-        fm.beginTransaction().add(R.id.fragment_container, mapFragment, "1").commit();
+    //    fm.beginTransaction().add(R.id.fragment_container, mapFragment, "1").commit();
 
         ButterKnife.bind(this);
 
-        InitToolBar(false);
         InitBottomNav(false);
         InitDrawerLayout();
         retrieveUserData();
         createFireStoreUser();
 
 
+        loadFragment(mapFragment);
 
     }
 
@@ -187,25 +189,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mBottomNavigationView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
-
-    public void InitToolBar(boolean isHidden) {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        View lltop = findViewById(R.id.LLTop);
-        View llbottom = findViewById(R.id.LLbottom);
-        lltop.setBackgroundResource(R.drawable.gradientmap);
-        llbottom.setBackgroundResource(R.drawable.gradientmap);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         View llbottom = findViewById(R.id.LLbottom);
@@ -274,7 +257,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_lunch).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "CHOICE");
             fm.beginTransaction().replace(R.id.fragment_container, mChoiceFrag).commit();
-            active = mChoiceFrag;
+            //active = mChoiceFrag;
             mDrawerLayout.closeDrawers();
             return false;
         });
@@ -284,7 +267,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "SETTINGS");
             fm.beginTransaction().replace(R.id.fragment_container, mFavFrag).commit();
-            active = mFavFrag;
+          //  active = mFavFrag;
             mDrawerLayout.closeDrawers();
             return true;
         });

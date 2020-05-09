@@ -2244,7 +2244,6 @@ id button_sign_in
 id buttonworld
 id cancel_action
 id cancel_button
-id card_view
 id center
 id center_horizontal
 id center_vertical
@@ -2354,13 +2353,13 @@ id icon_group
 id icon_only
 id ifRoom
 id image
-id imageButton
 id imageButtonFav
 id info
 id inline
 id invisible
 id invisible_frame
 id italic
+id itemNametxt
 id itemRecyclerView
 id itemRecyclerViewFav
 id item_touch_helper_previous_elevation
@@ -2383,7 +2382,6 @@ id map
 id masked
 id media_actions
 id menu_search
-id menu_search_formap
 id message
 id messenger_send_button
 id middle
@@ -2529,6 +2527,7 @@ id search_close_btn
 id search_edit_frame
 id search_go_btn
 id search_mag_icon
+id search_menu_item
 id search_plate
 id search_src_text
 id search_voice_btn
@@ -2701,6 +2700,7 @@ layout activity_maps
 layout autocomplete_edittext
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
+layout card_item
 layout com_facebook_activity_layout
 layout com_facebook_device_auth_dialog_fragment
 layout com_facebook_login_fragment

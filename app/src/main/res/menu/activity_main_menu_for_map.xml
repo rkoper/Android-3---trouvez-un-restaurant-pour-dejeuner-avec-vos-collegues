@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/menu_search_formap"
-        android:icon="@drawable/searchicon"
-        android:title="Search"
-        android:visible="true"
-        app:showAsAction="ifRoom"
-        tools:ignore="HardcodedText" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <item
+        android:id="@+id/search_menu_item"
+        android:icon="@drawable/searchicon"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="com.m.sofiane.go4lunch.adapter.ArrayAdapterSearchView"
+        android:textSize="16sp"
+        android:title="Search" />
 </menu>

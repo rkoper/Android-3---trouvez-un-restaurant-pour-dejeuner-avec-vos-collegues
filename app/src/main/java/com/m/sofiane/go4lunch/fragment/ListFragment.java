@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class ListFragment extends Fragment implements searchImpl {
     RecyclerView recyclerView;
 
     String mKeyName = "1";
+    private FrameLayout frameLayout;
 
     private boolean isBackFromB;
 
@@ -98,6 +100,8 @@ public class ListFragment extends Fragment implements searchImpl {
         isBackFromB=false;
         setHasOptionsMenu(true);
         uploadToolbar();
+
+
         build_retrofit_and_get_response();
         this.configureRecyclerView(view);
 
@@ -108,12 +112,11 @@ public class ListFragment extends Fragment implements searchImpl {
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
-        ImageButton imageButton = getActivity().findViewById(R.id.imageButton);
-        imageButton.setVisibility(View.GONE);
+//        ImageButton imageButton = getActivity().findViewById(R.id.imageButton);
+  //      imageButton.setVisibility(View.VISIBLE);
 
     }
 
-    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
 
@@ -167,28 +170,28 @@ public class ListFragment extends Fragment implements searchImpl {
 
 
     private void build_retrofit_and_get_response() {
-                ArrayList<Result> mData = Singleton.getInstance().getArrayList();
+        ArrayList<Result> mData = Singleton.getInstance().getArrayList();
 
-                mychoiceHelper.getMyChoice()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    document.getData();
-                                    MyChoice l = document.toObject(MyChoice.class);
+        mychoiceHelper.getMyChoice()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            document.getData();
+                            MyChoice l = document.toObject(MyChoice.class);
 
-                                    listData.add(l);
+                            listData.add(l);
 
-                                }
-                            }
-                            ArrayList<String> mTest = new ArrayList<>();
-                            for (int i = 0; i < listData.size(); i++) {
-                                mTest.add(listData.get(i).getNameOfResto());
-                                Log.e("TEEEEEET", mTest.toString());
+                        }
+                    }
+                    ArrayList<String> mTest = new ArrayList<>();
+                    for (int i = 0; i < listData.size(); i++) {
+                        mTest.add(listData.get(i).getNameOfResto());
+                        Log.e("TEEEEEET", mTest.toString());
 
-                                mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
-                                mRecyclerView.setAdapter(mAdapter);
-                            }
-                        });
+                        mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+                });
     }
 
     @Override

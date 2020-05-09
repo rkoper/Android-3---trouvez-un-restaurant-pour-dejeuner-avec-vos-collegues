@@ -16,20 +16,16 @@ public interface googleInterface {
     String api_KEY = BuildConfig.APIKEY;
      String mUrl = "api/place/nearbysearch/json?&sessiontoken=19840521&key=";
     String mUrlDetail = "api/place/details/json?fields=photos,international_phone_number,name,address_components,formatted_address,rating,website,place_id&sessiontoken=19840521&key=";
-    String mUrlAutoComplete = "api/place/autocomplete/json?types=establishment&strictbounds&radius=200&sessiontoken=19840521&key=";
+    String mUrlAutoComplete = "api/place/autocomplete/json?types=establishment&fields=name,place_id&strictbounds&radius=50&sessiontoken=19840521&key=";
 
 
     @GET(mUrl+api_KEY)
     Call<Result>
    getNearbyPlaces(@Query("location") String location, @Query("radius") int radius, @Query("type") String type);
 
-    @GET(mUrl+api_KEY)
-    Call<Result>
-    getNearbyPlacesForList(@Query("location") String location, @Query("radius") int radius, @Query("type") String type);
-
     @GET(mUrlAutoComplete+api_KEY)
     Call<AutoComplete>
-    getNearbyPlacesAutoComplete(@Query("location") String location, @Query("input") String input );
+    getNearbyPlacesAutoComplete(@Query("location") String location, @Query("input") String input);
 
     @GET(mUrlAutoComplete+api_KEY)
     Call<Prediction>
