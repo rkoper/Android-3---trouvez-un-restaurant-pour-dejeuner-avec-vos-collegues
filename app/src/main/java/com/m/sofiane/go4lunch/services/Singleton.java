@@ -9,13 +9,14 @@ public final class Singleton {
             public ArrayList<Result> results = new ArrayList<Result>();;
             public double mLatitude;
             public double mLongitude;
-            private Singleton() {
+            public Singleton() {
             }
             public static Singleton getInstance() {
                 if (uniqInstance == null)
                     uniqInstance = new Singleton();
                 return uniqInstance;
             }
+
             public void setArrayList(ArrayList<Result> results)
             {
                 this.results = results;

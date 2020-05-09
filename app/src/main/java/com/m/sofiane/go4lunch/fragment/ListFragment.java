@@ -1,81 +1,40 @@
 package com.m.sofiane.go4lunch.fragment;
 
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.adapter.ListAdapter;
-import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.services.googleInterface;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-import com.m.sofiane.go4lunch.utils.searchImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.OnItemSelected;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
-public class ListFragment extends Fragment implements searchImpl {
+public class ListFragment extends Fragment  {
 
 
     private RecyclerView mRecyclerView;
@@ -100,11 +59,8 @@ public class ListFragment extends Fragment implements searchImpl {
         isBackFromB=false;
         setHasOptionsMenu(true);
         uploadToolbar();
-
-
-        build_retrofit_and_get_response();
+        initRecyclerView();
         this.configureRecyclerView(view);
-
         return view;
     }
 
@@ -165,52 +121,32 @@ public class ListFragment extends Fragment implements searchImpl {
 
     }
 
-
-
-    private void build_retrofit_and_get_response() {
+    private void initRecyclerView() {
         ArrayList<Result> mData = Singleton.getInstance().getArrayList();
+            readFireBase(mData);
 
+                }
+
+    private void readFireBase(ArrayList<Result> mData) {
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             document.getData();
                             MyChoice l = document.toObject(MyChoice.class);
-
-                            listData.add(l);
-
-                        }
-                    }
-                    ArrayList<String> mTest = new ArrayList<>();
-                    for (int i = 0; i < listData.size(); i++) {
-                        mTest.add(listData.get(i).getNameOfResto());
-                        Log.e("TEEEEEET", mTest.toString());
-
-                        mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
-                        mRecyclerView.setAdapter(mAdapter);
+                            listData.add(l); }
+                        uploadRecyclerView(mData, listData);
                     }
                 });
     }
 
-    @Override
-    public void searchQueryMapSubmit(String query) {
 
+    private void uploadRecyclerView(ArrayList<Result> mData,  ArrayList<MyChoice> listData ) {
+        ArrayList<String> mTest = new ArrayList<>();
+        for (int i = 0; i < listData.size(); i++) {
+            mTest.add(listData.get(i).getNameOfResto());
+            mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
-
-    @Override
-    public void searchQueryMapChanges(String newText) {
-
-    }
-
-    @Override
-    public void searchQueryListSubmit(String val) {
-
-    }
-
-    @Override
-    public void searchQueryListChanges(String val) {
-
-    }
-
-
 }

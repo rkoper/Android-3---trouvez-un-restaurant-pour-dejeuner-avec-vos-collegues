@@ -4,10 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +35,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.fragment.FavoriteFragment;
 import com.m.sofiane.go4lunch.fragment.ListFragment;
@@ -96,7 +92,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     double latitude;
 
     final FragmentManager fm = getSupportFragmentManager();
-  //  Fragment active = mapFragment;
+    //  Fragment active = mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,7 +280,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "SETTINGS");
             fm.beginTransaction().replace(R.id.fragment_container, mFavFrag).commit();
-          //  active = mFavFrag;
+            //  active = mFavFrag;
             mDrawerLayout.closeDrawers();
             return true;
         });
@@ -355,7 +351,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 ArrayList<Result> mArrayList = new ArrayList<>();
-              mArrayList = response.body().getList();
+                mArrayList = response.body().getList();
 
 
                 Singleton.getInstance().setArrayList(mArrayList);

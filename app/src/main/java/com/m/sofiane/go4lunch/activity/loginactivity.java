@@ -40,9 +40,10 @@ public class loginactivity extends AppCompatActivity {
         public void createSignInIntent () {
             List<AuthUI.IdpConfig> mProviders = Arrays.asList(
                     new AuthUI.IdpConfig.FacebookBuilder().build(),
-                   new AuthUI.IdpConfig.GoogleBuilder().build()
+                   new AuthUI.IdpConfig.GoogleBuilder().build(),
+                    new AuthUI.IdpConfig.TwitterBuilder().build(),
+                  new AuthUI.IdpConfig.EmailBuilder().build()
             );
-
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
                             .setAvailableProviders(mProviders)

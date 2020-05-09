@@ -50,13 +50,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.m.sofiane.go4lunch.activity.loginactivity" >
-        </activity>
+        <activity android:name="com.m.sofiane.go4lunch.activity.loginactivity" />
         <activity android:name="com.m.sofiane.go4lunch.activity.subactivity" />
+        <activity android:name="com.m.sofiane.go4lunch.activity.webviewactivity" />
 
         <receiver android:name="com.m.sofiane.go4lunch.services.notificationService" />
-
-        <activity android:name="com.m.sofiane.go4lunch.activity.webviewactivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
