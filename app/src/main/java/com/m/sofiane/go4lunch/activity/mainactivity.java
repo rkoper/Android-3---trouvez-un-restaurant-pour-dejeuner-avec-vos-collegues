@@ -349,7 +349,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
         googleInterface service = retrofit.create(googleInterface.class);
 
-        Call<Result> call = service.getNearbyPlaces((latitude+","+longitude), 30, type);
+        Call<Result> call = service.getNearbyPlaces((latitude+","+longitude), 50, type);
 
         call.enqueue(new Callback<Result>() {
             @SuppressLint({"RestrictedApi", "LongLogTag"})

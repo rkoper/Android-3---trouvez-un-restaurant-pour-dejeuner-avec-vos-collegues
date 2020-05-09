@@ -51,6 +51,9 @@ import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import okhttp3.OkHttpClient;
@@ -71,6 +74,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     Marker mRestoMarker;
     LatLng mLatLng;
     LatLng mLatLngForAll;
+    String placeId;
+    String placeIdToCompare;
     @BindView(R.id.menu_search)
     MenuItem mSearch;
     View view;
@@ -80,7 +85,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     ArrayList<Prediction> listdataForSearch ;
     RecyclerView mRecyclerView;
     FragmentManager mFragmentManager;
-
+    Map<String, LatLng> mMapToCompare;
 
     @Nullable
     @Override
@@ -110,8 +115,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
 
-    }
 
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -146,7 +151,10 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             public boolean onQueryTextChange(String item) {
                 Toast.makeText(getContext(), "QUERY", Toast.LENGTH_SHORT).show();
                 if (item.length() != 0) {
+                    System.out.println("1-------->");
                     build_retrofit_and_get_responseForSearch(view, item);}
+
+
 
                 else{
                     mRecyclerView.setVisibility(View.GONE);
@@ -199,9 +207,14 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                       //  String mS = place.body().getPredictions().get(i).getDescription();
                         listdataForSearch.add(place.body().getPredictions().get(i));
 
+                        placeIdToCompare = place.body().getPredictions().get(i).getPlaceId();
+
 
                         mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
                         mRecyclerView.setAdapter(mAdapter);
+                        System.out.println("2-------->");
+                        compareToUpdateMarkers(placeIdToCompare);
+
 
                         mRecyclerView.setVisibility(view.VISIBLE);
                     }
@@ -215,7 +228,34 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             });
         }
 
-        private void loadMap () {
+    private void compareToUpdateMarkers( String placeIdToCompare) {
+        System.out.println("3-------->");
+        for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
+            System.out.println("placeIdToCompare--------> " + placeIdToCompare);
+            System.out.println("Place ID -------->" + Singleton.getInstance().getArrayList().get(i).getReference());
+            if (placeIdToCompare.equals(Singleton.getInstance().getArrayList().get(i).getReference())) {
+                mMap.clear();
+                System.out.println("placeIdToCompare--------> " + placeIdToCompare);
+                System.out.println("Place ID -------->" + Singleton.getInstance().getArrayList().get(i).getId());
+                Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
+                Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
+                mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
+                System.out.println("mLatLngForAll--------> " + mLatLngForAll);
+            }
+
+                System.out.println("4-------->" + mLatLngForAll);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(mLatLngForAll);
+                markerOptions.snippet(placeIdToCompare);
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
+                mRestoMarker = mMap.addMarker(markerOptions);
+        }
+
+        Onclick();
+    }
+
+
+    private void loadMap () {
             mMFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.containermap);
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -286,9 +326,10 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
 
             String placeId = Singleton.getInstance().getArrayList().get(i).getPlaceId();
-            markerAllRestaurant(mLatLngForAll, placeId);
+            markerAllRestaurant(mLatLngForAll, placeId, i );
 
         }
+
     }
 
     private void initMyPosition() {
@@ -315,7 +356,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
     }
 
-    private void markerAllRestaurant(LatLng mLatLngForAll, String placeId) {
+    private void markerAllRestaurant(LatLng mLatLngForAll, String placeId, int i) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(mLatLngForAll);
         markerOptions.snippet(placeId);
@@ -324,6 +365,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
         Onclick();
     }
+
 
     public void Onclick() {
         mMap.setOnMarkerClickListener(marker -> {

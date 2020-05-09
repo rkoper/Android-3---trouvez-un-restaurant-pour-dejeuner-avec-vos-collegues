@@ -49,7 +49,7 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-         String ld = listdataForSearch.get(i).getDescription();
+         String ld = listdataForSearch.get(i).getStructuredFormatting().getMainText();
         h.txtname.setText(ld);
 
         clickAndSendData(h,i);
