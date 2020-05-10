@@ -130,6 +130,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         searchView.setOnSearchClickListener(v -> DoAfterClickOnSearch(mToolbar, searchView));
         searchView.setOnCloseListener(() -> {
             mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
+            initRestaurantPosition();
             return false;
         });
     }

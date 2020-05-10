@@ -81,7 +81,9 @@ public class ListFragment extends Fragment  {
 
         searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
         searchView.setOnCloseListener(() -> {
-            mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
+        //    mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
+        //   mAdapter.notifyDataSetChanged();
+
             return false;
         });
 
