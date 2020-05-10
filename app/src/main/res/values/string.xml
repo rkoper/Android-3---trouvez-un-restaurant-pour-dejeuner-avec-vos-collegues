@@ -6,12 +6,8 @@
     <!-- FACEBOOK -->
     <string name="facebook_application_id">525610718262133</string>
     <string name="fb_login_protocol_scheme">fb525610718262133</string>
-
-
-    <!--  TWITTER -->
-    <string name="twitter_consumer_key" translatable="false"> zdiaAZSvkCyHtjbs2H3K38EpC </string>
-    <string name="twitter_consumer_secret" translatable="false"> hrxercpKOk4HBS4m2D4qXUlpoTGaiD1OimLi3R0sdnjgAbaYlb </string>
-
+    <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
+    <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
 
     <!-- BOTTOM MENU -->
     <string name="title_map">Map View</string>

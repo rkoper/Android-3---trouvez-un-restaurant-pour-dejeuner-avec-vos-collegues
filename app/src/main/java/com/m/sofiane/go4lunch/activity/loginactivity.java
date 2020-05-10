@@ -21,12 +21,8 @@ import java.util.List;
 
 public class loginactivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 777;
-    private static final String TWITTER_KEY= "twitter_consumer_key";
-    private static final String TWITTER_SECRET= "twitter_secret_key";
 
-    TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
     FirebaseAuth mAuth;
-    OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

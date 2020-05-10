@@ -15,14 +15,17 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_api_key"/>
 
-        <activity android:name=".activity.mainactivity">
-            <intent-filter>
+        <activity android:name=".activity.mainactivity"/>
+
+
+        <activity android:name=".activity.loginactivity">
+        <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        </intent-filter>
+    </activity>
 
-        <activity android:name=".activity.loginactivity"/>
+
         <activity android:name=".activity.subactivity" />
         <activity android:name=".activity.webviewactivity" />
 

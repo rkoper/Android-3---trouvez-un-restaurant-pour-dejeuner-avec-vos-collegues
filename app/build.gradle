@@ -20,6 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         buildConfigField("String", "facebook_application_id", facebook_application_id)
+        buildConfigField("String", "twitter_api_key", twitter_api_key)
         buildConfigField("String", "twitter_secret_key", twitter_secret_key)
         buildConfigField("String", "APIKEY", APIKEY)
 
@@ -45,7 +46,7 @@ android {
     dependencies {
 
         implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
-        implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+        implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
         implementation "androidx.drawerlayout:drawerlayout:1.0.0"
