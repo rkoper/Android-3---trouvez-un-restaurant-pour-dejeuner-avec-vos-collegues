@@ -19,11 +19,11 @@ public class NameOfResto extends ArrayList<NameOfResto> {
     private String NameOfResto;
     private String UserName;
     private String UserPhoto;
-    private int Id;
+    private String Id;
 
 
 
-    public NameOfResto(String PlaceID, String NameOfResto, String UserName, String UserPhoto, int Id) {
+    public NameOfResto(String PlaceID, String NameOfResto, String UserName, String UserPhoto, String Id) {
         this.PlaceID = PlaceID;
         this.NameOfResto = NameOfResto;
         this.UserName= UserName;
@@ -64,11 +64,11 @@ public class NameOfResto extends ArrayList<NameOfResto> {
         UserPhoto = userPhoto;
     }
 
-    public int getId() {
+    public String  getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 }

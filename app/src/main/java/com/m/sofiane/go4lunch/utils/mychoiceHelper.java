@@ -24,7 +24,7 @@ public class mychoiceHelper {
         mDataMapForFav.put("UserPhoto", myuserhelper.getProfilPhoto());
         mDataMapForFav.put("RestoPhoto", "0");
         mDataMapForFav.put("Adress", "0");
-        mDataMapForFav.put("Id", "0");
+        mDataMapForFav.put("Id", "2");
         String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).set(mDataMapForFav);
     }

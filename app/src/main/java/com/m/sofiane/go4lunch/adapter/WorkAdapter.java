@@ -72,7 +72,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
 
-        if (listData.get(i).getNameOfResto().equals("0"))
+        if (listData.get(i).getId().equals("2"))
         {
             h.txtname.setTextColor(0xffbdbdbd);
             h.txtname.setTypeface(h.txtname.getTypeface(), Typeface.BOLD_ITALIC);
@@ -82,6 +82,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
         else
             {
               h.txtname.setText(listData.get(i).getUserName() + " eat @ " + listData.get(i).getNameOfResto());
+                clickOnItem(h, listData.get(i).getPlaceID());
             }
 
         Glide
@@ -90,11 +91,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
                 .apply(RequestOptions.circleCropTransform())
                 .into(h.urlphoto);
 
-        if (listData.get(i).getPlaceID().equals("0"))
-        { }
 
-        else {
-            clickOnItem(h, listData.get(i).getPlaceID());}
     }
 
     @SuppressLint("RestrictedApi")

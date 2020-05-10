@@ -102,9 +102,11 @@ public class WorkFragment extends Fragment {
                             NameOfResto l = document.toObject(NameOfResto.class);
 
                             listData.add(l);
-                            Collections.sort(listData, (lhs, rhs) -> {
-                                //
-                                return Integer.compare(rhs.getId(), lhs.getId());
+
+                            Collections.sort(listData, (rhs,lhs) -> {
+                                int a = Integer.parseInt(rhs.getId().toString());
+                                int b = Integer.parseInt(lhs.getId().toString());
+                                return Integer.compare(a,b);
                             });
                         }
                         mAdapter = new WorkAdapter(listData, mFragmentManager, mContext);
@@ -118,41 +120,4 @@ public class WorkFragment extends Fragment {
         mTitleText.setText("Availables workmates");
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
-
-        inflater.inflate(R.menu.activity_main_menu, menu);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        setSearchTextColour(searchView);
-
-        searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
-        searchView.setOnCloseListener(() -> {
-            mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
-            return false;
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.e("TAG", "onQueryTextSubmit: "+query );
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("TAG", "onQueryTextChange: "+newText );
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private void setSearchTextColour(SearchView searchView) {
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = (EditText) searchView.findViewById(searchPlateId);
-        searchPlate.setTextColor(getResources().getColor(R.color.Red));
-        searchPlate.setBackgroundResource(R.color.tw__solid_white);
-    }
 }
