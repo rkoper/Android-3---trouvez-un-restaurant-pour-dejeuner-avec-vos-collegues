@@ -34,6 +34,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.fragment.FavoriteFragment;
@@ -45,6 +46,9 @@ import com.m.sofiane.go4lunch.fragment.WorkFragment;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
+import com.m.sofiane.go4lunch.utils.myuserhelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,9 +86,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     final Fragment mSettingsFrag = new SettingsFragment();
     final Fragment mChoiceFrag = new MyChoiceFragment();
 
-    String mProfilName, mProfilPhoto, mProfilId, mProfilEmail;
-    Uri mProfilPhotoUri;
-
     Location gps_loc;
     Location network_loc;
     Location final_loc;
@@ -97,8 +98,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         findLocation();
 
         setContentView(R.layout.activity_main);
@@ -106,7 +105,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         ButterKnife.bind(this);
         InitToolBar(false);
         InitBottomNav(false);
-        retrieveUserData();
+       // retrieveUserData();
         InitDrawerLayout();
         createFireStoreUser();
 
@@ -250,9 +249,9 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         TextView navUserMail = (TextView) headerView.findViewById(R.id.profiltextmailBis);
         ImageView navProfilPic = (ImageView) headerView.findViewById(R.id.profilimage);
 
-        navUsername.setText(mProfilName);
-        navUserMail.setText(mProfilEmail);
-        Glide.with(this).load(String.valueOf(mProfilPhotoUri)).apply(RequestOptions.circleCropTransform()).into(navProfilPic);
+        navUsername.setText(myuserhelper.getProfilName());
+        navUserMail.setText(myuserhelper.getProfilEmail());
+        Glide.with(this).load((myuserhelper.getProfilPhoto())).apply(RequestOptions.circleCropTransform()).into(navProfilPic);
 
 
     }
@@ -301,31 +300,24 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
-    public void retrieveUserData() {
-        mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        mProfilPhotoUri = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        mProfilPhoto = mProfilPhotoUri.toString();
-        mProfilId = FirebaseAuth.getInstance().getUid();
-        mProfilEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    }
-
     public void createFireStoreUser() {
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         Map<String, Object> mDataMap = new HashMap<>();
-        mDataMap.put("NameUser", mProfilName);
-        mDataMap.put("PhotoUser", mProfilPhoto);
+        mDataMap.put("NameUser", myuserhelper.getProfilName());
+        mDataMap.put("PhotoUser", myuserhelper.getProfilPhoto());
 
-        db.collection("myUser")
-                .document("1")
-                .collection("myUserList")
-                .document(mProfilId)
-                .set((mDataMap))
-                .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!")
+        myuserhelper.createMyUser().set(mDataMap);
 
-                )
-                .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+        mychoiceHelper.readMyChoice()
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                } else {
+                    mychoiceHelper.initMyChoice();
+                    myfavoriteHelper.getMyFavoriteCollection();
+                }
+            }
+        });
     }
 
     private void build_retrofit_and_get_response(double latitude, double longitude, String type) {

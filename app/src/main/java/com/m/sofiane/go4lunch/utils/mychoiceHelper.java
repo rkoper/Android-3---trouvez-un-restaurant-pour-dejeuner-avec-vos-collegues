@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class mychoiceHelper {
@@ -15,14 +16,23 @@ public class mychoiceHelper {
         return FirebaseFirestore.getInstance().collection("MyChoice");
     }
 
-    // --- CREATE ---
+    public static Task<Void> initMyChoice() {
+        Map<String, Object> mDataMapForFav = new HashMap<>();
+        mDataMapForFav.put("NameOfResto", "0");
+        mDataMapForFav.put("PlaceID", "0");
+        mDataMapForFav.put("UserName", myuserhelper.getProfilName());
+        mDataMapForFav.put("UserPhoto", myuserhelper.getProfilPhoto());
+        mDataMapForFav.put("RestoPhoto", "0");
+        mDataMapForFav.put("Adress", "0");
+        mDataMapForFav.put("Id", "0");
+        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).set(mDataMapForFav);
+    }
 
     public static Task<Void> createMyChoice(  Map<String, Object> mDataMap) {
         String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).set(mDataMap);
     }
-
-    // --- READ ---
 
     public static Task<QuerySnapshot> getMyChoice(){
         return mychoiceHelper.getMyCHoiceCollection().get();
@@ -32,8 +42,6 @@ public class mychoiceHelper {
         String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         return mychoiceHelper.getMyCHoiceCollection().document(mProfilName);
     }
-
-    // --- DELETE ---
 
     public static Task<Void> deleteMyChoice(String mProfilName) {
         return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).delete();

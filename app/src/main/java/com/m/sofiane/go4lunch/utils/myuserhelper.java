@@ -20,7 +20,8 @@ public class myuserhelper {
     // --- CREATE ---
 
     public static DocumentReference createMyUser() {
-        return myuserhelper.getMyUserCollection().document();
+        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        return myuserhelper.getMyUserCollection().document(mProfilName);
     }
 
     // --- READ ---
@@ -33,5 +34,19 @@ public class myuserhelper {
     public static Task<QuerySnapshot> deleteMyUser(String t){
         return myuserhelper.getMyUserCollection().whereEqualTo("Name", t).get();}
 
+        public static String getProfilName() {
+            String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            return mProfilName;
+    }
 
+    public static String getProfilPhoto() {
+        Uri mProfilImage = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+        String mProfilPhoto = mProfilImage.toString();
+        return mProfilPhoto;
+    }
+
+    public static String getProfilEmail() {
+        String mProfilEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        return mProfilEmail;
+    }
 }
