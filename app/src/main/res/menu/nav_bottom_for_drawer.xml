@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/homedrawer"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:visible="true"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"
         app:showAsAction="ifRoom"
-        android:title="@string/title_Group" />
+        android:visible="true"
+        android:title="home" />
 
 </menu>

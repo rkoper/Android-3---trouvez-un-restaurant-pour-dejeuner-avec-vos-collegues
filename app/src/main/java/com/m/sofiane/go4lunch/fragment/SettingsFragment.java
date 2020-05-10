@@ -5,9 +5,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.work.WorkManager;
 
@@ -42,6 +46,10 @@ import static android.view.View.GONE;
 
 public class SettingsFragment extends Fragment {
 
+    public SettingsFragment() {
+        // Empty constructor required for DialogFragment
+    }
+
 
     @BindView(R.id.switchNotif)
     Switch mSwitch;
@@ -52,6 +60,7 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.buttonTime)
     Button mButtonTime;
 
+    final Fragment mapFragment = new MapFragment();
 
     int h;
     int m;
@@ -63,16 +72,37 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, null);
         uploadToolbar(view);
         ButterKnife.bind(this, view);
-          initSwitch();
+        initSwitch();
         initButton();
+        uploadBototmBr(view);
         return view;
     }
 
     private void uploadToolbar(View view) {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText("My Settings");
-
     }
+
+    private void uploadBototmBr(View view) {
+        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
+        mBottomNavigationView.setVisibility(mBottomNavigationView.GONE);
+        BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
+        mBmNaViewForDrawer.setVisibility(view.VISIBLE);
+
+        mBmNaViewForDrawer.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.home) {
+                mBmNaViewForDrawer.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#ff4444")));
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, mapFragment)
+                        .addToBackStack(null)
+                        .commit();
+                System.out.println("BACK = " + "To the future");
+            } return true;
+        });
+    }
+
     @SuppressLint("ResourceAsColor")
     private void initButton() {
         picker.setVisibility(View.INVISIBLE);
@@ -81,25 +111,23 @@ public class SettingsFragment extends Fragment {
         mButtonTime.setOnClickListener(v -> {
             int hour, minute;
             String am_pm;
-            if (Build.VERSION.SDK_INT >= 23 ){
+            if (Build.VERSION.SDK_INT >= 23) {
                 h = picker.getHour();
                 m = picker.getMinute();
-            }
-            else{
+            } else {
                 h = picker.getCurrentHour();
                 m = picker.getCurrentMinute();
             }
-            if(h > 12) {
+            if (h > 12) {
                 am_pm = "PM";
                 h = h - 12;
+            } else {
+                am_pm = "AM";
             }
-            else
-            {
-                am_pm="AM";
-            }
-            String mTime = "Selected Date: "+ h +":"+ m+" "+am_pm;
-            Toast.makeText(getContext(), mTime , Toast.LENGTH_SHORT).show();
-        });}
+            String mTime = "Selected Date: " + h + ":" + m + " " + am_pm;
+            Toast.makeText(getContext(), mTime, Toast.LENGTH_SHORT).show();
+        });
+    }
 
 
     @SuppressLint("ResourceAsColor")
@@ -128,7 +156,7 @@ public class SettingsFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.HOUR_OF_DAY, h);
-        cal.set(Calendar.MINUTE,  m);
+        cal.set(Calendar.MINUTE, m);
 
 
         Intent notificationIntent = new Intent(getActivity(), notificationService.class);
@@ -140,6 +168,7 @@ public class SettingsFragment extends Fragment {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, broadcast);
     }
+
 }
 
 

@@ -1,13 +1,18 @@
 package com.m.sofiane.go4lunch.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,21 +38,41 @@ import static com.firebase.ui.auth.AuthUI.TAG;
 /**
  * created by Sofiane M. 25/04/2020
  */
-public class MyChoiceFragment extends Fragment {
-    MyChoiceFragment myChoiceFragment;
-
+public class MyChoiceFragment extends Fragment  {
+    final Fragment mapFragment = new MapFragment();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
         readFireStore(view);
         uploadToolbar();
+        uploadBototmBr(view) ;
         return view;
     }
 
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" My Choice");
+    }
+
+    private void uploadBototmBr(View view) {
+        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
+        mBottomNavigationView.setVisibility(mBottomNavigationView.GONE);
+        BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
+        mBmNaViewForDrawer.setVisibility(view.VISIBLE);
+
+        mBmNaViewForDrawer.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.home) {
+                mBmNaViewForDrawer.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#ff4444")));
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, mapFragment)
+                        .addToBackStack(null)
+                        .commit();
+                System.out.println("BACK = " + "To the future");
+            } return true;
+        });
     }
 
     private void readFireStore(View view) {
@@ -81,4 +107,5 @@ public class MyChoiceFragment extends Fragment {
             }
         });
     }
+
 }

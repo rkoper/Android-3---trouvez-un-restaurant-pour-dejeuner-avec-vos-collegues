@@ -2,6 +2,7 @@ package com.m.sofiane.go4lunch.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -76,6 +77,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     BottomNavigationView mBottomNavigationView;
     @BindView(R.id.activity_main_drawer_isOpen)
     NavigationView mNavigationView;
+    @BindView(R.id.constraitForCont)
+            View mdeco;
+   // @BindView(R.id.LLTop)
+   //  View mdecoTop;
+   //@BindView(R.id.LLbottom)
+    // View mdecoBottom;
 
     RecyclerView recyclerView;
 
@@ -101,55 +108,33 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         findLocation();
 
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
+        loadOpenFragement();
         InitToolBar(false);
         InitBottomNav(false);
-       // retrieveUserData();
         InitDrawerLayout();
         createFireStoreUser();
+    }
 
-
+    private void loadOpenFragement() {
         loadFragment(mapFragment);
-
+        mdeco.setBackgroundResource(R.drawable.gradientmap);
     }
 
     private void findLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-
+            return; }
         try {
-
             gps_loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) { e.printStackTrace(); }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (gps_loc != null) {
-            final_loc = gps_loc;
-            latitude = final_loc.getLatitude();
-            longitude = final_loc.getLongitude();
-        }
-        else if (network_loc != null) {
-            final_loc = network_loc;
-            latitude = final_loc.getLatitude();
-            longitude = final_loc.getLongitude();
-        }
-        else {
-            latitude = 0.0;
-            longitude = 0.0;
-        }
-
-        Log.e("LOC IN MAIN------>", latitude+"/"+longitude );
+        if (gps_loc != null || network_loc != null) {
+            final_loc = gps_loc; latitude = final_loc.getLatitude(); longitude = final_loc.getLongitude(); }
+        else { latitude = 0.0; longitude = 0.0; }
 
         Singleton.getInstance().setLatitude(latitude);
         Singleton.getInstance().setLongitude(longitude);
@@ -190,10 +175,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        View lltop = findViewById(R.id.LLTop);
-        View llbottom = findViewById(R.id.LLbottom);
-        lltop.setBackgroundResource(R.drawable.gradientmap);
-        llbottom.setBackgroundResource(R.drawable.gradientmap);
     }
 
     @Override
@@ -203,26 +184,21 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        View llbottom = findViewById(R.id.LLbottom);
-        View lltop = findViewById(R.id.LLTop);
         switch (item.getItemId()) {
 
             case R.id.map:
                 loadFragment(mapFragment);
-                lltop.setBackgroundResource(R.drawable.gradientmap);
-                llbottom.setBackgroundResource(R.drawable.gradientmap);
+                      mdeco.setBackgroundResource(R.drawable.gradientmap);
                 break;
 
             case R.id.list:
                 loadFragment(listFragment);
-                lltop.setBackgroundResource(R.drawable.gradientlist);
-                llbottom.setBackgroundResource(R.drawable.gradientlist);
+                    mdeco.setBackgroundResource(R.drawable.gradientlist);
                 break;
 
             case R.id.group:
                 loadFragment(workFragment);
-                lltop.setBackgroundResource(R.drawable.gradientwork);
-                llbottom.setBackgroundResource(R.drawable.gradientwork);
+                     mdeco.setBackgroundResource(R.drawable.gradientfull);
                 break;
 
         }
@@ -252,14 +228,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         navUsername.setText(myuserhelper.getProfilName());
         navUserMail.setText(myuserhelper.getProfilEmail());
         Glide.with(this).load((myuserhelper.getProfilPhoto())).apply(RequestOptions.circleCropTransform()).into(navProfilPic);
-
-
     }
 
     private void initSettingsDrawer() {
         mNavigationView.getMenu().findItem(R.id.drawer_settings).setOnMenuItemClickListener(menuItem -> {
             fm.beginTransaction().replace(R.id.fragment_container, mSettingsFrag).show(mSettingsFrag).commit();
-            //   active = mSettingsFrag;
+            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
             mDrawerLayout.closeDrawers();
             return false;
         });
@@ -269,7 +243,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_lunch).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "CHOICE");
             fm.beginTransaction().replace(R.id.fragment_container, mChoiceFrag).commit();
-            //active = mChoiceFrag;
+            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
             mDrawerLayout.closeDrawers();
             return false;
         });
@@ -279,7 +253,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "SETTINGS");
             fm.beginTransaction().replace(R.id.fragment_container, mFavFrag).commit();
-            //  active = mFavFrag;
+            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
             mDrawerLayout.closeDrawers();
             return true;
         });

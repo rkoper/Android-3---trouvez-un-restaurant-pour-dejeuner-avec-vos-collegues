@@ -41,4 +41,20 @@
 
     </LinearLayout>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/drawer_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorWhite"
+        app:itemIconSize="30sp"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextAppearanceActive="@style/TextStyleActive"
+        app:itemTextAppearanceInactive="@style/TextStyleInactive"
+        app:itemTextColor="@drawable/tab_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/nav_bottom_for_drawer"
+        tools:ignore="MissingConstraints"
+
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

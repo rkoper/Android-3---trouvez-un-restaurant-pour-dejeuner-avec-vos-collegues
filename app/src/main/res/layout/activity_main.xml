@@ -23,8 +23,8 @@
             android:orientation="vertical"
             android:theme="@style/ToolBarStyle"
             app:buttonGravity="center_vertical"
-            app:layout_constraintBottom_toTopOf="@id/LLTop"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/constraitForCont"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -44,36 +44,32 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/LLTop"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/fragment_container"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            tools:ignore="MissingConstraints"/>
-
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraitForCont"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/LLbottom"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/LLTop"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_toolbar"
+            tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/LLbottom"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/activity_main_bottom_navigation"
-            app:layout_constraintTop_toBottomOf="@id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            tools:ignore="MissingConstraints"/>
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="7dp"
+                android:background="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/activity_main_bottom_navigation"
@@ -87,8 +83,8 @@
             app:itemTextAppearanceActive="@style/TextStyleActive"
             app:itemTextAppearanceInactive="@style/TextStyleInactive"
             app:itemTextColor="@drawable/tab_color"
+            app:layout_constraintTop_toBottomOf="@+id/constraitForCont"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/LLbottom"
             app:menu="@menu/bottom_nav_menu"
             tools:ignore="MissingConstraints"
 

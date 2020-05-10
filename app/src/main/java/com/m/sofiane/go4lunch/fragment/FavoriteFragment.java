@@ -2,6 +2,8 @@ package com.m.sofiane.go4lunch.fragment;
 
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -29,13 +33,15 @@ import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 
 public class FavoriteFragment extends Fragment {
-
     FavoriteAdapter mAdapter;
     List<MyFavorite> listData;
     RecyclerView mRecyclerView;
     Context mContext;
+    final Fragment mapFragment = new MapFragment();
     FragmentManager mFragmentManager;
 
     @Nullable
@@ -43,15 +49,36 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, null);
         uploadToolbar();
+        uploadBototmBr(view);
         this.configureRecyclerView(view);
         readDataFromFirebase();
         return view;
+    }
+
+    private void uploadBototmBr(View view) {
+        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
+        mBottomNavigationView.setVisibility(mBottomNavigationView.GONE);
+        BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
+        mBmNaViewForDrawer.setVisibility(view.VISIBLE);
+        mBmNaViewForDrawer.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.home) {
+             //   mBmNaViewForDrawer.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#ff4444")));
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, mapFragment)
+                        .addToBackStack(null)
+                        .commit();
+                System.out.println("BACK = " + "To the future");
+            } return true;
+        });
     }
 
 
     private void uploadToolbar() {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" My Favorites");
+
     }
 
     @Override
@@ -91,6 +118,8 @@ public class FavoriteFragment extends Fragment {
                     }
                 });
     }
+
+
 
 
 }
