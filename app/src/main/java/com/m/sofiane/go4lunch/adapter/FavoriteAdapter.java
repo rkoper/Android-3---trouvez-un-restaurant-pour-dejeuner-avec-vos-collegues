@@ -83,7 +83,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             String t = ld.getName();
             Log.e( t,t);
 
-
             myfavoriteHelper.deleteMyFav(t)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -95,8 +94,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                             Log.d("FAV DATA 2", "Error getting documents: ", task.getException());
                         }
                     });
-
-
         });
     }
 

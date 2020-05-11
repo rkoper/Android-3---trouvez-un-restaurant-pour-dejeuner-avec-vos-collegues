@@ -5,58 +5,124 @@
     android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="1000dp"
-    android:minHeight="450dp"
+    android:background="@color/fui_transparent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/clock"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/layoutclose"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-282dp">
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/button_image_close_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_cancel_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutswitch"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
         <Switch
             android:id="@+id/switchNotif"
-            android:layout_width="309dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="85sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Switch" />
+            android:text="Switch"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layouttimepicker"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/texttime"
+            android:textColor="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="60dp"
+            android:text="Choose time to notification :" />
 
         <TimePicker
-            android:id="@+id/ClockNotif"
-            android:layout_width="match_parent"
+            android:id="@+id/settings_time_picker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/Red"
-            android:headerBackground="@color/Red"
-            android:numbersSelectorColor="@color/Red"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:inputType="time"
+            android:timePickerMode="spinner"
 
-        <Button
-            android:id="@+id/buttonTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Time Picker"
-            tools:ignore="MissingConstraints" />
+            />
 
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/drawer_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/colorWhite"
-        app:itemIconSize="30sp"
-        app:itemIconTint="@drawable/tab_color"
-        app:itemTextAppearanceActive="@style/TextStyleActive"
-        app:itemTextAppearanceInactive="@style/TextStyleInactive"
-        app:itemTextColor="@drawable/tab_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/nav_bottom_for_drawer"
-        tools:ignore="MissingConstraints"
+    <LinearLayout
+        android:id="@+id/layoutbutton"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
+        android:layout_marginTop="380dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-        />
+        <ImageButton
+            android:id="@+id/buttonTime"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_check_circle_white"
+            android:text="Time Picker"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

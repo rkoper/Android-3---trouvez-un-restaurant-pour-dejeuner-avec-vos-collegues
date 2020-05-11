@@ -93,7 +93,6 @@ public class FavoriteFragment extends Fragment {
 
 
     public void readDataFromFirebase() {
-
         myfavoriteHelper.getMyFav()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -113,8 +112,4 @@ public class FavoriteFragment extends Fragment {
                     }
                 });
     }
-
-
-
-
 }

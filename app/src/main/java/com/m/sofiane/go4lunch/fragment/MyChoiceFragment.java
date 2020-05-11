@@ -6,13 +6,17 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,6 +42,9 @@ import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.firebase.ui.auth.AuthUI.TAG;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -47,16 +55,58 @@ public class MyChoiceFragment extends DialogFragment {
 
     public MyChoiceFragment() { }
 
+
+    @BindView(R.id.layout_choice_close)
+    LinearLayout mLLclose;
+    @BindView(R.id.layout_choice_name)
+    LinearLayout mLLname;
+    @BindView(R.id.layout_choice_photo)
+    LinearLayout mLLphoto;
+    @BindView(R.id.layout_choice_title)
+    LinearLayout mLLtitle;
+    @BindView(R.id.frag_choice_title)
+    TextView mChoiceTitle;
+    @BindView(R.id.frag_choice_name)
+    TextView mChoiceName;
+    @BindView(R.id.frag_choice_photo)
+    ImageView mChoicePhoto;
+    @BindView(R.id.frag_choice_adress)
+    TextView mChoiceAdress;
+    @BindView(R.id.frag_choice_close)
+    ImageButton mChoiceClose;
+
+    final Fragment mapFragment = new MapFragment();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
         readFireStore(view);
-
+        ButterKnife.bind(this, view);
+        initCloseButton();
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(android.R.color.transparent);
-
         return view;
+    }
+
+    private void initCloseButton() {
+        mChoiceClose.setOnClickListener(v -> {
+            onDestroyView();
+            backtoHome();
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    private void backtoHome() {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, mapFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void readFireStore(View view) {
@@ -71,9 +121,9 @@ public class MyChoiceFragment extends DialogFragment {
                     String mAdress = l.getAdress();
                     String mPhotoResto = l.getRestoPhoto();
 
-                    TextView nNameChoice = view.findViewById(R.id.MychoiceName);
-                    TextView mAdressChoice = view.findViewById(R.id.MychoiceAdress);
-                    ImageView imageView = view.findViewById(R.id.MychoicePhoto);
+                    TextView nNameChoice = view.findViewById(R.id.frag_choice_name);
+                    TextView mAdressChoice = view.findViewById(R.id.frag_choice_adress);
+                    ImageView imageView = view.findViewById(R.id.frag_choice_photo);
 
                     nNameChoice.setText(mName);
                     mAdressChoice.setText(mAdress);
@@ -94,5 +144,7 @@ public class MyChoiceFragment extends DialogFragment {
             }
         });
     }
+
+
 
 }
