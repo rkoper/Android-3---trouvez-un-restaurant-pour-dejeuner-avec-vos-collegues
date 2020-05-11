@@ -5,52 +5,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fui_transparent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/MychoicePhoto"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-    <TextView
-        android:id="@+id/MychoiceName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MychoiceName"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-      app:layout_constraintTop_toBottomOf="@id/MychoicePhoto" />
+        <ImageView
+            android:id="@+id/MychoicePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/fui_transparent"
+            android:foregroundGravity="center"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="24dp"
+            tools:layout_editor_absoluteY="24dp" />
+    </LinearLayout>
 
-    <TextView
-        app:layout_constraintTop_toBottomOf="@id/MychoiceName"
-        android:id="@+id/MychoiceAdress"
-        android:layout_width="match_parent"
-        android:layout_height="97dp"
-        android:text="MychoiceAdress"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="14sp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="317dp" />
+    <LinearLayout
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:layout_marginTop="332dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
+        <TextView
+            android:id="@+id/MychoiceName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="bottom|center"
+            android:text="MychoiceName"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/drawer_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/colorWhite"
-        app:itemIconSize="30sp"
-        app:itemIconTint="@drawable/tab_color"
-        app:itemTextAppearanceActive="@style/TextStyleActive"
-        app:itemTextAppearanceInactive="@style/TextStyleInactive"
-        app:itemTextColor="@drawable/tab_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/nav_bottom_for_drawer"
-        tools:ignore="MissingConstraints"
+        <TextView
+            android:id="@+id/MychoiceAdress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="35sp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="MychoiceAdress"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="0dp" />
 
-        />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,7 @@ import static android.view.View.GONE;
  * created by Sofiane M. 23/04/2020
  */
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends DialogFragment {
 
     public SettingsFragment() {
         // Empty constructor required for DialogFragment
@@ -73,8 +73,8 @@ public class SettingsFragment extends Fragment {
         uploadToolbar(view);
         ButterKnife.bind(this, view);
         initSwitch();
-        initButton();
-        uploadBototmBr(view);
+    //    initButton();
+     //   uploadBototmBr(view);
         return view;
     }
 

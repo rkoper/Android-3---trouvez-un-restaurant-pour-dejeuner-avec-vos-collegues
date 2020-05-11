@@ -133,9 +133,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtname = (TextView) itemView.findViewById(R.id.place_name);
-            txtadress = (TextView) itemView.findViewById(R.id.place_address);
-            urlphoto = (ImageView) itemView.findViewById(R.id.place_photo);
+            txtname = (TextView) itemView.findViewById(R.id.place_namefav);
+            txtadress = (TextView) itemView.findViewById(R.id.place_addressfav);
+            urlphoto = (ImageView) itemView.findViewById(R.id.place_photofav);
             mButtonFav = (ImageButton) itemView.findViewById(R.id.imageButtonFav);
 
         }

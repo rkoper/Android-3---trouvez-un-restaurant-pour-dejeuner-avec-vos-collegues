@@ -117,8 +117,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         mBottomNavigationView.setVisibility(mBottomNavigationView.VISIBLE);
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
-
-
     }
 
     @Override
@@ -162,6 +160,9 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
                 else{
                     mRecyclerView.setVisibility(View.GONE);
+                    Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
+                    mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
+                    initRestaurantPosition();
                 }
                 return false;
             }

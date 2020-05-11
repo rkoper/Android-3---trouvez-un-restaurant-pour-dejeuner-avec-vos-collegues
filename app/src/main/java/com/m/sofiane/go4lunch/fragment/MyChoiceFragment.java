@@ -4,21 +4,25 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,45 +38,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.firebase.ui.auth.AuthUI.TAG;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
  * created by Sofiane M. 25/04/2020
  */
-public class MyChoiceFragment extends Fragment  {
+public class MyChoiceFragment extends DialogFragment {
+
+    public MyChoiceFragment() {
+        // Empty constructor required for DialogFragment
+    }
     final Fragment mapFragment = new MapFragment();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
         readFireStore(view);
-        uploadToolbar();
-        uploadBototmBr(view) ;
+    //    uploadToolbar();
+     //   uploadBototmBr(view) ;
+
+        Window window = getDialog().getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+
         return view;
-    }
-
-    private void uploadToolbar() {
-        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        mTitleText.setText(" My Choice");
-    }
-
-    private void uploadBototmBr(View view) {
-        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
-        mBottomNavigationView.setVisibility(mBottomNavigationView.GONE);
-        BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
-        mBmNaViewForDrawer.setVisibility(view.VISIBLE);
-
-        mBmNaViewForDrawer.setOnNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.home) {
-                mBmNaViewForDrawer.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#ff4444")));
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, mapFragment)
-                        .addToBackStack(null)
-                        .commit();
-                System.out.println("BACK = " + "To the future");
-            } return true;
-        });
     }
 
     private void readFireStore(View view) {
@@ -96,8 +84,15 @@ public class MyChoiceFragment extends Fragment  {
 
 
                     if (getContext() != null){
-                        Glide.with(getContext()).load(mPhotoResto).into(imageView);
-                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                        Glide
+                                .with(getContext())
+                                .load(mPhotoResto)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(imageView);
+
+
+
+
                     } else {
                         Log.d("TAG", "No such document");
                     }

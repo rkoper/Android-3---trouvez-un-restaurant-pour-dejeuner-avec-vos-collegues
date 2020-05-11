@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="99dp"
-        android:background="@color/colorGray"
+        android:background="@color/Red"
         android:orientation="vertical"
         tools:visibility="visible" />
 

@@ -78,20 +78,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.activity_main_drawer_isOpen)
     NavigationView mNavigationView;
     @BindView(R.id.constraitForCont)
-            View mdeco;
-   // @BindView(R.id.LLTop)
-   //  View mdecoTop;
-   //@BindView(R.id.LLbottom)
-    // View mdecoBottom;
-
-    RecyclerView recyclerView;
+    View mdeco;
 
     final Fragment mapFragment = new MapFragment();
     final Fragment listFragment = new ListFragment();
     final Fragment workFragment = new WorkFragment();
     final Fragment mFavFrag = new FavoriteFragment();
-    final Fragment mSettingsFrag = new SettingsFragment();
-    final Fragment mChoiceFrag = new MyChoiceFragment();
 
     Location gps_loc;
     Location network_loc;
@@ -144,11 +136,10 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void InitDrawerLayout() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, navigation_drawer_close);
-        System.out.println("Drawer = " + drawer);
-        drawer.addDrawerListener(toggle);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        mDrawerLayout.onCheckIsTextEditor();
         toggle.syncState();
         for (int i = 0; i < mToolbar.getChildCount(); i++) {
             if (mToolbar.getChildAt(i) instanceof ImageButton) {
@@ -163,6 +154,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         initMyChoiceDrawer();
     }
 
+
     public void InitBottomNav(boolean isHidden) {
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
         mBottomNavigationView.setVisibility(isHidden ? View.GONE : View.VISIBLE);
@@ -170,7 +162,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     public void InitToolBar(boolean isHidden) {
 
-        mToolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -232,8 +223,8 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     private void initSettingsDrawer() {
         mNavigationView.getMenu().findItem(R.id.drawer_settings).setOnMenuItemClickListener(menuItem -> {
-            fm.beginTransaction().replace(R.id.fragment_container, mSettingsFrag).show(mSettingsFrag).commit();
-            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
+            SettingsFragment editNameDialog = new SettingsFragment();
+            editNameDialog.show(fm, "fragment_settings");
             mDrawerLayout.closeDrawers();
             return false;
         });
@@ -241,11 +232,10 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     private void initMyChoiceDrawer() {
         mNavigationView.getMenu().findItem(R.id.drawer_lunch).setOnMenuItemClickListener(menuItem -> {
-            Log.e("TEST---------", "CHOICE");
-            fm.beginTransaction().replace(R.id.fragment_container, mChoiceFrag).commit();
-            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
+            MyChoiceFragment editNameDialog = new MyChoiceFragment();
+            editNameDialog.show(fm, "fragment_settings");
             mDrawerLayout.closeDrawers();
-            return false;
+            return true;
         });
     }
 
@@ -253,7 +243,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
             Log.e("TEST---------", "SETTINGS");
             fm.beginTransaction().replace(R.id.fragment_container, mFavFrag).commit();
-            mdeco.setBackgroundResource(R.drawable.gradienfullnull);
             mDrawerLayout.closeDrawers();
             return true;
         });
@@ -295,8 +284,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void build_retrofit_and_get_response(double latitude, double longitude, String type) {
-
-        // ATTENTION
         String url = "https://maps.googleapis.com/maps/";
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

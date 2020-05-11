@@ -98,12 +98,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/holo_red_light"
-        android:fitsSystemWindows="true"
         app:headerLayout="@layout/activity_main_nav_header"
-        app:itemIconTint="@color/tw__solid_white"
-        app:itemTextColor="@color/tw__solid_white"
+        app:itemIconTint="@color/colorWhite"
+        app:itemShapeFillColor="@color/drawercolor"
+        app:itemTextColor="@color/colorWhite"
+        app:itemTextAppearance="@color/drawercolor"
         android:foregroundGravity="top"
+        android:clickable="true"
         app:menu="@menu/activity_main_menu_drawer"
+        app:theme="@style/TextAppearance"
         >
 
     </com.google.android.material.navigation.NavigationView>

@@ -76,7 +76,7 @@ public class WorkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_work, null);
-        uploadToolbar();
+        uploadToolbar(view);
         this.configureRecyclerView(view);
         readDataFromFirebase();
         return view;
@@ -115,9 +115,10 @@ public class WorkFragment extends Fragment {
                 });
     }
 
-    private void uploadToolbar() {
+    private void uploadToolbar(View view) {
         TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText("Availables workmates");
+
     }
 
 }
