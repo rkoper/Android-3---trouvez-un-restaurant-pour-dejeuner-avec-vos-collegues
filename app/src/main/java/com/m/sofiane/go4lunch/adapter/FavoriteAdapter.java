@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,7 +80,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             notifyItemRemoved(i);
             notifyItemRangeChanged(i,listData.size());
             Toast.makeText((v.getContext()),"Removed : " + itemLabel,Toast.LENGTH_SHORT).show();
-
             String t = ld.getName();
             Log.e( t,t);
 
@@ -136,7 +136,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             txtname = (TextView) itemView.findViewById(R.id.place_namefav);
             txtadress = (TextView) itemView.findViewById(R.id.place_addressfav);
             urlphoto = (ImageView) itemView.findViewById(R.id.place_photofav);
-            mButtonFav = (ImageButton) itemView.findViewById(R.id.imageButtonFav);
+            mButtonFav = (ImageButton) itemView.findViewById(R.id.imageButton);
 
         }
     }

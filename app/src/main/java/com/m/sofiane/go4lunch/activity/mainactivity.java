@@ -92,7 +92,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     double latitude;
 
     final FragmentManager fm = getSupportFragmentManager();
-    //  Fragment active = mapFragment;
+     Fragment active = mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +201,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
                     .commit();
             return true;
         }

@@ -156,8 +156,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                     System.out.println("1-------->");
                     build_retrofit_and_get_responseForSearch(view, item);}
 
-
-
                 else{
                     mRecyclerView.setVisibility(View.GONE);
                     Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
@@ -308,7 +306,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
 
-            mMap.getUiSettings().setZoomControlsEnabled(true);
+        //    mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().isTiltGesturesEnabled();
             mMap.setMyLocationEnabled(true);
             mMap.setMinZoomPreference(5.0f);

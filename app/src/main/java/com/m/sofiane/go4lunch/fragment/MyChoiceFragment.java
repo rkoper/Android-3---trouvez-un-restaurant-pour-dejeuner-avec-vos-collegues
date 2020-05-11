@@ -45,17 +45,13 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class MyChoiceFragment extends DialogFragment {
 
-    public MyChoiceFragment() {
-        // Empty constructor required for DialogFragment
-    }
-    final Fragment mapFragment = new MapFragment();
+    public MyChoiceFragment() { }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
         readFireStore(view);
-    //    uploadToolbar();
-     //   uploadBototmBr(view) ;
 
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(android.R.color.transparent);
@@ -89,10 +85,6 @@ public class MyChoiceFragment extends DialogFragment {
                                 .load(mPhotoResto)
                                 .apply(RequestOptions.circleCropTransform())
                                 .into(imageView);
-
-
-
-
                     } else {
                         Log.d("TAG", "No such document");
                     }
