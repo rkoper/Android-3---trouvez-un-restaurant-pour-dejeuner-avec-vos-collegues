@@ -52,9 +52,9 @@ public class FavoriteFragment extends Fragment {
 
     private void uploadBototmBr(View view) {
         BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
-        mBottomNavigationView.setVisibility(mBottomNavigationView.GONE);
+        mBottomNavigationView.setVisibility(View.GONE);
         BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
-        mBmNaViewForDrawer.setVisibility(view.VISIBLE);
+        mBmNaViewForDrawer.setVisibility(View.VISIBLE);
         mBmNaViewForDrawer.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.home) {
@@ -71,7 +71,7 @@ public class FavoriteFragment extends Fragment {
 
 
     private void uploadToolbar() {
-        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" My Favorites");
 
     }

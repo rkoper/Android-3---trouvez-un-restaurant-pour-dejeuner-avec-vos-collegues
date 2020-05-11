@@ -106,7 +106,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         this.listdataForSearch = new ArrayList<>();
         this.mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
         mRecyclerView = view.findViewById(R.id.recyclerview_for_maps);
-        mRecyclerView.setVisibility(view.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
@@ -114,14 +114,14 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     private void uploadToolbar() {
         BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
-        mBottomNavigationView.setVisibility(mBottomNavigationView.VISIBLE);
-        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        mBottomNavigationView.setVisibility(View.VISIBLE);
+        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
+        Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
 
         inflater.inflate(R.menu.activity_main_menu, menu);
 
@@ -158,7 +158,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
                 else{
                     mRecyclerView.setVisibility(View.GONE);
-                    Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
+                    Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
                     initRestaurantPosition();
                 }
@@ -170,7 +170,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     private void setSearchTextColour(SearchView searchView) {
         searchView.setMaxWidth(Integer.MAX_VALUE);
         int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = (EditText) searchView.findViewById(searchPlateId);
+        EditText searchPlate = searchView.findViewById(searchPlateId);
         searchPlate.setTextColor(getResources().getColor(R.color.Red));
         searchPlate.setBackgroundResource(R.color.tw__solid_white);
     }
@@ -219,7 +219,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                         compareToUpdateMarkers(placeIdToCompare);
 
 
-                        mRecyclerView.setVisibility(view.VISIBLE);
+                        mRecyclerView.setVisibility(View.VISIBLE);
                     }
                     Log.e("LIST ID----->", listdataForSearch.toString());
 

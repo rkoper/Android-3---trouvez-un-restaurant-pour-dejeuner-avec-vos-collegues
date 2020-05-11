@@ -76,8 +76,8 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtname = (TextView) itemView.findViewById(R.id.place_name_for_maps);
-            mButton = (Button) itemView.findViewById(R.id.button_click_map_search);
+            txtname = itemView.findViewById(R.id.place_name_for_maps);
+            mButton = itemView.findViewById(R.id.button_click_map_search);
 
         }
     }

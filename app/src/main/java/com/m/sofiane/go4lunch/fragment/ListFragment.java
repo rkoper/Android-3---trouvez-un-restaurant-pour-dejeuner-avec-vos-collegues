@@ -39,7 +39,7 @@ public class ListFragment extends Fragment  {
 
     private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
-    private ListAdapter mAdapter;;
+    private ListAdapter mAdapter;
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
     ArrayList<String> mTest;
@@ -66,13 +66,13 @@ public class ListFragment extends Fragment  {
 
 
     private void uploadToolbar() {
-        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
 
     }
 
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
+        Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
 
         inflater.inflate(R.menu.activity_main_menu, menu);
 
@@ -98,7 +98,7 @@ public class ListFragment extends Fragment  {
                     mAdapter.getFilter().filter(newText);
 
                 } else {
-                    Toolbar mToolbar = (Toolbar) getActivity().findViewById(R.id.activity_main_toolbar);
+                    Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
                     initRecyclerView();
                 }
@@ -111,7 +111,7 @@ public class ListFragment extends Fragment  {
     private void setSearchTextColour(SearchView searchView) {
         searchView.setMaxWidth(Integer.MAX_VALUE);
         int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = (EditText) searchView.findViewById(searchPlateId);
+        EditText searchPlate = searchView.findViewById(searchPlateId);
         searchPlate.setTextColor(getResources().getColor(R.color.Red));
         searchPlate.setBackgroundResource(R.color.tw__solid_white);
     }

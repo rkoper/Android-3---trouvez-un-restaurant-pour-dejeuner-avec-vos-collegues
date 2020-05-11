@@ -119,9 +119,9 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtname = (TextView) itemView.findViewById(R.id.sub_name_profilgo);
-            urlphoto = (ImageView) itemView.findViewById(R.id.sub_photo_profilgo);
-            mButton = (Button) itemView.findViewById(R.id.buttonClick);
+            txtname = itemView.findViewById(R.id.sub_name_profilgo);
+            urlphoto = itemView.findViewById(R.id.sub_photo_profilgo);
+            mButton = itemView.findViewById(R.id.buttonClick);
 
         }
     }

@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.OAuthProvider;
 import com.m.sofiane.go4lunch.R;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.util.Arrays;
 import java.util.List;

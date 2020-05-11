@@ -5,19 +5,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -25,30 +19,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.work.WorkManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.notificationService;
 
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.view.View.GONE;
 
 /**
  * created by Sofiane M. 23/04/2020
@@ -76,6 +60,11 @@ public class SettingsFragment extends DialogFragment {
     LinearLayout mLayoutCLose;
     @BindView(R.id.button_image_close_settings)
     ImageButton mCloseButton;
+    @BindView(R.id.layoutTitle)
+    LinearLayout mLayoutTitle;
+    @BindView(R.id.txt_title_settings)
+    TextView mTitleTxt;
+
 
 
     final Fragment mapFragment = new MapFragment();

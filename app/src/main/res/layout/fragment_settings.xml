@@ -9,31 +9,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/layoutclose"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <ImageButton
-            android:id="@+id/button_image_close_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/fui_transparent"
-            app:srcCompat="@drawable/ic_cancel_white" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/layoutswitch"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -58,10 +33,40 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layouttimepicker"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="120dp"
+        android:id="@+id/layoutTitle"
+        android:layout_width="147dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:visibility="visible"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/txt_title_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:background="@color/fui_transparent"
+            android:gravity="left"
+            android:text="Notification"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_cancel_white" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutclose"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/dialog_rounded_bg"
         android:minWidth="350dp"
         android:orientation="vertical"
@@ -72,14 +77,41 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/texttime"
-            android:textColor="@color/colorWhite"
+        <ImageButton
+            android:id="@+id/button_image_close_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_cancel_white" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/layouttimepicker"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/texttime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="60dp"
-            android:text="Choose time to notification :" />
+            android:paddingLeft="30dp"
+            android:text="Choose time to notification :"
+            android:textColor="@color/colorWhite" />
 
         <TimePicker
             android:id="@+id/settings_time_picker"
@@ -88,9 +120,11 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:ems="10"
-            android:textColor="@color/colorWhite"
             android:gravity="center"
             android:inputType="time"
+            android:numbersSelectorColor="@color/colorWhite"
+            android:outlineSpotShadowColor="@color/colorWhite"
+            android:textColor="@color/colorWhite"
             android:timePickerMode="spinner"
 
             />

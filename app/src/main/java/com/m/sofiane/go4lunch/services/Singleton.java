@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public final class Singleton {
             private static Singleton uniqInstance;
-            public ArrayList<Result> results = new ArrayList<Result>();;
-            public double mLatitude;
+            public ArrayList<Result> results = new ArrayList<Result>();
+    public double mLatitude;
             public double mLongitude;
             public Singleton() {
             }

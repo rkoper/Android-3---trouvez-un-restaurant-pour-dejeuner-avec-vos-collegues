@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,16 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.R;
+import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
-import com.m.sofiane.go4lunch.utils.myuserhelper;
 
 import java.util.List;
 
@@ -130,10 +123,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtname = (TextView) itemView.findViewById(R.id.place_namefav);
-            txtadress = (TextView) itemView.findViewById(R.id.place_addressfav);
-            urlphoto = (ImageView) itemView.findViewById(R.id.place_photofav);
-            mButtonFav = (ImageButton) itemView.findViewById(R.id.imageButton);
+            txtname = itemView.findViewById(R.id.place_namefav);
+            txtadress = itemView.findViewById(R.id.place_addressfav);
+            urlphoto = itemView.findViewById(R.id.place_photofav);
+            mButtonFav = itemView.findViewById(R.id.imageButton);
 
         }
     }

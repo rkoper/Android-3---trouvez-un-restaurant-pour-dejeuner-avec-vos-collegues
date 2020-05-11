@@ -104,8 +104,8 @@ public class WorkFragment extends Fragment {
                             listData.add(l);
 
                             Collections.sort(listData, (rhs,lhs) -> {
-                                int a = Integer.parseInt(rhs.getId().toString());
-                                int b = Integer.parseInt(lhs.getId().toString());
+                                int a = Integer.parseInt(rhs.getId());
+                                int b = Integer.parseInt(lhs.getId());
                                 return Integer.compare(a,b);
                             });
                         }
@@ -116,7 +116,7 @@ public class WorkFragment extends Fragment {
     }
 
     private void uploadToolbar(View view) {
-        TextView mTitleText = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText("Availables workmates");
 
     }

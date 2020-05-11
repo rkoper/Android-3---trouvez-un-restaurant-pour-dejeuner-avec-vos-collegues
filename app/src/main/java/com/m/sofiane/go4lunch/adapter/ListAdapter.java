@@ -49,7 +49,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public static final String MAX_WIDTH = "&maxheight=10000";
     public static final String MAX_HEIGHT = "&maxheight=10000";
     public static final String URLPHOTO = "https://maps.googleapis.com/maps/api/place/photo?";
-    public static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";;
+    public static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";
     public static final String KEY = "&key=";
     public static final String PHOTOREF = "&photoreference=" ;
     String API_KEY = BuildConfig.APIKEY;

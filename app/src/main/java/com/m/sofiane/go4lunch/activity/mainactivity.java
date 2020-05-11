@@ -2,13 +2,11 @@ package com.m.sofiane.go4lunch.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,16 +25,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.fragment.FavoriteFragment;
 import com.m.sofiane.go4lunch.fragment.ListFragment;
@@ -85,14 +80,11 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     final Fragment workFragment = new WorkFragment();
     final Fragment mFavFrag = new FavoriteFragment();
 
-    Location gps_loc;
-    Location network_loc;
-    Location final_loc;
-    double longitude;
-    double latitude;
+    Location gps_loc, network_loc, final_loc;
+    double longitude,latitude;
+    HeaderViewHolder mHeaderViewHolder;
 
     final FragmentManager fm = getSupportFragmentManager();
-     Fragment active = mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +98,19 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         InitBottomNav(false);
         InitDrawerLayout();
         createFireStoreUser();
+    }
+
+    protected static class HeaderViewHolder {
+        @BindView(R.id.profiltextnameBis)
+        TextView navUsername;
+        @BindView(R.id.profiltextmailBis)
+        TextView navUserMail;
+        @BindView(R.id.profilimage)
+        ImageView navProfilPic;
+
+        HeaderViewHolder(View headerView) {
+            ButterKnife.bind(this, headerView);
+        }
     }
 
     private void loadOpenFragement() {
@@ -161,7 +166,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void InitToolBar(boolean isHidden) {
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -209,15 +213,14 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
 
     public void loadUserProfil() {
-        View headerView = mNavigationView.getHeaderView(0);
-
-        TextView navUsername = headerView.findViewById(R.id.profiltextnameBis);
-        TextView navUserMail = (TextView) headerView.findViewById(R.id.profiltextmailBis);
-        ImageView navProfilPic = (ImageView) headerView.findViewById(R.id.profilimage);
-
-        navUsername.setText(myuserhelper.getProfilName());
-        navUserMail.setText(myuserhelper.getProfilEmail());
-        Glide.with(this).load((myuserhelper.getProfilPhoto())).apply(RequestOptions.circleCropTransform()).into(navProfilPic);
+        View header = mNavigationView.getHeaderView(0);
+        mHeaderViewHolder = new HeaderViewHolder(header);
+        mHeaderViewHolder.navUsername.setText(myuserhelper.getProfilName());
+        mHeaderViewHolder.navUserMail.setText(myuserhelper.getProfilEmail());
+        Glide.with(this)
+                .load((myuserhelper.getProfilPhoto()))
+                .apply(RequestOptions.circleCropTransform())
+                .into(mHeaderViewHolder.navProfilPic);
     }
 
     private void initSettingsDrawer() {
@@ -240,7 +243,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     private void initFavDrawer() {
         mNavigationView.getMenu().findItem(R.id.drawer_fav).setOnMenuItemClickListener(menuItem -> {
-            Log.e("TEST---------", "SETTINGS");
             fm.beginTransaction().replace(R.id.fragment_container, mFavFrag).commit();
             mDrawerLayout.closeDrawers();
             return true;
@@ -249,7 +251,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     private void initLogout() {
         mNavigationView.getMenu().findItem(R.id.drawer_logout).setOnMenuItemClickListener(menuItem -> {
-
             AuthUI.getInstance()
                     .signOut(mainactivity.this)
                     .addOnCompleteListener(task -> {
@@ -296,7 +297,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
         googleInterface service = retrofit.create(googleInterface.class);
 
-        Call<Result> call = service.getNearbyPlaces((latitude+","+longitude), 50, type);
+        Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 50, type);
 
         call.enqueue(new Callback<Result>() {
             @SuppressLint({"RestrictedApi", "LongLogTag"})
@@ -304,16 +305,12 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             public void onResponse(Call<Result> call, Response<Result> response) {
                 ArrayList<Result> mArrayList = new ArrayList<>();
                 mArrayList = response.body().getList();
-
-
                 Singleton.getInstance().setArrayList(mArrayList);
-
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-            } });
+            }
+        });
     }
-
-
 }
