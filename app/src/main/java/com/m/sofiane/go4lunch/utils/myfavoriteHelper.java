@@ -28,6 +28,7 @@ public class myfavoriteHelper {
         return myfavoriteHelper.getMyFavoriteCollection().get();}
 
 
+
     // --- DELETE ---
     public static Task<QuerySnapshot> deleteMyFav(String t){
         return myfavoriteHelper.getMyFavoriteCollection().whereEqualTo("Name", t).get();}

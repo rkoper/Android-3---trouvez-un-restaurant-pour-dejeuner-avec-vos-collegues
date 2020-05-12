@@ -27,12 +27,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.SubAdapter;
+import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
@@ -284,31 +286,40 @@ public class subactivity extends AppCompatActivity{
         readDataFromFirebase(mDisplayNameOfResto);
 
         searchFavList(mDisplayNameOfResto);
+        searchChoiceList(mDisplayNameOfResto);
     }
+
+    private void searchChoiceList(String mDisplayNameOfResto) {
+        mychoiceHelper.readMyChoice()
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists())
+                    if (document.toObject(MyChoice.class).getNameOfResto().equals(mDisplayNameOfResto)) {
+                        mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_orange_24dp));
+                    } else {
+                        mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_green_24dp));
+                    }
+                clickOnRestaurant();
+            }
+        });
+    }
+
     private void searchFavList(String mDisplayNameOfResto) {
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        FirebaseFirestore
-                .getInstance()
-                .collection("MyFavorite")
-                .document(mProfilName)
-                .collection("MyFavoriteList")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<String> list = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                list.add(document.getId());
-                            }
-
-                            if (list.contains(mDisplayNameOfResto))
-                            { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));}
-                            LikeRestaurantCalling(mDisplayNameOfResto, list);
-
-                        } else {
-
+        myfavoriteHelper.getMyFav()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            list.add(document.getId());
                         }
+
+                        if (list.contains(mDisplayNameOfResto))
+                        { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));}
+                        LikeRestaurantCalling(mDisplayNameOfResto, list);
+
+                    } else {
+
                     }
                 });
     }
@@ -316,16 +327,14 @@ public class subactivity extends AppCompatActivity{
     private void LikeRestaurantCalling(String mDisplayNameOfResto,List<String> list ) {
         mLike.setOnClickListener(v -> {
             if (list.contains(mDisplayNameOfResto))
-            {
-                myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> {
+            { myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 });
 
-                mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
-            }
-            else
-                {
-                    mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
+            mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
+                finish();
+                startActivity(getIntent()); }
+            else { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
 
                     Map<String, Object> mDataMap = new HashMap<>();
                     mDataMap.put("Name", mDisplayNameOfResto);
@@ -334,14 +343,16 @@ public class subactivity extends AppCompatActivity{
                     mDataMap.put("FireStoreID", getTaskId());
 
                     myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
+                    finish();
+                    startActivity(getIntent());
                 }
         });
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void clickOnRestaurant() {
         mActionButton.setOnClickListener(v1 -> {
+            mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_orange_24dp));
+
             String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
             String mProfilPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
 
