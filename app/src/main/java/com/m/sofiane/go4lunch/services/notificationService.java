@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.models.MyChoice;
+import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 /**
@@ -34,15 +35,32 @@ public class notificationService extends BroadcastReceiver {
         readDataFromFirebase(intent);
     }
 
+    public void readDataFromFirebase(Intent intent){
+        mychoiceHelper.readMyChoice().get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    NameOfResto l = document.toObject(NameOfResto.class);
+
+                    if (l.getId().equals("2"))
+                    {mNameForNotif = "No restaurant chosen for today";}
+                    else {mNameForNotif = "You are expected" + " @ " + l.getNameOfResto();}
+
+                    createNotification(intent, mNameForNotif) ;
+                }
+
+                else {mNameForNotif = "No restaurant chosen for today"; }
+            }});
+
+    }
 
     private final void createNotification(Intent intent, String mNameForNotif) {
         Intent intent1 = new Intent(mContext, mainactivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent1, PendingIntent.FLAG_ONE_SHOT);
 
-
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.setBigContentTitle("Go 4 Lunch");
-        inboxStyle.addLine("You are expected" + " @ " + mNameForNotif);
+        inboxStyle.addLine(mNameForNotif);
 
         String channelId = "MyID";
 
@@ -71,23 +89,9 @@ public class notificationService extends BroadcastReceiver {
     }
 
 
-    public void readDataFromFirebase(Intent intent){
-        mychoiceHelper.readMyChoice().get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    MyChoice l = document.toObject(MyChoice.class);
-
-                    mNameForNotif = l.getNameOfResto();
-
-                    createNotification(intent, mNameForNotif) ;
-                }}});
-
-    }
 
     private void deleteFirebaseitem() {
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        mychoiceHelper.deleteMyChoice(mProfilName);
+        mychoiceHelper.initMyChoice();
 
     }
 
