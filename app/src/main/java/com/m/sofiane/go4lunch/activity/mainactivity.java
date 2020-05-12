@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +48,7 @@ import com.m.sofiane.go4lunch.utils.myuserhelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,18 +125,18 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
             return; }
         try {
-            gps_loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            gps_loc = Objects.requireNonNull(locationManager).getLastKnownLocation(LocationManager.GPS_PROVIDER);
             network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (Exception e) { e.printStackTrace(); }
 
         if (gps_loc != null || network_loc != null) {
-            final_loc = gps_loc; latitude = final_loc.getLatitude(); longitude = final_loc.getLongitude(); }
+            final_loc = gps_loc; latitude = Objects.requireNonNull(final_loc).getLatitude(); longitude = final_loc.getLongitude(); }
         else { latitude = 0.0; longitude = 0.0; }
 
         Singleton.getInstance().setLatitude(latitude);
         Singleton.getInstance().setLongitude(longitude);
 
-        build_retrofit_and_get_response(latitude, longitude, "restaurant");
+        build_retrofit_and_get_response(latitude, longitude);
 
     }
 
@@ -167,7 +167,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     public void InitToolBar(boolean isHidden) {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -200,15 +200,13 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         return true;
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-            return true;
         }
-        return false;
     }
 
 
@@ -274,7 +272,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (Objects.requireNonNull(document).exists()) {
                 } else {
                     mychoiceHelper.initMyChoice();
                     myfavoriteHelper.getMyFavoriteCollection();
@@ -283,7 +281,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
-    private void build_retrofit_and_get_response(double latitude, double longitude, String type) {
+    private void build_retrofit_and_get_response(double latitude, double longitude) {
         String url = "https://maps.googleapis.com/maps/";
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -297,14 +295,14 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
         googleInterface service = retrofit.create(googleInterface.class);
 
-        Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 50, type);
+        Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 50, "restaurant");
 
         call.enqueue(new Callback<Result>() {
             @SuppressLint({"RestrictedApi", "LongLogTag"})
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                ArrayList<Result> mArrayList = new ArrayList<>();
-                mArrayList = response.body().getList();
+                ArrayList<Result> mArrayList;
+                mArrayList = Objects.requireNonNull(response.body()).getList();
                 Singleton.getInstance().setArrayList(mArrayList);
             }
 

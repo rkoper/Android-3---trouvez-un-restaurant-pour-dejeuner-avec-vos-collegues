@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.google.android.gms.maps.model.LatLng;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.BuildConfig;
-import com.m.sofiane.go4lunch.models.MyChoice;
-import com.m.sofiane.go4lunch.models.pojoMaps.OpeningHours;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
@@ -34,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,15 +49,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";
     public static final String KEY = "&key=";
     public static final String PHOTOREF = "&photoreference=" ;
-    String API_KEY = BuildConfig.APIKEY;
+    final String API_KEY = BuildConfig.APIKEY;
     Double mLatitude,mLongitude;
     Location mCurrentLocation;
     Boolean mOpen;
     String mPlaceId,mDistance,mNameOfRestaurant,mAdress,UrlPhoto,refPhoto,mLoadAdress;
     List<Result> mData,mDataList;
-    Context mContext;
-    ArrayList<String> mTest;
-    FragmentManager fragmentManager;
+    final Context mContext;
+    final ArrayList<String> mTest;
+    final FragmentManager fragmentManager;
     CharSequence mKeyName = "";
     Location location;
 
@@ -120,7 +117,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
 
         else
             {
-                h.R_place_people_count.setText("("+countMap.get(mNameOfRestaurant).toString()+")");
+                h.R_place_people_count.setText("("+ Objects.requireNonNull(countMap.get(mNameOfRestaurant)).toString()+")");
             }
 
 
@@ -164,7 +161,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private void distanceCalling(ViewHolder h, int i) {
         mLatitude = mData.get(i).getGeometry().getLocation().getLat();
         mLongitude = mData.get(i).getGeometry().getLocation().getLng();
-        if (mLatitude == null || mLatitude == null)
+        if (mLatitude == null || mLongitude == null)
 
         {mDistance = "";}
         else {
@@ -173,8 +170,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             locationA.setLatitude(mLatitude);
             locationA.setLongitude(mLongitude);
 
-            Double mLat = Singleton.getInstance().getmLatitude();
-            Double mLng = Singleton.getInstance().getmLongitude();
+            double mLat = Singleton.getInstance().getmLatitude();
+            double mLng = Singleton.getInstance().getmLongitude();
 
 
             Location locationB = new Location("B");

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
@@ -33,10 +30,10 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     public mainactivity activity;
-    ArrayList<NameOfResto> listDataName;
-    ArrayList listDataPhoto;
-    Context mContext;
-    FragmentManager mFragmentManager;
+    final ArrayList<NameOfResto> listDataName;
+    final ArrayList listDataPhoto;
+    final Context mContext;
+    final FragmentManager mFragmentManager;
 
     public SubAdapter(ArrayList<NameOfResto> listDataName, ArrayList listDataPhoto, FragmentManager mFragmentManager, Context mContext) {
         this.listDataName = listDataName;
@@ -51,7 +48,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyclerview_sub, parent, false);
 
-        return new SubAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @SuppressLint("RestrictedApi")
@@ -73,7 +70,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         return listDataName.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.sub_name_profilgo)
         TextView txtname;
         @BindView(R.id.sub_photo_profilgo)

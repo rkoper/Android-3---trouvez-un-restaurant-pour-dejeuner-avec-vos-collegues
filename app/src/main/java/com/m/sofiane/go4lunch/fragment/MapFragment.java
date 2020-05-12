@@ -2,7 +2,6 @@ package com.m.sofiane.go4lunch.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -52,9 +51,8 @@ import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,9 +67,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapFragment extends Fragment implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener  {
 
-    private SupportMapFragment mMFragment;
     private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     Marker mRestoMarker;
     LatLng mLatLng;
@@ -113,7 +109,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     private void uploadToolbar() {
-        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView mBottomNavigationView = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_bottom_navigation);
         mBottomNavigationView.setVisibility(View.VISIBLE);
         TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
@@ -121,7 +117,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
+        Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
 
         inflater.inflate(R.menu.activity_main_menu, menu);
 
@@ -158,7 +154,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
                 else{
                     mRecyclerView.setVisibility(View.GONE);
-                    Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
+                    Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
                     initRestaurantPosition();
                 }
@@ -183,7 +179,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     private void build_retrofit_and_get_responseForSearch (View view, String input) {
 
             Double mLat = Singleton.getInstance().getmLatitude();
-            Double mLng = Singleton.getInstance().getmLongitude();
+            double mLng = Singleton.getInstance().getmLongitude();
 
             String url = "https://maps.googleapis.com/maps/";
 
@@ -206,7 +202,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 @Override
                 public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
                         listdataForSearch = new ArrayList<>();
-                    for (int i = 0; i < place.body().getPredictions().size(); i++) {
+                    for (int i = 0; i < Objects.requireNonNull(place.body()).getPredictions().size(); i++) {
                       //  String mS = place.body().getPredictions().get(i).getDescription();
                         listdataForSearch.add(place.body().getPredictions().get(i));
 
@@ -259,33 +255,31 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
 
     private void loadMap () {
-            mMFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.containermap);
+        SupportMapFragment mMFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.containermap);
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkPermissions();
                 FragmentManager mFragmentManager = getFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                FragmentTransaction mFragmentTransaction = Objects.requireNonNull(mFragmentManager).beginTransaction();
                 mMFragment = SupportMapFragment.newInstance();
                 mFragmentTransaction.replace(R.id.containermap, mMFragment).commit();
             }
-            mMFragment.getMapAsync(this);
+            Objects.requireNonNull(mMFragment).getMapAsync(this);
             CheckGooglePlayServices();
         }
 
-    public boolean checkPermissions() {
-        if (ContextCompat.checkSelfPermission(getActivity(),
+    public void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
-            return false;
         } else {
-            return true;
         }
     }
 
-    private boolean CheckGooglePlayServices() {
+    private void CheckGooglePlayServices() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(getContext());
         if (result != ConnectionResult.SUCCESS) {
@@ -293,9 +287,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 googleAPI.getErrorDialog(getActivity(), result,
                         0).show();
             }
-            return false;
         }
-        return true;
     }
 
 
@@ -303,7 +295,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
 
         //    mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -336,8 +328,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     private void initMyPosition() {
-        Double mLat = Singleton.getInstance().getmLatitude();
-        Double mLng = Singleton.getInstance().getmLongitude();
+        double mLat = Singleton.getInstance().getmLatitude();
+        double mLng = Singleton.getInstance().getmLongitude();
 
         Log.e("LOC in Map---------", mLat + "/" + mLng);
 
@@ -346,7 +338,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(Objects.requireNonNull(getContext()))
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -375,7 +367,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             Intent intent = new Intent(getContext(), subactivity.class);
             String mId = marker.getSnippet();
             intent.putExtra("I", mId);
-            getContext().startActivity(intent);
+            Objects.requireNonNull(getContext()).startActivity(intent);
             return false;
         });
     }

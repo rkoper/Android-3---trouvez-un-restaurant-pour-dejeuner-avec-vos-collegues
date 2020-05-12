@@ -9,8 +9,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class myuserhelper {
     public static CollectionReference getMyUserCollection(){
@@ -20,8 +19,8 @@ public class myuserhelper {
     // --- CREATE ---
 
     public static DocumentReference createMyUser() {
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        return myuserhelper.getMyUserCollection().document(mProfilName);
+        String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+        return myuserhelper.getMyUserCollection().document(Objects.requireNonNull(mProfilName));
     }
 
     // --- READ ---
@@ -35,18 +34,15 @@ public class myuserhelper {
         return myuserhelper.getMyUserCollection().whereEqualTo("Name", t).get();}
 
         public static String getProfilName() {
-            String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            return mProfilName;
+            return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
     public static String getProfilPhoto() {
-        Uri mProfilImage = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        String mProfilPhoto = mProfilImage.toString();
-        return mProfilPhoto;
+        Uri mProfilImage = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhotoUrl();
+        return mProfilImage.toString();
     }
 
     public static String getProfilEmail() {
-        String mProfilEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        return mProfilEmail;
+        return FirebaseAuth.getInstance().getCurrentUser().getEmail();
     }
 }

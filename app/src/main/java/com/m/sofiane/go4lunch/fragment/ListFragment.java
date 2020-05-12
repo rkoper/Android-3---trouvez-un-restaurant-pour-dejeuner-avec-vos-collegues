@@ -28,9 +28,9 @@ import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +39,6 @@ import butterknife.ButterKnife;
 public class ListFragment extends Fragment  {
 
 
-    private ArrayList<Result> mData;
     private ListAdapter mAdapter;
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
@@ -48,16 +47,14 @@ public class ListFragment extends Fragment  {
     @BindView(R.id.List_recyclerView)
     RecyclerView mRecyclerView;
 
-    String mKeyName = "1";
+    final String mKeyName = "1";
     private FrameLayout frameLayout;
-
-    private boolean isBackFromB;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, null);
-        isBackFromB=false;
+        boolean isBackFromB = false;
         setHasOptionsMenu(true);
         uploadToolbar();
         ButterKnife.bind(this, view);
@@ -72,13 +69,13 @@ public class ListFragment extends Fragment  {
 
 
     private void uploadToolbar() {
-        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
+        TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
         mTitleText.setText(" I'm Hungry!");
 
     }
 
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
+        Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
 
         inflater.inflate(R.menu.activity_main_menu, menu);
 
@@ -104,7 +101,7 @@ public class ListFragment extends Fragment  {
                     mAdapter.getFilter().filter(newText);
 
                 } else {
-                    Toolbar mToolbar = getActivity().findViewById(R.id.activity_main_toolbar);
+                    Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
                     initRecyclerView();
                 }
@@ -125,8 +122,8 @@ public class ListFragment extends Fragment  {
 
     private void configureRecyclerView(View view) {
         this.listData = new ArrayList<>();
-        this.mData = new ArrayList<>();
-        this.mAdapter = new ListAdapter(this.mData, getContext(), mFragmentManager, mKeyName, mTest );
+        ArrayList<Result> mData = new ArrayList<>();
+        this.mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest );
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
@@ -143,7 +140,7 @@ public class ListFragment extends Fragment  {
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             document.getData();
                             MyChoice l = document.toObject(MyChoice.class);
                             listData.add(l); }

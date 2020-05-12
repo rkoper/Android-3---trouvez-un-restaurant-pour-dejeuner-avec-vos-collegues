@@ -9,6 +9,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class mychoiceHelper {
 
@@ -25,13 +26,13 @@ public class mychoiceHelper {
         mDataMapForFav.put("RestoPhoto", "0");
         mDataMapForFav.put("Adress", "0");
         mDataMapForFav.put("Id", "2");
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).set(mDataMapForFav);
+        String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMapForFav);
     }
 
     public static Task<Void> createMyChoice(  Map<String, Object> mDataMap) {
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).set(mDataMap);
+        String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMap);
     }
 
     public static Task<QuerySnapshot> getMyChoice(){
@@ -39,8 +40,8 @@ public class mychoiceHelper {
     }
 
     public static DocumentReference readMyChoice() {
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(mProfilName);
+        String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName));
     }
 
     public static Task<Void> deleteMyChoice(String mProfilName) {

@@ -31,7 +31,6 @@
             android:id="@+id/place_namefav"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_alignStart="@+id/place_info"
             android:layout_weight="1"
             android:background="@color/fui_transparent"
             android:ellipsize="end"
@@ -40,7 +39,7 @@
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:text="place_name"
+            android:text="@string/place_name"
             android:textAppearance="@style/TextAppearanceBlack"
             android:textSize="20sp" />
 
@@ -55,7 +54,7 @@
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:text="place_location"
+            android:text="@string/place_location"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -76,7 +75,6 @@
             android:id="@+id/place_photofav"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/place_info_2"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="7dp"
             android:background="@color/fui_transparent"

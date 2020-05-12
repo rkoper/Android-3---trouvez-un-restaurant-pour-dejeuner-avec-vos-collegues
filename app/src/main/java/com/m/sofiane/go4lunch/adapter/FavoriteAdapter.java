@@ -23,6 +23,7 @@ import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -32,9 +33,9 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
-    private List<MyFavorite> listData;
-    Context mContext;
-    FragmentManager mFragmentManager;
+    private final List<MyFavorite> listData;
+    final Context mContext;
+    final FragmentManager mFragmentManager;
     ImageButton mButtonFav;
     String name;
 
@@ -79,7 +80,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             myfavoriteHelper.deleteMyFav(t)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d("FAv DATA 1", document.getId() + " => " + document.getData());
                                 document.getReference().delete();
                             }
@@ -116,8 +117,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtname, txtadress;
-        ImageView urlphoto;
+        private final TextView txtname;
+        private final TextView txtadress;
+        final ImageView urlphoto;
 
 
         public ViewHolder(View itemView) {

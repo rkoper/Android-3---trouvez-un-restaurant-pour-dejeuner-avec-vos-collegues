@@ -1,8 +1,5 @@
 package com.m.sofiane.go4lunch.models.pojoMaps;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -41,7 +38,7 @@ public class Result implements Serializable {
     private OpeningHours openingHours;
     @SerializedName("photos")
     @Expose
-    private List<Photo> photos = new ArrayList<Photo>();
+    private List<Photo> photos = new ArrayList<>();
     @SerializedName("place_id")
     @Expose
     private String placeId;
@@ -59,7 +56,7 @@ public class Result implements Serializable {
     private String scope;
     @SerializedName("types")
     @Expose
-    private List<String> types = new ArrayList<String>();
+    private List<String> types = new ArrayList<>();
     @SerializedName("vicinity")
     @Expose
     private String vicinity;

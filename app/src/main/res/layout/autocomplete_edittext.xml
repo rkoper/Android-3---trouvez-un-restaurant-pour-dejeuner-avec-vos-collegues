@@ -16,7 +16,7 @@
         android:id="@+id/edittext_autocomplete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="test"
+        android:hint="@string/test"
         android:background="@android:color/transparent"
         android:inputType="text"
         android:layout_marginStart="35dp"/>

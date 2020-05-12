@@ -89,7 +89,7 @@
                         android:layout_marginStart="32dp"
                         android:fontFamily="sans-serif-condensed-light"
                         android:paddingTop="10dp"
-                        android:text="Place_name"
+                        android:text="@string/place_name_"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         android:typeface="monospace"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:fontFamily="sans-serif-condensed-light"
-                        android:text="Place_Adress"
+                        android:text="@string/place_adress"
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:typeface="monospace"
@@ -189,7 +189,7 @@
                         android:id="@+id/activity_restaurant_call_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CALL"
+                        android:text="@string/call"
                         android:textColor="@android:color/holo_red_light" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -219,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25sp"
-                        android:text="LIKE"
+                        android:text="@string/like"
                         android:textColor="@android:color/holo_red_light" />
 
                 </RelativeLayout>
@@ -247,7 +247,7 @@
                         android:id="@+id/activity_restaurant_web_site_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="WEBSITE"
+                        android:text="@string/website"
                         android:textColor="@android:color/holo_red_light" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -268,7 +268,6 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView

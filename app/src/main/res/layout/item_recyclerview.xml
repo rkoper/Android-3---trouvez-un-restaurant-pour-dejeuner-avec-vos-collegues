@@ -30,14 +30,13 @@
             android:id="@+id/place_name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_alignStart="@+id/place_info"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLength="30"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:text="place_name"
+            android:text="@string/place_name"
             android:textSize="20sp"
             android:textAppearance="@style/TextAppearanceBlack"/>
 
@@ -51,7 +50,7 @@
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:text="place_location"
+            android:text="@string/place_location"
             android:textAppearance="@style/TextAppearanceBlack"
           />
 
@@ -62,7 +61,7 @@
             android:gravity="center_vertical"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
-            android:text="place_open"
+            android:text="@string/place_open"
             android:textAppearance="@style/TextAppearanceBlack"
             android:textSize="16sp"
             android:textStyle="italic" />
@@ -85,7 +84,7 @@
                 android:id="@+id/place_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1200m"
+                android:text="@string/_1200m"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearanceBlack"
                 android:textSize="16sp" />
@@ -112,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="9sp"
-                    android:text="(0)"
+                    android:text="@string/_0"
                     android:textAppearance="@style/TextAppearanceBlack"
                     android:textSize="14sp"
                     android:visibility="visible" />
@@ -167,7 +166,6 @@
             android:id="@+id/place_photo"
             android:layout_width="66dp"
             android:layout_height="66dp"
-            android:layout_alignTop="@+id/place_info_2"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="7dp"
             android:background="@color/colorBlack"
@@ -180,8 +178,8 @@
         android:layout_height="9dp"
         android:layout_marginLeft="280dp"
         android:textAppearance="@style/TextAppearanceBlack"
-        android:text="TextView"
-        android:textSize="7sp" />
+        android:text="@string/textview"
+        android:textSize="12sp" />
 
     <!-- 1 | Add an image button -->
     <ImageButton

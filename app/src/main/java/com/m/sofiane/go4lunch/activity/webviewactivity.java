@@ -3,7 +3,6 @@ package com.m.sofiane.go4lunch.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.m.sofiane.go4lunch.R;

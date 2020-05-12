@@ -34,7 +34,7 @@
                 android:layout_gravity="start|center_horizontal"
                 android:fontFamily="sans-serif"
                 android:freezesText="false"
-                android:text="I'm Hungry!"
+                android:text="@string/i_m_hungry"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"

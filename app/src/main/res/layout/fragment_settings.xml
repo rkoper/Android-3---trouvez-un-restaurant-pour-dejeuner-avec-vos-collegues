@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Switch"
+            android:text="@string/switchbutton"
             android:textAppearance="@style/TextAppearance" />
     </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_marginLeft="5dp"
             android:background="@color/fui_transparent"
             android:gravity="left"
-            android:text="Notification"
+            android:text="@string/notification"
             android:textAppearance="@style/TextAppearance"
             android:textSize="18sp"
             android:visibility="visible"
@@ -111,7 +111,7 @@
             android:layout_marginTop="60dp"
             android:paddingLeft="30dp"
             android:textSize="12sp"
-            android:text="Choose time to notification :"
+            android:text="@string/choose_time_to_notification"
             android:textAppearance="@style/TextAppearance"/>
 
         <TimePicker
@@ -155,7 +155,7 @@
             android:layout_marginTop="30dp"
             android:background="@color/fui_transparent"
             app:srcCompat="@drawable/ic_check_circle_white"
-            android:text="Time Picker"
+            android:text="@string/time_picker"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 

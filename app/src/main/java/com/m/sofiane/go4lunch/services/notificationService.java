@@ -12,13 +12,13 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
-import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+
+import java.util.Objects;
 
 /**
  * created by Sofiane M. 26/04/2020
@@ -39,10 +39,10 @@ public class notificationService extends BroadcastReceiver {
         mychoiceHelper.readMyChoice().get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (Objects.requireNonNull(document).exists()) {
                     NameOfResto l = document.toObject(NameOfResto.class);
 
-                    if (l.getId().equals("2"))
+                    if (Objects.requireNonNull(l).getId().equals("2"))
                     {mNameForNotif = "No restaurant chosen for today";}
                     else {mNameForNotif = "You are expected" + " @ " + l.getNameOfResto();}
 
@@ -54,7 +54,7 @@ public class notificationService extends BroadcastReceiver {
 
     }
 
-    private final void createNotification(Intent intent, String mNameForNotif) {
+    private void createNotification(Intent intent, String mNameForNotif) {
         Intent intent1 = new Intent(mContext, mainactivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent1, PendingIntent.FLAG_ONE_SHOT);
 
@@ -81,10 +81,10 @@ public class notificationService extends BroadcastReceiver {
             CharSequence channelName = "Message";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationManager.createNotificationChannel(mChannel);
+            Objects.requireNonNull(notificationManager).createNotificationChannel(mChannel);
 
         }
-        notificationManager.notify("TAG", 120, notificationBuilder.build());
+        Objects.requireNonNull(notificationManager).notify("TAG", 120, notificationBuilder.build());
         deleteFirebaseitem();
     }
 

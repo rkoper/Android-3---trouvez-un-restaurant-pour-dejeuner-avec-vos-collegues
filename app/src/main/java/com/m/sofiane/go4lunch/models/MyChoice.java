@@ -1,9 +1,6 @@
 package com.m.sofiane.go4lunch.models;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 
 /**

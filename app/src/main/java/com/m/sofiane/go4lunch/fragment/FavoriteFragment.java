@@ -9,12 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +27,7 @@ import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FavoriteFragment extends Fragment {
@@ -51,7 +50,7 @@ public class FavoriteFragment extends Fragment {
     }
 
     private void uploadBototmBr(View view) {
-        BottomNavigationView mBottomNavigationView = getActivity().findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView mBottomNavigationView = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_bottom_navigation);
         mBottomNavigationView.setVisibility(View.GONE);
         BottomNavigationView mBmNaViewForDrawer = view.findViewById(R.id.drawer_bottom_navigation);
         mBmNaViewForDrawer.setVisibility(View.VISIBLE);
@@ -71,7 +70,7 @@ public class FavoriteFragment extends Fragment {
 
 
     private void uploadToolbar() {
-        TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
+        TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
         mTitleText.setText(" My Favorites");
 
     }
@@ -83,7 +82,7 @@ public class FavoriteFragment extends Fragment {
     }
 
     private void configureRecyclerView(View view) {
-        this.listData = new ArrayList<MyFavorite>();
+        this.listData = new ArrayList<>();
         this.mAdapter = new FavoriteAdapter(this.listData, mFragmentManager, mContext);
         mRecyclerView = view.findViewById(R.id.Fav_recyclerView);
         mRecyclerView.setAdapter(mAdapter);
@@ -96,7 +95,7 @@ public class FavoriteFragment extends Fragment {
         myfavoriteHelper.getMyFav()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             MyFavorite l = document.toObject(MyFavorite.class);
                             Log.e("My data fav", document.toString());
 

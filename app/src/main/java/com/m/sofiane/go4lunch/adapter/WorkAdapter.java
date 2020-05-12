@@ -4,13 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,23 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.activity.subactivity;
-import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.NameOfResto;
-import com.m.sofiane.go4lunch.models.UserInfo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,9 +34,9 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     public mainactivity activity;
-    private ArrayList<NameOfResto> listData;
-    Context mContext;
-    FragmentManager mFragmentManager;
+    private final ArrayList<NameOfResto> listData;
+    final Context mContext;
+    final FragmentManager mFragmentManager;
 
 
 
@@ -68,7 +54,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyclerview_workgo, parent, false);
-        return new WorkAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @SuppressLint({"SetTextI18n", "RestrictedApi"})
@@ -114,7 +100,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
         return listData.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.sub_name_profilgo)
     TextView txtname;
     @BindView(R.id.sub_photo_profilgo)

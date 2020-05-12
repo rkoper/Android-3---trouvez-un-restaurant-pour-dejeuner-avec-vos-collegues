@@ -1,52 +1,32 @@
 package com.m.sofiane.go4lunch.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.firebase.ui.auth.AuthUI.TAG;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
  * created by Sofiane M. 25/04/2020
@@ -92,8 +72,8 @@ public class MyChoiceFragment extends DialogFragment {
         readFireStore(view);
         ButterKnife.bind(this, view);
         initCloseButton();
-        Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(android.R.color.transparent);
+        Window window = Objects.requireNonNull(getDialog()).getWindow();
+        Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
         cancelChoice();
         return view;
     }
@@ -111,7 +91,7 @@ public class MyChoiceFragment extends DialogFragment {
     }
 
     private void backtoHome() {
-        getActivity().getSupportFragmentManager()
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mapFragment)
                 .addToBackStack(null)
@@ -123,10 +103,10 @@ public class MyChoiceFragment extends DialogFragment {
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (Objects.requireNonNull(document).exists()) {
                     MyChoice l = document.toObject(MyChoice.class);
 
-                    String mName = l.getNameOfResto();
+                    String mName = Objects.requireNonNull(l).getNameOfResto();
                     String mAdress = l.getAdress();
                     String mPhotoResto = l.getRestoPhoto();
 

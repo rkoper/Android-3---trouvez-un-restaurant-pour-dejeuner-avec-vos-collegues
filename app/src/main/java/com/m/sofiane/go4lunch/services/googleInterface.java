@@ -32,6 +32,6 @@ public interface googleInterface {
     getNearbyPlacesAutoCompleteForList(@Query("location") String location, @Query("input") String input );
 
     @GET(mUrlDetail+api_KEY)
-    Call<com.m.sofiane.go4lunch.models.pojoDetail.Result> getNearbyPlacesDétail(@Query("place_id") String id);
+    Call<com.m.sofiane.go4lunch.models.pojoDetail.Result> getNearbyPlacesDetail(@Query("place_id") String id);
 
 }

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -22,20 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.SubAdapter;
 import com.m.sofiane.go4lunch.models.MyChoice;
-import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
 import com.m.sofiane.go4lunch.services.googleInterface;
@@ -46,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +63,7 @@ import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLPHOTO;
  */
 public class subactivity extends AppCompatActivity{
 
-    static String DEFAUTPHOTO = "https://urlz.fr/cw4j";
+    static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";
     boolean isBackFromB;
     private static final String TAG = "RealtimeDB";
     String mPlaceId, UrlPhoto,mPhone,mSite,mPhotoN,mAdressV2,mAdressV3,mAdressDef,mDisplayNameOfResto;
@@ -77,7 +71,7 @@ public class subactivity extends AppCompatActivity{
     Double mRating;
     SubAdapter mAdapter;
     RecyclerView mRecyclerView;
-    String APIKEY = BuildConfig.APIKEY;
+    final String APIKEY = BuildConfig.APIKEY;
     ArrayList listDataName,listDataPhoto;
     FragmentManager mFragmentManager;
 
@@ -140,19 +134,18 @@ public class subactivity extends AppCompatActivity{
 
 
     private void build_retrofit_and_get_response() {
-        String url = URLAPI;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(URLAPI)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         googleInterface service = retrofit.create(googleInterface.class);
-        Call call = service.getNearbyPlacesDétail(mPlaceId);
+        Call call = service.getNearbyPlacesDetail(mPlaceId);
         call.enqueue(new Callback<Result>() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -294,8 +287,8 @@ public class subactivity extends AppCompatActivity{
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists())
-                    if (document.toObject(MyChoice.class).getNameOfResto().equals(mDisplayNameOfResto)) {
+                if (Objects.requireNonNull(document).exists())
+                    if (Objects.requireNonNull(document.toObject(MyChoice.class)).getNameOfResto().equals(mDisplayNameOfResto)) {
                         mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_orange_24dp));
                     } else {
                         mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_green_24dp));
@@ -310,7 +303,7 @@ public class subactivity extends AppCompatActivity{
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<String> list = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             list.add(document.getId());
                         }
 
@@ -327,9 +320,7 @@ public class subactivity extends AppCompatActivity{
     private void LikeRestaurantCalling(String mDisplayNameOfResto,List<String> list ) {
         mLike.setOnClickListener(v -> {
             if (list.contains(mDisplayNameOfResto))
-            { myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
-                });
+            { myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show());
 
             mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
                 finish();
@@ -353,8 +344,8 @@ public class subactivity extends AppCompatActivity{
         mActionButton.setOnClickListener(v1 -> {
             mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_circle_orange_24dp));
 
-            String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            String mProfilPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
+            String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+            String mProfilPhoto = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).toString();
 
             Map<String, Object> mDataMap = new HashMap<>();
             mDataMap.put("NameOfResto", mDisplayNameOfResto);
@@ -375,7 +366,7 @@ public class subactivity extends AppCompatActivity{
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             if (mDisplayNameOfResto.equals(document.getData().get("NameOfResto"))) {
                                 NameOfResto l = document.toObject(NameOfResto.class);
                                 listDataName.add(l);

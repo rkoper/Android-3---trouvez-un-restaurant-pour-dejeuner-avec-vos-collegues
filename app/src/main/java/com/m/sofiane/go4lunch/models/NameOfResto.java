@@ -1,11 +1,5 @@
 package com.m.sofiane.go4lunch.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
