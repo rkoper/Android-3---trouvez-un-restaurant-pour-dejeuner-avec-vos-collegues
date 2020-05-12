@@ -32,12 +32,12 @@ import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ListFragment extends Fragment  {
 
 
-    private RecyclerView mRecyclerView;
     private ArrayList<Result> mData;
     private ListAdapter mAdapter;
     FragmentManager mFragmentManager;
@@ -45,7 +45,7 @@ public class ListFragment extends Fragment  {
     ArrayList<String> mTest;
 
     @BindView(R.id.List_recyclerView)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
 
     String mKeyName = "1";
     private FrameLayout frameLayout;
@@ -59,7 +59,9 @@ public class ListFragment extends Fragment  {
         isBackFromB=false;
         setHasOptionsMenu(true);
         uploadToolbar();
+        ButterKnife.bind(this, view);
         initRecyclerView();
+
         this.configureRecyclerView(view);
         return view;
     }
@@ -121,7 +123,6 @@ public class ListFragment extends Fragment  {
         this.listData = new ArrayList<>();
         this.mData = new ArrayList<>();
         this.mAdapter = new ListAdapter(this.mData, getContext(), mFragmentManager, mKeyName, mTest );
-        mRecyclerView = view.findViewById(R.id.List_recyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);

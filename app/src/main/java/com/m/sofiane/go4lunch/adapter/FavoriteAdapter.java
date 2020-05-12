@@ -118,7 +118,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtname, txtadress;
         ImageView urlphoto;
-        ImageButton mImageButton;
 
 
         public ViewHolder(View itemView) {
@@ -127,9 +126,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             txtadress = itemView.findViewById(R.id.place_addressfav);
             urlphoto = itemView.findViewById(R.id.place_photofav);
             mButtonFav = itemView.findViewById(R.id.imageButton);
-
         }
     }
-
-
 }

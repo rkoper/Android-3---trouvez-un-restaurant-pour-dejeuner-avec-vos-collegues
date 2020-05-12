@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.work.WorkManager;
 
 import com.m.sofiane.go4lunch.R;
@@ -64,10 +64,10 @@ public class SettingsFragment extends DialogFragment {
     LinearLayout mLayoutTitle;
     @BindView(R.id.txt_title_settings)
     TextView mTitleTxt;
-
-
-
-    final Fragment mapFragment = new MapFragment();
+    SharedPreferences mSharedPreferences;
+    public static final String PREFS ="666";
+    public static final String TIMETONOTIF= "TimeToNotif";
+    public static final String STATNOTIF= "StateNotif";
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -76,18 +76,32 @@ public class SettingsFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_settings, null);
         ButterKnife.bind(this, view);
         initSwitch();
-
         initCloseButton();
-        mLayoutButton.setVisibility(View.INVISIBLE);
-        mLayoutTimePicker.setVisibility(View.INVISIBLE);
-
-        Window window = getDialog().getWindow();
-        window.setBackgroundDrawableResource(android.R.color.transparent);
-
+        initVisibiliy();
+        initWindowsTransprent();
+        checkStateSwitch();
         return view;
     }
 
+    private void initWindowsTransprent() {
+        Window window = getDialog().getWindow();
+        window.setBackgroundDrawableResource(android.R.color.transparent);
 
+    }
+
+    private void initVisibiliy() {
+        mLayoutButton.setVisibility(View.INVISIBLE);
+        mLayoutTimePicker.setVisibility(View.INVISIBLE);
+    }
+
+    private void checkStateSwitch() {
+        mSharedPreferences = getActivity().getSharedPreferences(PREFS ,Context.MODE_PRIVATE);
+        Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
+        if (mStatNotif.equals(true))
+        {mSwitch.setChecked(true);}
+        Log.e("Shared P State ------>", mStatNotif.toString());
+
+    }
 
     @SuppressLint("ResourceAsColor")
     public void initSwitch() {
@@ -103,6 +117,11 @@ public class SettingsFragment extends DialogFragment {
             } else {
                 WorkManager.getInstance().cancelAllWork();
                 Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
+                mSharedPreferences
+                        .edit()
+                        .putBoolean(STATNOTIF, false)
+                        .remove(TIMETONOTIF)
+                        .apply();
             }
         });
     }
@@ -117,7 +136,6 @@ public class SettingsFragment extends DialogFragment {
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
            initButton(cal);
-            Log.e("Picker 1 ------->" , cal.toString());
         });
     }
 
@@ -130,13 +148,9 @@ public class SettingsFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 setAlarm(calendar);
-                Log.e("Picker 2 ------->" , calendar.toString());
                 onDestroyView();
             }
         });
-
-
-
     }
 
     private void initCloseButton() {
@@ -154,10 +168,21 @@ public class SettingsFragment extends DialogFragment {
         Intent notificationIntent = new Intent(getActivity(), notificationService.class);
         PendingIntent broadcast = PendingIntent.getBroadcast(getActivity(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Log.e("Picker 3 ------->" , cal.toString());
-        Toast.makeText(getActivity(), cal.toString(), Toast.LENGTH_SHORT).show();
+
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, broadcast);
+
+        mSharedPreferences
+                .edit()
+                .putBoolean(STATNOTIF, true)
+                .putLong(TIMETONOTIF, (cal.getTimeInMillis()))
+                .apply();
+
+        // TEST
+        Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
+        Long mTimeNotif = mSharedPreferences.getLong(TIMETONOTIF, 666);
+        Log.e("1 Sha P Click ------>", mStatNotif.toString());
+        Log.e("1 Sha P Time ------>", mTimeNotif.toString());
     }
 
 }

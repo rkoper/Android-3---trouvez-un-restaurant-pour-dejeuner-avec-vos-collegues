@@ -121,12 +121,9 @@ public class MyChoiceFragment extends DialogFragment {
                     String mAdress = l.getAdress();
                     String mPhotoResto = l.getRestoPhoto();
 
-                    TextView nNameChoice = view.findViewById(R.id.frag_choice_name);
-                    TextView mAdressChoice = view.findViewById(R.id.frag_choice_adress);
-                    ImageView imageView = view.findViewById(R.id.frag_choice_photo);
 
-                    nNameChoice.setText(mName);
-                    mAdressChoice.setText(mAdress);
+                    mChoiceName.setText(mName);
+                    mChoiceAdress.setText(mAdress);
 
 
                     if (getContext() != null){
@@ -134,7 +131,7 @@ public class MyChoiceFragment extends DialogFragment {
                                 .with(getContext())
                                 .load(mPhotoResto)
                                 .apply(RequestOptions.circleCropTransform())
-                                .into(imageView);
+                                .into(mChoicePhoto);
                     } else {
                         Log.d("TAG", "No such document");
                     }

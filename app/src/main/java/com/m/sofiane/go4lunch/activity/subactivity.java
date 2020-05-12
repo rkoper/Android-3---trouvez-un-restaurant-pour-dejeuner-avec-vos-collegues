@@ -72,43 +72,30 @@ public class subactivity extends AppCompatActivity{
 
     @BindView(R.id.subName)
     TextView mNameSub;
-
     @BindView(R.id.SubPhoto)
     ImageView mPhotoSub;
-
     @BindView(R.id.subAdress)
     TextView mAdressSub;
-
     @BindView(R.id.buttonCall)
     ImageButton mCallButton;
-
     @BindView(R.id.buttonworld)
     ImageButton mSiteUrl;
-
     @BindView(R.id.activity_restaurant_web_site_text)
     TextView mSiteView;
-
     @BindView(R.id.activity_restaurant_call_text)
     TextView mCallView;
-
     @BindView(R.id.buttonLike)
     ImageButton mLike;
-
     @BindView(R.id.placeSub_rating_icon1)
     ImageView mRate1;
-
     @BindView(R.id.placeSub_rating_icon2)
     ImageView mRate2;
-
     @BindView(R.id.placeSub_rating_icon3)
     ImageView mRate3;
-
     @BindView(R.id.floatingActionButton)
     FloatingActionButton mActionButton;
 
-
     @SuppressLint("WrongConstant")
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

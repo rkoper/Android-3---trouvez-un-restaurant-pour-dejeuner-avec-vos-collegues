@@ -38,6 +38,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
@@ -112,19 +115,19 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtname;
-        ImageView urlphoto;
-        Button mButton;
+    @BindView(R.id.sub_name_profilgo)
+    TextView txtname;
+    @BindView(R.id.sub_photo_profilgo)
+    ImageView urlphoto;
+    @BindView(R.id.buttonClick)
+    Button mButton;
 
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            txtname = itemView.findViewById(R.id.sub_name_profilgo);
-            urlphoto = itemView.findViewById(R.id.sub_photo_profilgo);
-            mButton = itemView.findViewById(R.id.buttonClick);
-
-        }
+    public ViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
     }
+}
 
 
 }

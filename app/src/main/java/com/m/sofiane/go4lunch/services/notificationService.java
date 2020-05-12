@@ -1,6 +1,6 @@
 package com.m.sofiane.go4lunch.services;
 
-import android.annotation.SuppressLint;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,29 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Build;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-
-import java.util.List;
-
-import static com.firebase.ui.auth.AuthUI.TAG;
 
 /**
  * created by Sofiane M. 26/04/2020
@@ -81,7 +67,7 @@ public class notificationService extends BroadcastReceiver {
 
         }
         notificationManager.notify("TAG", 120, notificationBuilder.build());
-
+        deleteFirebaseitem();
     }
 
 
@@ -98,4 +84,11 @@ public class notificationService extends BroadcastReceiver {
                 }}});
 
     }
-}
+
+    private void deleteFirebaseitem() {
+        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        mychoiceHelper.deleteMyChoice(mProfilName);
+
+    }
+
+    }

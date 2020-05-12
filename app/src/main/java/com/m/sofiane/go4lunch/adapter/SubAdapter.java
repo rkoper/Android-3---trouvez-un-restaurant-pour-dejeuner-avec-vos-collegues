@@ -23,6 +23,9 @@ import com.m.sofiane.go4lunch.models.NameOfResto;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 /**
@@ -71,19 +74,16 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.sub_name_profilgo)
         TextView txtname;
+        @BindView(R.id.sub_photo_profilgo)
         ImageView urlphoto;
-        Button mButton;
+
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtname = itemView.findViewById(R.id.sub_name_profilgo);
-            urlphoto = itemView.findViewById(R.id.sub_photo_profilgo);
-            mButton = itemView.findViewById(R.id.buttonClick);
-
+            ButterKnife.bind(this, itemView);
         }
     }
-
-
 }

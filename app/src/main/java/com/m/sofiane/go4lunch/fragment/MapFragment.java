@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -77,14 +78,13 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     LatLng mLatLngForAll;
     String placeId;
     String placeIdToCompare;
-    @BindView(R.id.menu_search)
-    MenuItem mSearch;
     View view;
     String apiKey = BuildConfig.APIKEY;
+    @BindView(R.id.recyclerview_for_maps)
+    RecyclerView mRecyclerView;
 
     SearchMapAdapter mAdapter;
     ArrayList<Prediction> listdataForSearch ;
-    RecyclerView mRecyclerView;
     FragmentManager mFragmentManager;
     Map<String, LatLng> mMapToCompare;
 
@@ -93,7 +93,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, null);
         uploadToolbar();
-        this.configureRecyclerView(view);
+        ButterKnife.bind(this, view);
+        configureRecyclerView();
         ArrayList<Prediction> mT =new ArrayList<>();
         setHasOptionsMenu(true);
         loadMap();
@@ -102,10 +103,9 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         return view;
     }
 
-    private void configureRecyclerView(View view) {
+    private void configureRecyclerView() {
         this.listdataForSearch = new ArrayList<>();
         this.mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
-        mRecyclerView = view.findViewById(R.id.recyclerview_for_maps);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
