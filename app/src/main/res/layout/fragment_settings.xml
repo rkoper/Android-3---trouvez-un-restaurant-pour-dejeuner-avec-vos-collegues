@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Switch"
-            android:textColor="@color/colorWhite" />
+            android:textAppearance="@style/TextAppearance" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,8 +56,8 @@
             android:background="@color/fui_transparent"
             android:gravity="left"
             android:text="Notification"
-            android:textColor="@color/colorWhite"
-            android:textSize="20dp"
+            android:textAppearance="@style/TextAppearance"
+            android:textSize="18sp"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_cancel_white" />
     </LinearLayout>
@@ -110,8 +110,9 @@
             android:layout_marginStart="6dp"
             android:layout_marginTop="60dp"
             android:paddingLeft="30dp"
+            android:textSize="12sp"
             android:text="Choose time to notification :"
-            android:textColor="@color/colorWhite" />
+            android:textAppearance="@style/TextAppearance"/>
 
         <TimePicker
             android:id="@+id/settings_time_picker"
@@ -122,8 +123,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="time"
-            android:numbersSelectorColor="@color/colorWhite"
-            android:outlineSpotShadowColor="@color/colorWhite"
+            android:textAppearance="@style/TextAppearance"
             android:textColor="@color/colorWhite"
             android:timePickerMode="spinner"
 

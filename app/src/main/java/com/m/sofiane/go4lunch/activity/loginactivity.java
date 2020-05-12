@@ -43,6 +43,7 @@ public class loginactivity extends AppCompatActivity {
                             .setAvailableProviders(mProviders)
                             .setTheme(R.style.MyTheme)
                             .setLogo(R.drawable.logogl)
+                            .setIsSmartLockEnabled(true)
                             .build(), MY_REQUEST_CODE);
         }
 

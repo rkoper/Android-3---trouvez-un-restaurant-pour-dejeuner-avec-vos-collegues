@@ -66,14 +66,22 @@ public class MyChoiceFragment extends DialogFragment {
     LinearLayout mLLtitle;
     @BindView(R.id.frag_choice_title)
     TextView mChoiceTitle;
+    @BindView(R.id.layout_choice_no_choice)
+    LinearLayout mLLnoChoice;
+    @BindView(R.id.frag_choice_no_choice)
+    TextView mChoiceNoChoice;
     @BindView(R.id.frag_choice_name)
     TextView mChoiceName;
     @BindView(R.id.frag_choice_photo)
     ImageView mChoicePhoto;
     @BindView(R.id.frag_choice_adress)
     TextView mChoiceAdress;
+    @BindView(R.id.layout_mychoice_cancel)
+    LinearLayout mLLcancel;
     @BindView(R.id.frag_choice_close)
     ImageButton mChoiceClose;
+    @BindView(R.id.image_b_cancel_choice)
+    ImageButton mCancelChoice;
 
     final Fragment mapFragment = new MapFragment();
 
@@ -86,6 +94,7 @@ public class MyChoiceFragment extends DialogFragment {
         initCloseButton();
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(android.R.color.transparent);
+        cancelChoice();
         return view;
     }
 
@@ -121,20 +130,13 @@ public class MyChoiceFragment extends DialogFragment {
                     String mAdress = l.getAdress();
                     String mPhotoResto = l.getRestoPhoto();
 
-
-                    mChoiceName.setText(mName);
-                    mChoiceAdress.setText(mAdress);
-
-
-                    if (getContext() != null){
-                        Glide
-                                .with(getContext())
-                                .load(mPhotoResto)
-                                .apply(RequestOptions.circleCropTransform())
-                                .into(mChoicePhoto);
-                    } else {
-                        Log.d("TAG", "No such document");
-                    }
+                if (mName.equals("0"))
+                {
+                    noRestaurantChoice();
+                }
+                else {
+                    callMyChoice(mName, mAdress, mPhotoResto);
+                 }
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());}
 
@@ -142,6 +144,33 @@ public class MyChoiceFragment extends DialogFragment {
         });
     }
 
+    private void callMyChoice(String mName, String mAdress, String mPhotoResto) {
+        mChoiceName.setText(mName);
+        mChoiceAdress.setText(mAdress);
+        if (getContext() != null){
+            Glide
+                    .with(getContext())
+                    .load(mPhotoResto)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(mChoicePhoto);}
+        else {
+            Log.d("TAG", "No such document");
+        }
+    }
+
+    private void cancelChoice() {
+        mCancelChoice.setOnClickListener(v -> {
+            mychoiceHelper.initMyChoice();
+            noRestaurantChoice();
+        });
+    }
+
+    private void noRestaurantChoice(){
+        mLLnoChoice.setVisibility(View.VISIBLE);
+        mLLphoto.setVisibility(View.INVISIBLE);
+        mLLname.setVisibility(View.INVISIBLE);
+        mLLcancel.setVisibility(View.INVISIBLE);
+    }
 
 
 }

@@ -3,6 +3,7 @@ package com.m.sofiane.go4lunch.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -20,12 +22,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.SubAdapter;
+import com.m.sofiane.go4lunch.models.MyFavorite;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
 import com.m.sofiane.go4lunch.services.googleInterface;
@@ -34,6 +42,7 @@ import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -70,6 +79,10 @@ public class subactivity extends AppCompatActivity{
     ArrayList listDataName,listDataPhoto;
     FragmentManager mFragmentManager;
 
+    SharedPreferences mSharedPreferences;
+    public static final String PREFS ="999";
+    public static final String FAVSTATUS= "FaveStatus";
+
     @BindView(R.id.subName)
     TextView mNameSub;
     @BindView(R.id.SubPhoto)
@@ -84,7 +97,7 @@ public class subactivity extends AppCompatActivity{
     TextView mSiteView;
     @BindView(R.id.activity_restaurant_call_text)
     TextView mCallView;
-    @BindView(R.id.buttonLike)
+    @BindView(R.id.buttonlike)
     ImageButton mLike;
     @BindView(R.id.placeSub_rating_icon1)
     ImageView mRate1;
@@ -106,6 +119,8 @@ public class subactivity extends AppCompatActivity{
 
         build_retrofit_and_get_response();
         initRV();
+
+       // mLike.setVisibility(View.INVISIBLE);
 
         mAdapter.notifyDataSetChanged();
 
@@ -268,45 +283,61 @@ public class subactivity extends AppCompatActivity{
 
         readDataFromFirebase(mDisplayNameOfResto);
 
-        LikeRestaurantCalling(mDisplayNameOfResto);
+        searchFavList(mDisplayNameOfResto);
+    }
+    private void searchFavList(String mDisplayNameOfResto) {
+        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        FirebaseFirestore
+                .getInstance()
+                .collection("MyFavorite")
+                .document(mProfilName)
+                .collection("MyFavoriteList")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> list = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                list.add(document.getId());
+                            }
+
+                            if (list.contains(mDisplayNameOfResto))
+                            { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));}
+                            LikeRestaurantCalling(mDisplayNameOfResto, list);
+
+                        } else {
+
+                        }
+                    }
+                });
     }
 
+    private void LikeRestaurantCalling(String mDisplayNameOfResto,List<String> list ) {
+        mLike.setOnClickListener(v -> {
+            if (list.contains(mDisplayNameOfResto))
+            {
+                myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+                });
 
-    private void LikeRestaurantCalling(String mDisplayNameOfResto) {
-    myfavoriteHelper.getMyFav()
-                .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.e("ETOILE -----> " , document.getData().get("Name").toString() +"//" + mDisplayNameOfResto);
-                                    if (document.exists())
-                                    {
-                                        if (document.getData().get("Name").equals(mDisplayNameOfResto))
-                                        {
-                                            mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
-                                        }
+                mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
+            }
+            else
+                {
+                    mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
 
-                                    } else {
-                                        mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
-                                    } } } });
+                    Map<String, Object> mDataMap = new HashMap<>();
+                    mDataMap.put("Name", mDisplayNameOfResto);
+                    mDataMap.put("Adress", mAdressDef);
+                    mDataMap.put("Photo", UrlPhoto);
+                    mDataMap.put("FireStoreID", getTaskId());
 
-        mLike.setOnClickListener(v1 -> {
+                    myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
+                }
+        });
+    }
 
-            Toast.makeText(this, R.string.likeResto,
-                    Toast.LENGTH_LONG).show();
-
-
-            mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
-
-            Map<String, Object> mDataMap = new HashMap<>();
-            mDataMap.put("Name", mDisplayNameOfResto);
-            mDataMap.put("Adress", mAdressDef);
-            mDataMap.put("Photo", UrlPhoto);
-            mDataMap.put("FireStoreID", getTaskId());
-
-            myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
-
-
-        });}
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void clickOnRestaurant() {
@@ -331,22 +362,22 @@ public class subactivity extends AppCompatActivity{
 
     private void readDataFromFirebase(String mDisplayNameOfResto) {
         mychoiceHelper.getMyChoice()
-                    .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        if (mDisplayNameOfResto.equals(document.getData().get("NameOfResto"))) {
-                                            NameOfResto l = document.toObject(NameOfResto.class);
-                                            listDataName.add(l);
-                                        } else {
-                                            Log.e("no", "match");
-                                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (mDisplayNameOfResto.equals(document.getData().get("NameOfResto"))) {
+                                NameOfResto l = document.toObject(NameOfResto.class);
+                                listDataName.add(l);
+                            } else {
+                                Log.e("no", "match");
+                            }
 
-                                        mAdapter = new SubAdapter(listDataName, listDataPhoto,  mFragmentManager, mContext);
-                                        mRecyclerView.setAdapter(mAdapter);
-                                    }
-                                }
-                            });
+                            mAdapter = new SubAdapter(listDataName, listDataPhoto,  mFragmentManager, mContext);
+                            mRecyclerView.setAdapter(mAdapter);
+                        }
                     }
+                });
+    }
     @Override
     protected void onPause(){
         mAdapter.notifyDataSetChanged();

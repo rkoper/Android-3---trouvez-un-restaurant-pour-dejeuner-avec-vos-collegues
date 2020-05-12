@@ -28,18 +28,15 @@
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:background="@color/fui_transparent"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="@style/TextAppearanceBlack"
             android:maxLength="30"
             android:maxLines="1"
             android:text="place_name"
             android:textAlignment="center"
-            android:textColor="@color/colorBlack"
             android:textSize="20sp"
             tools:ignore="RtlCompat" />
 
     </LinearLayout>
-    >
 
 
 </RelativeLayout>

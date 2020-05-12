@@ -313,4 +313,5 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             }
         });
     }
+
 }

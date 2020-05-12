@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fui_transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="ExtraText">
 
     <LinearLayout
         android:id="@+id/layout_choice_close"
@@ -58,8 +59,7 @@
             android:gravity="bottom|center"
             android:text="MychoiceName"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorWhite"
+            android:textAppearance="@style/TextAppearance"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
@@ -72,8 +72,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="MychoiceAdress"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorWhite"
+            android:textAppearance="@style/TextAppearance"
             android:textSize="12sp"
             tools:layout_editor_absoluteX="0dp" />
 
@@ -134,5 +133,61 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="24dp"
             tools:layout_editor_absoluteY="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/layout_choice_no_choice"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/frag_choice_no_choice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_transparent"
+            android:gravity="center"
+            android:text="No restaurant choosen"
+            android:textAppearance="@style/TextAppearance"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_mychoice_cancel"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="155dp"
+        android:layout_weight="2"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toEndOf="@+id/layout_choice_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/image_b_cancel_choice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_transparent"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_cancel_black_24dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

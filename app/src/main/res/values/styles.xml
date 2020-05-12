@@ -38,6 +38,12 @@
 
      <style name="TextAppearance">
          <item name="colorControlHighlight">@android:color/darker_gray</item>
+         <item name="android:textColor">@color/colorWhite</item>
+         <item name="android:textAppearance">@font/opensans</item>
      </style>
-
+     <style name="TextAppearanceBlack">
+         <item name="colorControlHighlight">@android:color/darker_gray</item>
+         <item name="android:textColor">@color/colorBlack</item>
+         <item name="android:textAppearance">@font/opensans</item>
+     </style>
 </resources>

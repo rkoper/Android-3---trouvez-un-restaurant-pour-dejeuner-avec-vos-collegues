@@ -35,14 +35,13 @@
             android:layout_weight="1"
             android:background="@color/fui_transparent"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
             android:maxLength="30"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="place_name"
-            android:textColor="@color/colorBlack"
+            android:textAppearance="@style/TextAppearanceBlack"
             android:textSize="20sp" />
 
         <TextView
@@ -52,14 +51,12 @@
             android:layout_weight="2"
             android:background="@color/fui_transparent"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed-light"
+            android:textAppearance="@style/TextAppearanceBlack"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="place_location"
-            android:textColor="@color/colorBlack"
-            android:textSize="16sp"
-            android:typeface="monospace" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -21,11 +21,10 @@ public class myfavoriteHelper {
         return myfavoriteHelper.getMyFavoriteCollection().document(mNameOfResto);
     }
 
+
+
     // --- READ ---
     public static Task<QuerySnapshot> getMyFav(){
-        String mProfilName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        String mProfilEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        Uri mProfilPhoto = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
         return myfavoriteHelper.getMyFavoriteCollection().get();}
 
 

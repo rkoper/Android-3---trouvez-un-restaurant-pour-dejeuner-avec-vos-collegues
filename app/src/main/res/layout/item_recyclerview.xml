@@ -32,30 +32,27 @@
             android:layout_height="30dp"
             android:layout_alignStart="@+id/place_info"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical"
             android:maxLength="30"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="place_name"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearanceBlack"/>
 
         <TextView
             android:id="@+id/place_address"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed-light"
             android:textSize="16sp"
-            android:typeface="monospace"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="place_location"
-            android:textColor="@color/colorBlack"
+            android:textAppearance="@style/TextAppearanceBlack"
           />
 
         <TextView
@@ -66,7 +63,7 @@
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="place_open"
-            android:textColor="@color/colorBlack"
+            android:textAppearance="@style/TextAppearanceBlack"
             android:textSize="16sp"
             android:textStyle="italic" />
     </LinearLayout>
@@ -90,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="1200m"
                 android:textAlignment="center"
-                android:textColor="@color/colorGray"
+                android:textAppearance="@style/TextAppearanceBlack"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -116,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:paddingTop="9sp"
                     android:text="(0)"
-                    android:textColor="@color/colorBlack"
+                    android:textAppearance="@style/TextAppearanceBlack"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
@@ -157,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/colorBlack"
+                    android:textAppearance="@style/TextAppearanceBlack"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -182,6 +179,7 @@
         android:layout_width="14dp"
         android:layout_height="9dp"
         android:layout_marginLeft="280dp"
+        android:textAppearance="@style/TextAppearanceBlack"
         android:text="TextView"
         android:textSize="7sp" />
 

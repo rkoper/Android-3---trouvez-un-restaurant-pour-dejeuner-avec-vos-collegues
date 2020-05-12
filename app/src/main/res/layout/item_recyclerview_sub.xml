@@ -25,12 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="76sp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-condensed"
         android:maxLength="50"
         android:maxLines="1"
         android:text="profil name"
         android:textAlignment="viewStart"
-        android:textColor="@color/colorBlack"
+        android:textAppearance="@style/TextAppearanceBlack"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/sub_photo_profilgo"
         app:layout_constraintTop_toTopOf="@id/sub_photo_profilgo" />

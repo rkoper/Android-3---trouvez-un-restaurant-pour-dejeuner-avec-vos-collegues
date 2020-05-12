@@ -194,7 +194,7 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <RelativeLayout
                     android:id="@+id/linearLayoutCompat2"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -203,24 +203,26 @@
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat3"
                     app:layout_constraintEnd_toStartOf="@+id/linearLayoutCompat3"
                     app:layout_constraintStart_toEndOf="@+id/linearLayoutCompat"
-                    app:layout_constraintTop_toTopOf="@+id/linearLayoutCompat3">
+                    app:layout_constraintTop_toTopOf="@+id/linearLayoutCompat3"
+                    app:layout_constraintVertical_bias="0.0">
 
                     <!-- Like Restaurant -->
+
                     <ImageButton
-                        android:id="@+id/buttonLike"
+                        android:id="@+id/buttonlike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_star_border_black_24dp"
-                        android:backgroundTint="@android:color/holo_red_light" />
+                        android:background="@drawable/ic_star_border_black_24dp" />
 
                     <TextView
                         android:id="@+id/activity_restaurant_like_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="25sp"
                         android:text="LIKE"
                         android:textColor="@android:color/holo_red_light" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/linearLayoutCompat3"

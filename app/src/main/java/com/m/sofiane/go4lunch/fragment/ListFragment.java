@@ -28,6 +28,7 @@ import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,9 @@ public class ListFragment extends Fragment  {
         uploadToolbar();
         ButterKnife.bind(this, view);
         initRecyclerView();
+
+
+
 
         this.configureRecyclerView(view);
         return view;
