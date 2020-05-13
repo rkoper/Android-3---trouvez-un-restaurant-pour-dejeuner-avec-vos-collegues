@@ -32,4 +32,44 @@
     <string name="call">CALL</string>
     <string name="like">LIKE</string>
     <string name="website">WEBSITE</string>
+    <string name="app_name">Go4Lunch</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- FACEBOOK -->
+    <string name="facebook_application_id">525610718262133</string>
+    <string name="fb_login_protocol_scheme">fb525610718262133</string>
+    <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
+    <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
+
+    <!-- BOTTOM MENU -->
+    <string name="title_map">Map View</string>
+    <string name="title_List">List View</string>
+    <string name="title_Group">Workmates</string>
+
+
+    <!--  NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--  LoginActivity -->
+
+    <string name="Error_to_login">Error login - Sorry :(</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="urlError">Url Error</string>
+    <string name="phoneError">Phone Error</string>
+    <string name="likeResto">It/\'s a match !</string>
+    <string name="Search">Search</string>
+
+    <string name="formatted_place_data">
+        Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
+    </string>
+    Search
+
 </resources>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    android:theme="@style/AppTheme"
+    android:theme="@style/Theme.AppCompat"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:layout_gravity="start|center_horizontal"
                 android:fontFamily="sans-serif"
                 android:freezesText="false"
-                android:text="@string/i_m_hungry"
+                android:text="@string/_0"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"

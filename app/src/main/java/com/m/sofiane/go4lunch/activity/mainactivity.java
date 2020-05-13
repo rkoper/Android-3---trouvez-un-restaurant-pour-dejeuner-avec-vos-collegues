@@ -4,10 +4,15 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,8 +52,10 @@ import com.m.sofiane.go4lunch.utils.myuserhelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,16 +88,20 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     final Fragment mFavFrag = new FavoriteFragment();
 
     Location gps_loc, network_loc, final_loc;
-    double longitude,latitude;
+    double longitude, latitude;
     HeaderViewHolder mHeaderViewHolder;
 
     final FragmentManager fm = getSupportFragmentManager();
+
+    SharedPreferences mSharedPreferences;
+    public static final String PREFS = "666";
+    public static final String LANG = "language";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         findLocation();
-
+        testLanguage();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadOpenFragement();
@@ -98,6 +109,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         InitBottomNav(false);
         InitDrawerLayout();
         createFireStoreUser();
+
     }
 
     protected static class HeaderViewHolder {
@@ -123,15 +135,23 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return; }
+            return;
+        }
         try {
             gps_loc = Objects.requireNonNull(locationManager).getLastKnownLocation(LocationManager.GPS_PROVIDER);
             network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (gps_loc != null || network_loc != null) {
-            final_loc = gps_loc; latitude = Objects.requireNonNull(final_loc).getLatitude(); longitude = final_loc.getLongitude(); }
-        else { latitude = 0.0; longitude = 0.0; }
+            final_loc = gps_loc;
+            latitude = Objects.requireNonNull(final_loc).getLatitude();
+            longitude = final_loc.getLongitude();
+        } else {
+            latitude = 0.0;
+            longitude = 0.0;
+        }
 
         Singleton.getInstance().setLatitude(latitude);
         Singleton.getInstance().setLongitude(longitude);
@@ -183,17 +203,17 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.map:
                 loadFragment(mapFragment);
-                      mdeco.setBackgroundResource(R.drawable.gradientmap);
+                mdeco.setBackgroundResource(R.drawable.gradientmap);
                 break;
 
             case R.id.list:
                 loadFragment(listFragment);
-                    mdeco.setBackgroundResource(R.drawable.gradientlist);
+                mdeco.setBackgroundResource(R.drawable.gradientlist);
                 break;
 
             case R.id.group:
                 loadFragment(workFragment);
-                     mdeco.setBackgroundResource(R.drawable.gradientfull);
+                mdeco.setBackgroundResource(R.drawable.gradientfull);
                 break;
 
         }
@@ -312,4 +332,14 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
+    public void testLanguage() {
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+
+            conf.locale = new Locale("fr");
+
+
+        res.updateConfiguration(conf, dm);
+    }
 }

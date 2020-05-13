@@ -10,6 +10,7 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
+        resConfigs "en", "fr"
         buildConfigField "boolean", "ANALYTICS", "false"
         applicationId "com.m.sofiane.Go4lunch"
         minSdkVersion 19
@@ -22,7 +23,9 @@ android {
         buildConfigField("String", "facebook_application_id", facebook_application_id)
         buildConfigField("String", "twitter_api_key", twitter_api_key)
         buildConfigField("String", "twitter_secret_key", twitter_secret_key)
-        buildConfigField("String", "APIKEY", APIKEY)
+        buildConfigField("String", "APIKEY", APIKEY
+
+        )
 
 
 

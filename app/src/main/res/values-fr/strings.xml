@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="i_m_hungry">I\'m Hungry!</string>
-    <string name="your_lunch">YOUR LUNCH</string>
-    <string name="favorites">FAVORITES</string>
-    <string name="settings">SETTINGS</string>
-    <string name="logout">LOGOUT</string>
-    <string name="search">Search</string>
+    <string name="i_m_hungry">I\'m XXXXXXX!</string>
+    <string name="your_lunch">YOUR XXXXXXX</string>
+    <string name="favorites">XXXXXXX</string>
+    <string name="settings">XXXXXXX</string>
+    <string name="logout">XXXXXXX</string>
+    <string name="search">XXXXXXX</string>
     <string name="todo">TODO</string>
-    <string name="go4lunch">GO4LUNCH</string>
+    <string name="go4lunch">XXXXXXX</string>
     <string name="name">Name</string>
     <string name="e_mail">E-mail</string>
     <string name="test">test</string>
     <string name="mychoicename">MychoiceName</string>
     <string name="mychoiceadress">MychoiceAdress</string>
     <string name="my_choice">My Choice</string>
-    <string name="no_restaurant_choosen">No restaurant choosen</string>
+    <string name="no_restaurant_choosen">No XXXXXXX choosen</string>
     <string name="switchbutton">Switch</string>
     <string name="notification">Notification</string>
-    <string name="choose_time_to_notification">Choose time to notification :</string>
+    <string name="choose_time_to_notification">Choose time to XXXXXXX :</string>
     <string name="time_picker">Time Picker</string>
     <string name="place_open">place_open</string>
     <string name="_1200m">1200m</string>
@@ -29,12 +29,12 @@
     <string name="home">home</string>
     <string name="place_name_">Place_name</string>
     <string name="place_adress">Place_Adress</string>
-    <string name="call">CALL</string>
-    <string name="like">LIKE</string>
-    <string name="website">WEBSITE</string>
-    <string name="app_name">Go4Lunch</string>
+    <string name="call">XXXXXXX</string>
+    <string name="like">XXXXXXX</string>
+    <string name="website">XXXXXXX</string>
+    <string name="app_name">XXXXXXX</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">XXXXXXX</string>
 
     <!-- FACEBOOK -->
     <string name="facebook_application_id">525610718262133</string>
@@ -43,9 +43,9 @@
     <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
 
     <!-- BOTTOM MENU -->
-    <string name="title_map">Map View</string>
-    <string name="title_List">List View</string>
-    <string name="title_Group">Workmates</string>
+    <string name="title_map">Map XXXXXXX</string>
+    <string name="title_List">List XXXXXXX</string>
+    <string name="title_Group">XXXXXXX</string>
 
 
     <!--  NavigationDrawer -->

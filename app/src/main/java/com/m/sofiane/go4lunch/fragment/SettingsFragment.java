@@ -6,9 +6,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +31,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.work.WorkManager;
 
 import com.m.sofiane.go4lunch.R;
+import com.m.sofiane.go4lunch.activity.mainactivity;
+import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.services.notificationService;
 import com.m.sofiane.go4lunch.utils.languageHelper;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -83,6 +88,7 @@ public class SettingsFragment extends DialogFragment {
     @BindView(R.id.fourL_txtlanguage)
     TextView mTxtLang;
 
+    Locale myLocale;
 
     @BindView(R.id.Five_button_ok)
     ImageButton mButtonTime;
@@ -135,16 +141,21 @@ public class SettingsFragment extends DialogFragment {
         String mLang  = mSharedPreferences.getString(LANG,"en");
         if (mLang.equals("en"))
         {mSwitchEN.setChecked(true);}
+
         else {mSwitchFR.setChecked(true);}
+
         mSwitchFR.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                languageHelper.changeLanguage(mTest, "fr");
+              //  languageHelper.changeLanguage(mTest, "fr");
                 mSharedPreferences.edit().putString(LANG, "fr").apply();
                 System.out.println("-----------> GO FR");
                 mSwitchEN.setChecked(false);
+                Intent refresh = new Intent(getContext(), mainactivity.class);
+                startActivity(refresh);
+
+
             }
         });
-
         mSwitchEN.setOnCheckedChangeListener(((buttonView, isChecked) -> {
          if (isChecked) {
              languageHelper.changeLanguage(mTest, "en");
