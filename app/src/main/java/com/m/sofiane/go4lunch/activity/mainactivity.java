@@ -333,13 +333,22 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void testLanguage() {
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
+        mSharedPreferences = Objects.requireNonNull(getSharedPreferences(LANG, Context.MODE_PRIVATE));
+        String mLang = mSharedPreferences.getString(LANG, "en");
 
+        if (mLang.equals("en")) {
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = new Locale("en");
+            res.updateConfiguration(conf, dm);
+        } else {
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
             conf.locale = new Locale("fr");
 
-
-        res.updateConfiguration(conf, dm);
+            res.updateConfiguration(conf, dm);
+        }
     }
 }

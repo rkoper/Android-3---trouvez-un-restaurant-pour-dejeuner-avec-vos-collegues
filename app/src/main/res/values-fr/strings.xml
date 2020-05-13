@@ -1,51 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="i_m_hungry">I\'m XXXXXXX!</string>
-    <string name="your_lunch">YOUR XXXXXXX</string>
-    <string name="favorites">XXXXXXX</string>
-    <string name="settings">XXXXXXX</string>
-    <string name="logout">XXXXXXX</string>
-    <string name="search">XXXXXXX</string>
-    <string name="todo">TODO</string>
-    <string name="go4lunch">XXXXXXX</string>
-    <string name="name">Name</string>
+    <string name="i_m_hungry">J\'ai faim!</string>
+    <string name="your_lunch">TON DEJEUNER</string>
+    <string name="favorites">FAVORIS</string>
+    <string name="settings">PARAMETRES</string>
+    <string name="logout">DECONNEXION</string>
+    <string name="search">RECHERCHE</string>
+    <string name="todo">FAIRE</string>
+    <string name="go4lunch">GO 4 LUNCH</string>
+    <string name="name">Nom</string>
     <string name="e_mail">E-mail</string>
     <string name="test">test</string>
-    <string name="mychoicename">MychoiceName</string>
-    <string name="mychoiceadress">MychoiceAdress</string>
-    <string name="my_choice">My Choice</string>
-    <string name="no_restaurant_choosen">No XXXXXXX choosen</string>
-    <string name="switchbutton">Switch</string>
+    <string name="mychoicename">Mon choix de resto</string>
+    <string name="mychoiceadress">Mon choix : l\'adresse</string>
+    <string name="my_choice">Mon choix</string>
+    <string name="no_restaurant_choosen">Mon restaurant choisi : </string>
+    <string name="switchbutton">Changer</string>
     <string name="notification">Notification</string>
-    <string name="choose_time_to_notification">Choose time to XXXXXXX :</string>
-    <string name="time_picker">Time Picker</string>
-    <string name="place_open">place_open</string>
+    <string name="choose_time_to_notification">Choisis l\'heure de la notification :</string>
+    <string name="time_picker">Heure choisi</string>
+    <string name="place_open">C\'est ouvert</string>
     <string name="_1200m">1200m</string>
     <string name="_0">(0)</string>
     <string name="textview">TextView</string>
     <string name="place_name">place_name</string>
     <string name="place_location">place_location</string>
     <string name="profil_name">profil name</string>
-    <string name="home">home</string>
+    <string name="home">Ecran d\'accueil</string>
     <string name="place_name_">Place_name</string>
     <string name="place_adress">Place_Adress</string>
-    <string name="call">XXXXXXX</string>
-    <string name="like">XXXXXXX</string>
-    <string name="website">XXXXXXX</string>
-    <string name="app_name">XXXXXXX</string>
+    <string name="call">APPEL</string>
+    <string name="like">J\'AIME</string>
+    <string name="website">SITE</string>
+    <string name="app_name">GO4LUNCH</string>
+    <string name="choice"> mange @ </string>
+    <string name="nochoice"> n\'a pas choisi </string>
 
     <string name="title_activity_main">XXXXXXX</string>
 
-    <!-- FACEBOOK -->
-    <string name="facebook_application_id">525610718262133</string>
-    <string name="fb_login_protocol_scheme">fb525610718262133</string>
-    <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
-    <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
-
-    <!-- BOTTOM MENU -->
-    <string name="title_map">Map XXXXXXX</string>
-    <string name="title_List">List XXXXXXX</string>
-    <string name="title_Group">XXXXXXX</string>
+    <string name="title_map">Carte</string>
+    <string name="title_List">Liste</string>
+    <string name="title_Group">Collegues</string>
 
 
     <!--  NavigationDrawer -->
@@ -54,22 +49,27 @@
 
     <!--  LoginActivity -->
 
-    <string name="Error_to_login">Error login - Sorry :(</string>
+    <string name="Error_to_login">Erreur d\'authentification - désolé(</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="Open">Open</string>
-    <string name="Close">Close</string>
-    <string name="urlError">Url Error</string>
-    <string name="phoneError">Phone Error</string>
-    <string name="likeResto">It/\'s a match !</string>
-    <string name="Search">Search</string>
+    <string name="Open">Ouvert</string>
+    <string name="Close">Fermé</string>
+    <string name="urlError">Erreur dans l\'adresse du site</string>
+    <string name="phoneError">Erreur dans le numero</string>
+    <string name="likeResto"> Coup de coeur !</string>
+    <string name="Search">Recherche</string>
 
     <string name="formatted_place_data">
         Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
     </string>
-    Search
+    <string name="workmats">Collègues disponibles</string>
+    <string name="favfrag">Mes favoris</string>
+    <string name="choose_your_language">Choisis ta langue</string>
+    <string name="anglais">Anglais</string>
+    <string name="fran_ais">Français</string>
+    <string name="language">Langue</string>
 
 </resources>

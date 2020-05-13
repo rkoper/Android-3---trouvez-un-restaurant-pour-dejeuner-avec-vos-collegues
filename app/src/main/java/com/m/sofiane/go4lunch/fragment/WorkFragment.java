@@ -121,7 +121,7 @@ public class WorkFragment extends Fragment {
 
     private void uploadToolbar(View view) {
         TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
-        mTitleText.setText("Availables workmates");
+        mTitleText.setText(R.string.workmats);
 
     }
 

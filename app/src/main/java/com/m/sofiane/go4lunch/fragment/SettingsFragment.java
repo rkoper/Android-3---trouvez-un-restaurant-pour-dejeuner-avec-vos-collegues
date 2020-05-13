@@ -141,27 +141,23 @@ public class SettingsFragment extends DialogFragment {
         String mLang  = mSharedPreferences.getString(LANG,"en");
         if (mLang.equals("en"))
         {mSwitchEN.setChecked(true);}
-
         else {mSwitchFR.setChecked(true);}
 
         mSwitchFR.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-              //  languageHelper.changeLanguage(mTest, "fr");
                 mSharedPreferences.edit().putString(LANG, "fr").apply();
-                System.out.println("-----------> GO FR");
                 mSwitchEN.setChecked(false);
                 Intent refresh = new Intent(getContext(), mainactivity.class);
                 startActivity(refresh);
-
-
             }
         });
         mSwitchEN.setOnCheckedChangeListener(((buttonView, isChecked) -> {
          if (isChecked) {
-             languageHelper.changeLanguage(mTest, "en");
              mSharedPreferences.edit().putString(LANG, "en").apply();
-             System.out.println("-----------> GO EN");
              mSwitchFR.setChecked(false);
+             Intent refresh = new Intent(getContext(), mainactivity.class);
+             startActivity(refresh);
+
          }
 
         }));

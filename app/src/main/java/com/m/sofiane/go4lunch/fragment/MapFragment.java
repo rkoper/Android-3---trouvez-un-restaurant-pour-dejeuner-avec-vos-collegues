@@ -112,7 +112,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         BottomNavigationView mBottomNavigationView = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_bottom_navigation);
         mBottomNavigationView.setVisibility(View.VISIBLE);
         TextView mTitleText = getActivity().findViewById(R.id.toolbar_title);
-        mTitleText.setText(" I'm Hungry!");
+        mTitleText.setText(R.string.i_m_hungry);
     }
 
     @Override

@@ -36,11 +36,6 @@
 
     <string name="title_activity_main">MainActivity</string>
 
-    <!-- FACEBOOK -->
-    <string name="facebook_application_id">525610718262133</string>
-    <string name="fb_login_protocol_scheme">fb525610718262133</string>
-    <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
-    <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
 
     <!-- BOTTOM MENU -->
     <string name="title_map">Map View</string>
@@ -66,10 +61,16 @@
     <string name="phoneError">Phone Error</string>
     <string name="likeResto">It/\'s a match !</string>
     <string name="Search">Search</string>
-
+    <string name="choice"> eat @ </string>
+    <string name="nochoice"> haven\'t decided yet </string>
     <string name="formatted_place_data">
         Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
     </string>
-    Search
+    <string name="workmats">Availables workmates</string>
+    <string name="favfrag">\" My Favorites\"</string>
+    <string name="choose_your_language">Choose your language</string>
+    <string name="anglais">English</string>
+    <string name="fran_ais">French</string>
+    <string name="language">Language</string>
 
 </resources>

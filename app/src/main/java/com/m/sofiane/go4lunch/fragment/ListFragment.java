@@ -70,7 +70,7 @@ public class ListFragment extends Fragment  {
 
     private void uploadToolbar() {
         TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
-        mTitleText.setText(" I'm Hungry!");
+        mTitleText.setText(R.string.i_m_hungry);
 
     }
 

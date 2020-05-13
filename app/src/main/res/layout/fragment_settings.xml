@@ -103,7 +103,7 @@
             android:layout_marginStart="6dp"
             android:layout_marginTop="60dp"
             android:paddingLeft="30dp"
-            android:text="Choose your language"
+            android:text="@string/choose_your_language"
             android:textAppearance="@style/TextAppearance"
             android:textSize="16sp" />
 
@@ -111,13 +111,13 @@
             android:id="@+id/fourL_switchEN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Anglais" />
+            android:text="@string/anglais" />
 
         <Switch
             android:id="@+id/fourL_switchFR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fançais" />
+            android:text="@string/fran_ais" />
 
     </LinearLayout>
 
@@ -169,7 +169,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/fui_transparent"
             android:gravity="right"
-            android:text="Language"
+            android:text="@string/language"
             android:textAppearance="@style/TextAppearance"
             android:textSize="18sp"
             android:visibility="visible"

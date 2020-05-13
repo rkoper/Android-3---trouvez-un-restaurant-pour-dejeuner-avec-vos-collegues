@@ -71,7 +71,7 @@ public class FavoriteFragment extends Fragment {
 
     private void uploadToolbar() {
         TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
-        mTitleText.setText(" My Favorites");
+        mTitleText.setText(R.string.favfrag);
 
     }
 

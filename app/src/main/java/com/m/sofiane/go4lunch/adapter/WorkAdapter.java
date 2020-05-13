@@ -62,15 +62,15 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
 
         if (listData.get(i).getId().equals("2"))
-        {
+        {   String d = getApplicationContext().getResources().getString(R.string.nochoice);
             h.txtname.setTextColor(0xffbdbdbd);
             h.txtname.setTypeface(h.txtname.getTypeface(), Typeface.BOLD_ITALIC);
-            h.txtname.setText(listData.get(i).getUserName() + " haven't decided yet");
+            h.txtname.setText(listData.get(i).getUserName() + " "+ " " + d);
 
         }
         else
-            {
-              h.txtname.setText(listData.get(i).getUserName() + " eat @ " + listData.get(i).getNameOfResto());
+            { String t = getApplicationContext().getResources().getString(R.string.choice);
+              h.txtname.setText(listData.get(i).getUserName() + " " +t + " " +listData.get(i).getNameOfResto());
                 clickOnItem(h, listData.get(i).getPlaceID());
             }
 
