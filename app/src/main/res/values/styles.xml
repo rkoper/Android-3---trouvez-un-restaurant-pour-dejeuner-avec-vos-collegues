@@ -46,4 +46,12 @@
          <item name="android:textColor">@color/colorBlack</item>
          <item name="android:textAppearance">@font/opensans</item>
      </style>
-</resources>
+     <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+         <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+     </style>
+
+     <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+         <item name="android:windowEnterAnimation">@anim/slider_left</item>
+         <item name="android:windowExitAnimation">@anim/slider_right</item>
+     </style>
+ </resources>

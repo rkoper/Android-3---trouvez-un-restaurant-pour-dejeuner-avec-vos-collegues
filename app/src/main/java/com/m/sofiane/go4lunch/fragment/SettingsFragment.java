@@ -2,15 +2,15 @@ package com.m.sofiane.go4lunch.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +26,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.work.WorkManager;
 
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
-import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.services.notificationService;
-import com.m.sofiane.go4lunch.utils.languageHelper;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -234,6 +231,7 @@ public class SettingsFragment extends DialogFragment {
                         .apply();
                 mLayoutTimePicker.setVisibility(View.INVISIBLE);
                 mTimePicker.setVisibility(View.INVISIBLE);
+                mLayoutButton.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -253,9 +251,8 @@ public class SettingsFragment extends DialogFragment {
     }
 
     private void initButton(Calendar calendar) {
-         mButtonTime.setVisibility(View.VISIBLE);
-        mLayoutButton.setVisibility(View.VISIBLE);
 
+        mLayoutButton.setVisibility(View.VISIBLE);
         mButtonTime.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setAlarm(calendar);
@@ -293,6 +290,18 @@ public class SettingsFragment extends DialogFragment {
         Log.e("1 Sha P Click ------>", Boolean.toString(mStatNotif));
         Log.e("1 Sha P Time ------>", Long.toString(mTimeNotif));
     }
+
+    public void showD() {
+        // Set a theme on the dialog builder constructor!
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity(), R.style.MyCustomTheme );
+
+        builder
+                .setTitle( "Your title" )
+                .setMessage( "Your message" )
+                .setPositiveButton( "OK" , (dialog, which) -> dismiss());
+
+    }
+
 
 }
 
