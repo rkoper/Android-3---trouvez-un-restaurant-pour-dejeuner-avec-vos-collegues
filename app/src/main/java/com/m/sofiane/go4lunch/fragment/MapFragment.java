@@ -168,7 +168,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchPlate = searchView.findViewById(searchPlateId);
         searchPlate.setTextColor(getResources().getColor(R.color.Red));
-        searchPlate.setBackgroundResource(R.color.tw__solid_white);
+        searchPlate.setBackgroundResource(R.drawable.dialog_rounded);
     }
 
     @Override

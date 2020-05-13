@@ -43,28 +43,48 @@ public class SettingsFragment extends DialogFragment {
 
     public SettingsFragment() {}
 
-    @BindView(R.id.switchNotif)
-    Switch mSwitch;
-    @BindView(R.id.settings_time_picker)
-    TimePicker mTimePicker;
-    @BindView(R.id.buttonTime)
-    ImageButton mButtonTime;
+
     private int h;
     private int m;
-    @BindView(R.id.layoutbutton)
-    LinearLayout mLayoutButton;
-    @BindView(R.id.layouttimepicker)
-    LinearLayout mLayoutTimePicker;
-    @BindView(R.id.layoutswitch)
-    LinearLayout mLayoutSwitch;
-    @BindView(R.id.layoutclose)
+
+    @BindView(R.id.one_layout_close)
     LinearLayout mLayoutCLose;
-    @BindView(R.id.button_image_close_settings)
+    @BindView(R.id.one_button_image_close_settings)
     ImageButton mCloseButton;
-    @BindView(R.id.layoutTitle)
-    LinearLayout mLayoutTitle;
-    @BindView(R.id.txt_title_settings)
-    TextView mTitleTxt;
+
+    @BindView(R.id.two_layout_notif)
+    LinearLayout mLayoutNotif;
+    @BindView(R.id.two_layout_language)
+    LinearLayout mLayoutLanguage;
+
+    @BindView(R.id.three_layout_subtitle)
+    LinearLayout mLayoutSwitch;
+    @BindView(R.id.three_switchNotif)
+    Switch mSwitch;
+
+    @BindView(R.id.fourR_layout_picker_time)
+    LinearLayout mLayoutTimePicker;
+    @BindView(R.id.fourR_settings_time_picker)
+    TimePicker mTimePicker;
+    @BindView(R.id.fourR_texttime)
+    TextView mTxtPicker;
+
+    @BindView(R.id.fourL_layout_picker_lang)
+    LinearLayout mLayoutLangPicker;
+    @BindView(R.id.fourL_switchEN)
+    Switch mSwitchEN;
+    @BindView(R.id.fourL_switchFR)
+    Switch mSwitchFR;
+    @BindView(R.id.fourL_txtlanguage)
+    TextView mTxtLang;
+
+
+    @BindView(R.id.Five_button_ok)
+    ImageButton mButtonTime;
+    @BindView(R.id.five_layout_save_button)
+    LinearLayout mLayoutButton;
+
+    Boolean mStatNotif;
     SharedPreferences mSharedPreferences;
     public static final String PREFS ="666";
     public static final String TIMETONOTIF= "TimeToNotif";
@@ -76,13 +96,43 @@ public class SettingsFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, null);
         ButterKnife.bind(this, view);
-        initSwitch();
         initCloseButton();
         initVisibiliy();
-        initWindowsTransprent();
-        checkStateSwitch();
+         initWindowsTransprent();
+        clickonNotif();
+        clickonLangauge();
         return view;
     }
+
+    private void clickonLangauge() {
+        mLayoutLanguage.setOnClickListener(v ->
+                displayLang());
+    }
+
+    private void displayLang(){
+        mLayoutSwitch.setVisibility(View.VISIBLE);
+        mSwitch.setVisibility(View.INVISIBLE);
+        mLayoutLangPicker.setVisibility(View.VISIBLE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void clickonNotif() {
+        mLayoutNotif.setOnClickListener(v ->
+                displayNotif());
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void displayNotif(){
+        mLayoutSwitch.setVisibility(View.VISIBLE);
+        mSwitch.setVisibility(View.VISIBLE);
+        mLayoutLangPicker.setVisibility(View.INVISIBLE);
+        checkStateSwitch();
+        initSwitch();
+
+
+    }
+
 
     private void initWindowsTransprent() {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
@@ -93,13 +143,20 @@ public class SettingsFragment extends DialogFragment {
     private void initVisibiliy() {
         mLayoutButton.setVisibility(View.INVISIBLE);
         mLayoutTimePicker.setVisibility(View.INVISIBLE);
+        mLayoutLangPicker.setVisibility(View.INVISIBLE);
+        mLayoutSwitch.setVisibility(View.INVISIBLE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkStateSwitch() {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREFS ,Context.MODE_PRIVATE);
         Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
         if (mStatNotif.equals(true))
-        {mSwitch.setChecked(true);}
+        {mSwitch.setChecked(true);
+            mLayoutSwitch.setVisibility(View.VISIBLE);
+          mLayoutTimePicker.setVisibility(View.VISIBLE);
+              mTimePicker.setVisibility(View.VISIBLE);
+        initPicker();}
         Log.e("Shared P State ------>", mStatNotif.toString());
 
     }
@@ -114,6 +171,8 @@ public class SettingsFragment extends DialogFragment {
                     mTimePicker.setVisibility(View.VISIBLE);
                     initPicker();
                 }
+                else { mLayoutTimePicker.setVisibility(View.VISIBLE);
+                    mTimePicker.setVisibility(View.VISIBLE);}
 
             } else {
                 WorkManager.getInstance().cancelAllWork();
@@ -123,6 +182,9 @@ public class SettingsFragment extends DialogFragment {
                         .putBoolean(STATNOTIF, false)
                         .remove(TIMETONOTIF)
                         .apply();
+                mLayoutTimePicker.setVisibility(View.INVISIBLE);
+                mTimePicker.setVisibility(View.INVISIBLE);
+
             }
         });
     }
@@ -171,7 +233,7 @@ public class SettingsFragment extends DialogFragment {
 
         mSharedPreferences
                 .edit()
-                .putBoolean(STATNOTIF, true)
+               .putBoolean(STATNOTIF, true)
                 .putLong(TIMETONOTIF, (cal.getTimeInMillis()))
                 .apply();
 
