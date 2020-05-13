@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +24,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.work.WorkManager;
 
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.notificationService;
+import com.m.sofiane.go4lunch.utils.languageHelper;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -46,6 +49,8 @@ public class SettingsFragment extends DialogFragment {
 
     private int h;
     private int m;
+
+    Context mContext;
 
     @BindView(R.id.one_layout_close)
     LinearLayout mLayoutCLose;
@@ -83,12 +88,13 @@ public class SettingsFragment extends DialogFragment {
     ImageButton mButtonTime;
     @BindView(R.id.five_layout_save_button)
     LinearLayout mLayoutButton;
-
+    Resources mTest;
     Boolean mStatNotif;
     SharedPreferences mSharedPreferences;
     public static final String PREFS ="666";
     public static final String TIMETONOTIF= "TimeToNotif";
     public static final String STATNOTIF= "StateNotif";
+    public static final String LANG = "language";
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -99,6 +105,10 @@ public class SettingsFragment extends DialogFragment {
         initCloseButton();
         initVisibiliy();
          initWindowsTransprent();
+
+        mTest = getActivity().getResources();
+
+
         clickonNotif();
         clickonLangauge();
         return view;
@@ -113,7 +123,40 @@ public class SettingsFragment extends DialogFragment {
         mLayoutSwitch.setVisibility(View.VISIBLE);
         mSwitch.setVisibility(View.INVISIBLE);
         mLayoutLangPicker.setVisibility(View.VISIBLE);
+     //   checkLangSwitch();
+        chooseYourLanguage();
     }
+
+
+
+
+    private void chooseYourLanguage() {
+        mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG ,Context.MODE_PRIVATE);
+        String mLang  = mSharedPreferences.getString(LANG,"en");
+        if (mLang.equals("en"))
+        {mSwitchEN.setChecked(true);}
+        else {mSwitchFR.setChecked(true);}
+        mSwitchFR.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                languageHelper.changeLanguage(mTest, "fr");
+                mSharedPreferences.edit().putString(LANG, "fr").apply();
+                System.out.println("-----------> GO FR");
+                mSwitchEN.setChecked(false);
+            }
+        });
+
+        mSwitchEN.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+         if (isChecked) {
+             languageHelper.changeLanguage(mTest, "en");
+             mSharedPreferences.edit().putString(LANG, "en").apply();
+             System.out.println("-----------> GO EN");
+             mSwitchFR.setChecked(false);
+         }
+
+        }));
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void clickonNotif() {

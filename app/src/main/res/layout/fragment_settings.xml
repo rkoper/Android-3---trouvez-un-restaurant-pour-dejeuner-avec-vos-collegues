@@ -62,7 +62,7 @@
             android:paddingLeft="30dp"
             android:text="@string/choose_time_to_notification"
             android:textAppearance="@style/TextAppearance"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <TimePicker
             android:id="@+id/fourR_settings_time_picker"
@@ -105,19 +105,19 @@
             android:paddingLeft="30dp"
             android:text="Choose your language"
             android:textAppearance="@style/TextAppearance"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <Switch
             android:id="@+id/fourL_switchEN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Switch" />
+            android:text="Anglais" />
 
         <Switch
             android:id="@+id/fourL_switchFR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Switch" />
+            android:text="Fançais" />
 
     </LinearLayout>
 
@@ -142,7 +142,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/switchbutton"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
