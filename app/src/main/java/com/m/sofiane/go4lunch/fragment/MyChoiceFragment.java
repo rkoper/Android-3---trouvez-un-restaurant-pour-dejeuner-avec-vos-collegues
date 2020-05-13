@@ -113,6 +113,7 @@ public class MyChoiceFragment extends DialogFragment {
                 if (mName.equals("0"))
                 {
                     noRestaurantChoice();
+                    Log.d("TRUE----------", "get failed with ", task.getException());
                 }
                 else {
                     callMyChoice(mName, mAdress, mPhotoResto);

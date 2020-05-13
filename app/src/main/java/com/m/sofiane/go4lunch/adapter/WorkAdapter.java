@@ -3,6 +3,7 @@ package com.m.sofiane.go4lunch.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,16 +61,16 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     @SuppressLint({"SetTextI18n", "RestrictedApi"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-
+        Resources res = h.itemView.getContext().getResources();
         if (listData.get(i).getId().equals("2"))
-        {   String d = getApplicationContext().getResources().getString(R.string.nochoice);
+        {   String d =res.getString(R.string.nochoice);
             h.txtname.setTextColor(0xffbdbdbd);
             h.txtname.setTypeface(h.txtname.getTypeface(), Typeface.BOLD_ITALIC);
             h.txtname.setText(listData.get(i).getUserName() + " "+ " " + d);
 
         }
         else
-            { String t = getApplicationContext().getResources().getString(R.string.choice);
+            { String t = res.getString(R.string.choice);
               h.txtname.setText(listData.get(i).getUserName() + " " +t + " " +listData.get(i).getNameOfResto());
                 clickOnItem(h, listData.get(i).getPlaceID());
             }
@@ -79,8 +80,6 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
                 .load(listData.get(i).getUserPhoto())
                 .apply(RequestOptions.circleCropTransform())
                 .into(h.urlphoto);
-
-
     }
 
     @SuppressLint("RestrictedApi")

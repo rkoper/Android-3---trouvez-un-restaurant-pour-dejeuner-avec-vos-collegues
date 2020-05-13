@@ -33,8 +33,6 @@
     <string name="like">LIKE</string>
     <string name="website">WEBSITE</string>
     <string name="app_name">Go4Lunch</string>
-    <string name="choice"> eat @ </string>
-    <string name="nochoice"> haven\'t decided yet </string>
 
     <string name="title_activity_main">MainActivity</string>
 
@@ -62,6 +60,8 @@
     <string name="phoneError">Phone Error</string>
     <string name="likeResto">It/\'s a match !</string>
     <string name="Search">Search</string>
+    <string name="choice"> eat @ </string>
+    <string name="nochoice"> haven\'t decided yet </string>
 
     <string name="formatted_place_data">
         Name: %1$s\nAddress: %2$s\nPhone: %3$s\nWebsite: %4$s\nRating: %5$s\nId: %6$s\n
