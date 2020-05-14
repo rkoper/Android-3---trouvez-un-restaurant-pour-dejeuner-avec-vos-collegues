@@ -104,11 +104,11 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         testLanguage();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        loadOpenFragement();
         InitToolBar(false);
         InitBottomNav(false);
         InitDrawerLayout();
         createFireStoreUser();
+        loadOpenFragement();
 
     }
 

@@ -73,4 +73,9 @@
     <string name="fran_ais">Français</string>
     <string name="language">Langue</string>
 
+    <string name="facebook_application_id">525610718262133</string>
+    <string name="fb_login_protocol_scheme">fb525610718262133</string>
+    <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
+    <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
+
 </resources>
