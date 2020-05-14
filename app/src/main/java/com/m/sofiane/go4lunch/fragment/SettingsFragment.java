@@ -3,7 +3,6 @@ package com.m.sofiane.go4lunch.fragment;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -34,7 +35,6 @@ import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.services.notificationService;
 
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -57,8 +57,8 @@ public class SettingsFragment extends DialogFragment {
     LinearLayout mLayoutLanguage;
     @BindView(R.id.e3_notification)
     LinearLayout mLayoutNotif;
-    @BindView(R.id.e4_switch)
-    LinearLayout mLayoutSwitchNotif;
+    @BindView(R.id.e4_switch_notif)
+    LinearLayout mLayoutSwitchNot;
     @BindView(R.id.three_switchNotif)
     Switch mSwitchNotif;
     @BindView(R.id.e5_time_picker)
@@ -71,6 +71,8 @@ public class SettingsFragment extends DialogFragment {
     ImageButton mButtonSwitchOk;
     @BindView(R.id.button_close)
     ImageButton mButtonClose;
+    @BindView(R.id.Layout)
+    RelativeLayout mLayoutG;
 
     public SettingsFragment() {}
 
@@ -86,22 +88,31 @@ public class SettingsFragment extends DialogFragment {
     public static final String STATNOTIF= "StateNotif";
     public static final String LANG = "language";
 
+    Animation mAnimLeftRight,mAnimRightLeft,mAnimFadeIn,mAnimFadeOut,mAnimZoomIn,mAnimZoomOut,mAnimSimple,mAnimBottom;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, null);
+        initAnim();
         ButterKnife.bind(this, view);
         initCloseButton();
-        initVisibiliy();
         initWindowsTransprent();
-
-        mTest = getActivity().getResources();
-
-
         clickonNotif();
         clickonLangauge();
         return view;
+    }
+
+    private void initAnim() {
+        mAnimLeftRight  = AnimationUtils.loadAnimation(getContext(),R.anim.lefttoright);
+        mAnimRightLeft  = AnimationUtils.loadAnimation(getContext(),R.anim.righttoleft);
+        mAnimFadeIn  = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
+        mAnimFadeOut  = AnimationUtils.loadAnimation(getContext(),R.anim.fadeout);
+        mAnimZoomIn  = AnimationUtils.loadAnimation(getContext(),R.anim.zoomin);
+        mAnimZoomOut  = AnimationUtils.loadAnimation(getContext(),R.anim.zoomout);
+        mAnimSimple = AnimationUtils.loadAnimation(getContext(),R.anim.sample_anim);
+        mAnimBottom = AnimationUtils.loadAnimation(getContext(),R.anim.inbottom);
+
     }
 
     private void clickonLangauge() {
@@ -115,21 +126,17 @@ public class SettingsFragment extends DialogFragment {
     }
 
 
+    @SuppressLint("ResourceAsColor")
     public void invisibleNotif(){
+        mLayoutSwitchFrench.startAnimation(mAnimLeftRight);
         mLayoutSwitchFrench.setVisibility(View.VISIBLE);
+        mLayoutSwitchEnglish.startAnimation(mAnimLeftRight);
         mLayoutSwitchEnglish.setVisibility(View.VISIBLE);
-        mLayoutSwitchNotif.setVisibility(View.INVISIBLE);
-        mLayoutTimePicker.setVisibility(View.INVISIBLE);
-        mLayoutOk.setVisibility(View.INVISIBLE);
-        mLayoutNotif.setVisibility(View.VISIBLE);
-    }
 
-    private void initVisibiliy() {
-        mLayoutSwitchNotif.setVisibility(View.INVISIBLE);
-        mLayoutTimePicker.setVisibility(View.INVISIBLE);
         mLayoutOk.setVisibility(View.INVISIBLE);
-        mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
-        mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
+        mLayoutTimePicker.setVisibility(View.INVISIBLE);
+        mLayoutSwitchNot.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -172,9 +179,12 @@ public class SettingsFragment extends DialogFragment {
     }
 
     public void invisibleLang(){
-        mLayoutSwitchNotif.setVisibility(View.VISIBLE);
+
+        mLayoutSwitchNot.setVisibility(View.VISIBLE);
         mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
         mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
+
+
     }
 
     private void initWindowsTransprent() {
@@ -190,9 +200,7 @@ public class SettingsFragment extends DialogFragment {
         Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
         if (mStatNotif.equals(true))
         {mSwitchNotif.setChecked(true);
-            mLayoutNotif.setVisibility(View.VISIBLE);
             mLayoutTimePicker.setVisibility(View.VISIBLE);
-            mWidgetTimePicker.setVisibility(View.VISIBLE);
             initPicker();}
         Log.e("Shared P State ------>", mStatNotif.toString());
 
@@ -203,12 +211,15 @@ public class SettingsFragment extends DialogFragment {
 
         mSwitchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     mLayoutTimePicker.setVisibility(View.VISIBLE);
                     mWidgetTimePicker.setVisibility(View.VISIBLE);
                     initPicker();
                 }
-                else { mLayoutTimePicker.setVisibility(View.VISIBLE);
+                else {    mLayoutTimePicker.startAnimation(mAnimSimple);
+
+                    mLayoutTimePicker.setVisibility(View.VISIBLE);
                     mWidgetTimePicker.setVisibility(View.VISIBLE);}
 
             } else {
@@ -219,10 +230,6 @@ public class SettingsFragment extends DialogFragment {
                         .putBoolean(STATNOTIF, false)
                         .remove(TIMETONOTIF)
                         .apply();
-                mLayoutTimePicker.setVisibility(View.INVISIBLE);
-                mWidgetTimePicker.setVisibility(View.INVISIBLE);
-                mButtonSwitchOk.setVisibility(View.INVISIBLE);
-                mLayoutOk.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -242,7 +249,7 @@ public class SettingsFragment extends DialogFragment {
     }
 
     private void initButton(Calendar calendar) {
-
+        mLayoutOk.startAnimation(mAnimBottom);
         mLayoutOk.setVisibility(View.VISIBLE);
         mButtonSwitchOk.setVisibility(View.VISIBLE);
         mButtonSwitchOk.setOnClickListener(v -> {
@@ -258,6 +265,7 @@ public class SettingsFragment extends DialogFragment {
     }
     @Override
     public void onDestroyView() {
+        mLayoutG.startAnimation(mAnimZoomOut);
         super.onDestroyView();
     }
 

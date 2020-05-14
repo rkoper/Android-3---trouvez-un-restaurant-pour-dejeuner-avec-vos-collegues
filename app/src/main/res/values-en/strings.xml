@@ -77,4 +77,5 @@
     <string name="fb_login_protocol_scheme">fb525610718262133</string>
     <string name="twitter_consumer_key" >qxqkFJe13qvbDmrGB8KOffjkm</string>
     <string name="twitter_consumer_secret">SsVDzz9uUtVfGAOYLko36hDP4KM7J98QKKeV6JBOWBgp3M7C9d</string>
+    <string name="active_notification">Active notification</string>
 </resources>

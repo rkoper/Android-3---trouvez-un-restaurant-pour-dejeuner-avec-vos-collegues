@@ -42,7 +42,6 @@ public class loginactivity extends AppCompatActivity {
                     AuthUI.getInstance().createSignInIntentBuilder()
                             .setAvailableProviders(mProviders)
                             .setTheme(R.style.MyTheme)
-                            .setLogo(R.drawable.logogl)
                             .setIsSmartLockEnabled(true)
                             .build(), MY_REQUEST_CODE);
         }

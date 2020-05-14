@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.loginactivity"
-    android:background="@drawable/go4lunchdef">
+    android:background="@drawable/one_screen">
 
 </RelativeLayout>

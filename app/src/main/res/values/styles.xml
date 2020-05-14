@@ -15,7 +15,7 @@
 
     <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-     //   <item name="android:windowBackground">@drawable/go4lunchdef</item>
+     //   <item name="android:windowBackground">@drawable/one_screen</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">

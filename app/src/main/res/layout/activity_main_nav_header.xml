@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/backdrawer"
+    android:background="@drawable/two_screen"
     android:orientation="vertical">
 
 
@@ -17,25 +17,13 @@
         android:contentDescription="@string/todo" />
 
     <TextView
-        android:id="@+id/profiltext3"
-        android:layout_width="228dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/go4lunch"
-        android:textAlignment="viewStart"
-        android:textColor="@color/tw__solid_white"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/profiltextnameBis"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="105dp"
         android:layout_marginTop="115dp"
         android:text="@string/name"
-        android:textColor="@color/tw__solid_white"
+        android:textColor="@color/Red"
         android:textSize="15sp" />
 
     <TextView
@@ -45,7 +33,7 @@
         android:layout_marginLeft="105dp"
         android:layout_marginTop="135dp"
         android:text="@string/e_mail"
-        android:textColor="@color/tw__solid_white"
+        android:textColor="@color/Red"
         android:textSize="12sp"
         android:textStyle="italic" />
 
