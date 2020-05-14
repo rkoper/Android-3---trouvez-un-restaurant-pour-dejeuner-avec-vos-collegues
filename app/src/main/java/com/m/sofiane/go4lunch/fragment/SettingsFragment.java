@@ -121,6 +121,7 @@ public class SettingsFragment extends DialogFragment {
         mLayoutSwitchNotif.setVisibility(View.INVISIBLE);
         mLayoutTimePicker.setVisibility(View.INVISIBLE);
         mLayoutOk.setVisibility(View.INVISIBLE);
+        mLayoutNotif.setVisibility(View.VISIBLE);
     }
 
     private void initVisibiliy() {
@@ -174,7 +175,6 @@ public class SettingsFragment extends DialogFragment {
         mLayoutSwitchNotif.setVisibility(View.VISIBLE);
         mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
         mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
-        mLayoutLanguage.setVisibility(View.INVISIBLE);
     }
 
     private void initWindowsTransprent() {
