@@ -174,11 +174,11 @@
 
     <TextView
         android:id="@+id/RateTxt"
-        android:layout_width="14dp"
-        android:layout_height="9dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="280dp"
-        android:textAppearance="@style/TextAppearanceBlack"
         android:text="@string/textview"
+        android:textAppearance="@style/TextAppearanceBlack"
         android:textSize="12sp" />
 
     <!-- 1 | Add an image button -->

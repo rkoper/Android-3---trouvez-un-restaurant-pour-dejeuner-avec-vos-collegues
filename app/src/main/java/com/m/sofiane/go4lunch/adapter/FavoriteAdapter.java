@@ -60,13 +60,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         callPhoto(h, ld);
         callAdress(h, ld);
         deleteItem( ld, i);
-
     }
 
 
     public void deleteItem(MyFavorite ld, int i ) {
-
-
         mButtonFav.setOnClickListener(v -> {
 
             String itemLabel = listData.get(i).getName();

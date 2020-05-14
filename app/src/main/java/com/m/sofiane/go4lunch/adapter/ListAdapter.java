@@ -15,20 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +60,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     final FragmentManager fragmentManager;
     CharSequence mKeyName = "";
     Location location;
+    Double mRate;
 
 
     public ListAdapter(ArrayList<Result> mData, Context mContext, FragmentManager fragmentManager, CharSequence mKeyName, ArrayList<String> mTest ) {
@@ -73,14 +70,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         this.mKeyName = mKeyName;
         this.mTest = mTest;
 
-     //   Log.e("ADAPTER ID", String.valueOf(mTest));
-       // Log.e("ADAPTER NAME", String.valueOf(mKeyName));
+        //   Log.e("ADAPTER ID", String.valueOf(mTest));
+        // Log.e("ADAPTER NAME", String.valueOf(mKeyName));
 
     }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recyclerview,viewGroup,false);
+
         return new ListAdapter.ViewHolder(view);
     }
 
@@ -95,8 +93,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         idDetailCalling(i);
         countCall(h,i);
         clickAndSendData(h,i);
-
-
     }
 
     private void countCall(ViewHolder h, int i) {
@@ -115,13 +111,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         if (countMap.get(mNameOfRestaurant)==null)
         {
             h.R_place_people_count.setText("(" + "0" +")");
-
         }
-        else
-            {
-                h.R_place_people_count.setText("("+ Objects.requireNonNull(countMap.get(mNameOfRestaurant)).toString()+")");
-            }
 
+        else
+        {
+            h.R_place_people_count.setText("("+ Objects.requireNonNull(countMap.get(mNameOfRestaurant)).toString()+")");
+        }
     }
 
     public void clickAndSendData(ViewHolder h, int i ){
@@ -131,9 +126,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             Intent intent= new Intent(mContext, subactivity.class);
             intent.putExtra("I", mData.get(i).getPlaceId());
             mContext.startActivity(intent);
-
         });
-
     }
 
     private void idDetailCalling(int i) {
@@ -187,10 +180,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private void rateCalling(ViewHolder h, int i) {
         if (mData.get(i).getRating() != null) {
             h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
-            double mRate = mData.get(i).getRating();
-            Utils.displayStarsforList(mRate, ((AppCompatActivity) mContext));
-        }
-    }
+            mRate = mData.get(i).getRating();
+            if (mRate<3.6){
+                h.R_rate1.setVisibility(View.INVISIBLE);
+            } else if (mRate<1.3) {
+                h.R_rate1.setVisibility(View.INVISIBLE);
+                h.R_rate2.setVisibility(View.INVISIBLE);
+            }}
+
+        else {
+            h.R_rate1.setVisibility(View.INVISIBLE) ;
+            h.R_rate2.setVisibility(View.INVISIBLE) ;
+            h.R_rate3.setVisibility(View.INVISIBLE);}
+            }
 
     private void adresseCalling(@NonNull ListAdapter.ViewHolder h, int i ) {
         mAdress = mData.get(i).getVicinity();
@@ -199,10 +201,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         else {
             mLoadAdress = mAdress.split("\\,", 2)[0];
             h.R_adress.setText(mLoadAdress);
-
-
-            System.out.println("-------------->" + mAdress);
-            System.out.println("---------------> " + mLoadAdress);
         }
     }
 
@@ -213,8 +211,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         } else {
             h.R_name.setText(mNameOfRestaurant);
         }
-
-
     }
 
     private void imageCalling(@NonNull ListAdapter.ViewHolder h, int i) {
@@ -222,34 +218,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         {UrlPhoto = DEFAUTPHOTO;}
         else { refPhoto = mData.get(i).getPhotos().get(0).getPhotoReference();
 
-            UrlPhoto = URLPHOTO
-                    + MAX_WIDTH
-                    + MAX_HEIGHT
-                    + PHOTOREF
-                    + refPhoto
-                    + KEY
-                    + API_KEY;
-
-            System.out.println("UrlPhoto--------+++++"+ URLPHOTO);
-            System.out.println("MaxW--------+++++"+ MAX_WIDTH);
-            System.out.println("MaxH--------+++++"+ MAX_HEIGHT);
-            System.out.println("PhotoRef--------+++++"+ PHOTOREF);
-            System.out.println("PhotoRef 2 --------+++++"+ refPhoto);
-            System.out.println("Key --------+++++"+ KEY);
-            System.out.println("Key 2 --------+++++"+ API_KEY);
-            System.out.println("DEF --------+++++"+ UrlPhoto);
-
-
+            UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + refPhoto + KEY + API_KEY;
             RequestManager glide = Glide.with(mContext);
             if (!(UrlPhoto == null)) {
                 glide.load(UrlPhoto).into(h.R_photo);
             } else {
                 glide.load(R.drawable.ic_notifications_black_24dp).into(h.R_photo);
             }}
-
-
-
     }
+
     @Override
     public int getItemCount() {
         return (mData == null) ? 0 : mData.size();
@@ -296,12 +273,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         TextView R_adress;
         @BindView(R.id.place_photo)
         ImageView R_photo;
-      //  @BindView(R.id.place_rating_icon1)
-     //   ImageView R_rate1;
-    //    @BindView(R.id.place_rating_icon2)
-       // ImageView R_rate2;
-    //    @BindView(R.id.place_rating_icon3)
-        // ImageView R_rate3;
+        @BindView(R.id.place_rating_icon1)
+        ImageView R_rate1;
+        @BindView(R.id.place_rating_icon2)
+        ImageView R_rate2;
+        @BindView(R.id.place_rating_icon3)
+        ImageView R_rate3;
         @BindView(R.id.RateTxt)
         TextView R_rateTxt;
         @BindView(R.id.place_distance)

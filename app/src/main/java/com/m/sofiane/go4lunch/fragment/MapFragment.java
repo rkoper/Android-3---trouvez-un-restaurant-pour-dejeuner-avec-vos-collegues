@@ -50,6 +50,7 @@ import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -123,7 +124,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         inflater.inflate(R.menu.activity_main_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        setSearchTextColour(searchView);
+        Utils.colorSearch(searchView, mToolbar);
 
         searchView.setOnSearchClickListener(v -> DoAfterClickOnSearch(mToolbar, searchView));
         searchView.setOnCloseListener(() -> {
@@ -151,7 +152,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 Toast.makeText(getContext(), "QUERY", Toast.LENGTH_SHORT).show();
                 if (item.length() != 0) {
                     System.out.println("1-------->");
-                    build_retrofit_and_get_responseForSearch(view, item);}
+                    build_retrofit_and_get_responseForSearch(item);}
 
                 else{
                     mRecyclerView.setVisibility(View.GONE);
@@ -164,64 +165,28 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         });
     }
 
-    private void setSearchTextColour(SearchView searchView) {
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = searchView.findViewById(searchPlateId);
-        searchPlate.setTextColor(getResources().getColor(R.color.Red));
-        searchPlate.setBackgroundResource(R.drawable.dialog_rounded);
-    }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
-    private void build_retrofit_and_get_responseForSearch (View view, String input) {
-
-            Double mLat = Singleton.getInstance().getmLatitude();
-            double mLng = Singleton.getInstance().getmLongitude();
-
-            String url = "https://maps.googleapis.com/maps/";
-
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
-                    .build();
-
-            googleInterface service = retrofit.create(googleInterface.class);
-
-            Call<AutoComplete> call = service.getNearbyPlacesAutoComplete(mLat + "," + mLng, input);
+    private void build_retrofit_and_get_responseForSearch (String input) {
+         Call<AutoComplete> call =   Utils.retrofitforMaps(input);
 
             call.enqueue(new Callback<AutoComplete>() {
                 @SuppressLint({"RestrictedApi", "LongLogTag"})
                 @Override
                 public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
-                        listdataForSearch = new ArrayList<>();
+                    listdataForSearch = new ArrayList<>();
                     for (int i = 0; i < Objects.requireNonNull(place.body()).getPredictions().size(); i++) {
-                      //  String mS = place.body().getPredictions().get(i).getDescription();
                         listdataForSearch.add(place.body().getPredictions().get(i));
-
                         placeIdToCompare = place.body().getPredictions().get(i).getPlaceId();
-
-
                         mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
                         mRecyclerView.setAdapter(mAdapter);
-                        System.out.println("2-------->");
                         compareToUpdateMarkers(placeIdToCompare);
-
-
                         mRecyclerView.setVisibility(View.VISIBLE);
                     }
-                    Log.e("LIST ID----->", listdataForSearch.toString());
-
                 }
-
                 @Override
                 public void onFailure(Call<AutoComplete> call, Throwable t) {
                 }
@@ -229,28 +194,19 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         }
 
     private void compareToUpdateMarkers( String placeIdToCompare) {
-        System.out.println("3-------->");
         for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
-            System.out.println("placeIdToCompare--------> " + placeIdToCompare);
-            System.out.println("Place ID -------->" + Singleton.getInstance().getArrayList().get(i).getReference());
             if (placeIdToCompare.equals(Singleton.getInstance().getArrayList().get(i).getReference())) {
                 mMap.clear();
-                System.out.println("placeIdToCompare--------> " + placeIdToCompare);
-                System.out.println("Place ID -------->" + Singleton.getInstance().getArrayList().get(i).getId());
                 Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
                 Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
                 mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
-                System.out.println("mLatLngForAll--------> " + mLatLngForAll);
             }
-
-                System.out.println("4-------->" + mLatLngForAll);
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(mLatLngForAll);
                 markerOptions.snippet(placeIdToCompare);
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
                 mRestoMarker = mMap.addMarker(markerOptions);
         }
-
         Onclick();
     }
 

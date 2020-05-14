@@ -27,6 +27,7 @@ import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
+import com.m.sofiane.go4lunch.utils.Utils;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.ArrayList;
@@ -59,10 +60,6 @@ public class ListFragment extends Fragment  {
         uploadToolbar();
         ButterKnife.bind(this, view);
         initRecyclerView();
-
-
-
-
         this.configureRecyclerView(view);
         return view;
     }
@@ -80,7 +77,7 @@ public class ListFragment extends Fragment  {
         inflater.inflate(R.menu.activity_main_menu, menu);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        setSearchTextColour(searchView);
+        Utils.colorSearch(searchView, mToolbar);
 
         searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
         searchView.setOnCloseListener(() -> {
@@ -111,13 +108,6 @@ public class ListFragment extends Fragment  {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void setSearchTextColour(SearchView searchView) {
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        EditText searchPlate = searchView.findViewById(searchPlateId);
-        searchPlate.setTextColor(getResources().getColor(R.color.Red));
-        searchPlate.setBackgroundResource(R.drawable.dialog_rounded);
-    }
 
 
     private void configureRecyclerView(View view) {
