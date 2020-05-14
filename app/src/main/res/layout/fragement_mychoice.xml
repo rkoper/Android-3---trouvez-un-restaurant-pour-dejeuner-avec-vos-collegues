@@ -10,32 +10,6 @@
     tools:ignore="ExtraText">
 
     <LinearLayout
-        android:id="@+id/layout_choice_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="110dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <ImageButton
-            android:id="@+id/frag_choice_close"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/fui_transparent"
-            app:srcCompat="@drawable/ic_cancel_white"
-            tools:ignore="MissingConstraints" />
-
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/layout_choice_name"
         android:layout_width="120sp"
         android:layout_height="120sp"
@@ -189,5 +163,32 @@
             android:background="@color/fui_transparent"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_cancel_black_24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_choice_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/dialog_rounded_bg"
+        android:minWidth="350dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/frag_choice_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1sp"
+            android:background="@color/fui_transparent"
+            app:srcCompat="@drawable/ic_cancel_white"
+            tools:ignore="MissingConstraints" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

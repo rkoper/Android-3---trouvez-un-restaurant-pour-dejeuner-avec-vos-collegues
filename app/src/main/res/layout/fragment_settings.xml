@@ -1,75 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/fui_transparent"
-    android:orientation="vertical">
-
+    android:orientation="horizontal"
+    android:layout_height="match_parent"
+    android:maxHeight="500dp"
+    android:maxWidth="900dp">
 
     <LinearLayout
-        android:id="@+id/five_layout_save_button"
-        android:layout_width="120sp"
-        android:layout_height="120sp"
-        android:layout_marginTop="380dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:id="@+id/e1_english"
+        android:layout_width="125dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="00dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/Five_button_ok"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/fui_transparent"
-            android:text="@string/time_picker"
-            app:srcCompat="@drawable/ic_check_circle_white"
-            tools:ignore="MissingConstraints" />
+        <Switch
+            android:id="@+id/fourL_switchEN"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:text="@string/anglais"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fourR_layout_picker_time"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:paddingLeft="25dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:visibility="invisible">
+        android:id="@+id/e1_french"
+        android:layout_width="125dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="125dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
+
+        <Switch
+            android:id="@+id/fourL_switchFR"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:text="@string/fran_ais"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/e2_language"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/fourR_texttime"
+            android:id="@+id/twoL_txt_language_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_transparent"
+            android:gravity="center"
+            android:text="@string/language"
+            android:textAppearance="@style/TextAppearance"
+            android:textSize="22sp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_cancel_white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/e3_notification"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/twoR_txt_notif_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_transparent"
+            android:gravity="center"
+            android:text="@string/notification"
+            android:textAppearance="@style/TextAppearance"
+            android:textSize="22sp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_cancel_white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/e4_switch"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
+
+        <Switch
+            android:id="@+id/three_switchNotif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Active notification"
+            android:textAppearance="@style/TextAppearance"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/e5_time_picker"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/e5_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="3dp"
             android:paddingLeft="30dp"
             android:text="@string/choose_time_to_notification"
             android:textAppearance="@style/TextAppearance"
             android:textSize="16sp" />
 
         <TimePicker
-            android:id="@+id/fourR_settings_time_picker"
+            android:id="@+id/e5_widget_time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
             android:ems="10"
             android:gravity="center"
             android:inputType="time"
@@ -82,152 +146,31 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fourL_layout_picker_lang"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:paddingLeft="25dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/fourL_txtlanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="60dp"
-            android:paddingLeft="30dp"
-            android:text="@string/choose_your_language"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="16sp" />
-
-        <Switch
-            android:id="@+id/fourL_switchEN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/anglais" />
-
-        <Switch
-            android:id="@+id/fourL_switchFR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fran_ais" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/three_layout_subtitle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <Switch
-            android:id="@+id/three_switchNotif"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/switchbutton"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/two_layout_language"
-        android:layout_width="130dp"
-        android:layout_height="28sp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:visibility="visible"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/twoL_txt_language_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:background="@color/fui_transparent"
-            android:gravity="right"
-            android:text="@string/language"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="18sp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_cancel_white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/two_layout_notif"
-        android:layout_width="130dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:visibility="visible"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/twoR_txt_notif_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:background="@color/fui_transparent"
-            android:gravity="left"
-            android:text="@string/notification"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="18sp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_cancel_white" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/one_layout_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/dialog_rounded_bg"
-        android:minWidth="350dp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:id="@+id/e6_ok"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="450dp"
+        android:background="@drawable/dialog_triangle_2"
+        android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/one_button_image_close_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:id="@+id/e6_button_ok"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:background="@color/fui_transparent"
-            app:srcCompat="@drawable/ic_cancel_white" />
+            android:text="@string/time_picker"
+            app:srcCompat="@drawable/ic_check_circle_white"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/button_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="135dp"
+        android:background="@drawable/dialog_rounded_bg"
+        app:srcCompat="@drawable/ic_cancel_white" />
+
+</RelativeLayout>

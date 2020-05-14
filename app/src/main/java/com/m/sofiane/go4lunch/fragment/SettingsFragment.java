@@ -45,6 +45,32 @@ import butterknife.ButterKnife;
  */
 
 public class SettingsFragment extends DialogFragment {
+    @BindView(R.id.e1_english)
+    LinearLayout mLayoutSwitchEnglish;
+    @BindView(R.id.fourL_switchEN)
+    Switch mSwitchEnglish;
+    @BindView(R.id.e1_french)
+    LinearLayout mLayoutSwitchFrench;
+    @BindView(R.id.fourL_switchFR)
+    Switch mSwitchFrench;
+    @BindView(R.id.e2_language)
+    LinearLayout mLayoutLanguage;
+    @BindView(R.id.e3_notification)
+    LinearLayout mLayoutNotif;
+    @BindView(R.id.e4_switch)
+    LinearLayout mLayoutSwitchNotif;
+    @BindView(R.id.three_switchNotif)
+    Switch mSwitchNotif;
+    @BindView(R.id.e5_time_picker)
+    LinearLayout mLayoutTimePicker;
+    @BindView(R.id.e5_widget_time_picker)
+    TimePicker mWidgetTimePicker;
+    @BindView(R.id.e6_ok)
+    LinearLayout mLayoutOk;
+    @BindView(R.id.e6_button_ok)
+    ImageButton mButtonSwitchOk;
+    @BindView(R.id.button_close)
+    ImageButton mButtonClose;
 
     public SettingsFragment() {}
 
@@ -52,45 +78,6 @@ public class SettingsFragment extends DialogFragment {
     private int h;
     private int m;
 
-    Context mContext;
-
-    @BindView(R.id.one_layout_close)
-    LinearLayout mLayoutCLose;
-    @BindView(R.id.one_button_image_close_settings)
-    ImageButton mCloseButton;
-
-    @BindView(R.id.two_layout_notif)
-    LinearLayout mLayoutNotif;
-    @BindView(R.id.two_layout_language)
-    LinearLayout mLayoutLanguage;
-
-    @BindView(R.id.three_layout_subtitle)
-    LinearLayout mLayoutSwitch;
-    @BindView(R.id.three_switchNotif)
-    Switch mSwitch;
-
-    @BindView(R.id.fourR_layout_picker_time)
-    LinearLayout mLayoutTimePicker;
-    @BindView(R.id.fourR_settings_time_picker)
-    TimePicker mTimePicker;
-    @BindView(R.id.fourR_texttime)
-    TextView mTxtPicker;
-
-    @BindView(R.id.fourL_layout_picker_lang)
-    LinearLayout mLayoutLangPicker;
-    @BindView(R.id.fourL_switchEN)
-    Switch mSwitchEN;
-    @BindView(R.id.fourL_switchFR)
-    Switch mSwitchFR;
-    @BindView(R.id.fourL_txtlanguage)
-    TextView mTxtLang;
-
-    Locale myLocale;
-
-    @BindView(R.id.Five_button_ok)
-    ImageButton mButtonTime;
-    @BindView(R.id.five_layout_save_button)
-    LinearLayout mLayoutButton;
     Resources mTest;
     Boolean mStatNotif;
     SharedPreferences mSharedPreferences;
@@ -107,7 +94,7 @@ public class SettingsFragment extends DialogFragment {
         ButterKnife.bind(this, view);
         initCloseButton();
         initVisibiliy();
-         initWindowsTransprent();
+        initWindowsTransprent();
 
         mTest = getActivity().getResources();
 
@@ -123,87 +110,90 @@ public class SettingsFragment extends DialogFragment {
     }
 
     private void displayLang(){
-        mLayoutSwitch.setVisibility(View.VISIBLE);
-        mSwitch.setVisibility(View.INVISIBLE);
-        mLayoutLangPicker.setVisibility(View.VISIBLE);
-     //   checkLangSwitch();
+        invisibleNotif();
         chooseYourLanguage();
     }
 
 
+    public void invisibleNotif(){
+        mLayoutSwitchFrench.setVisibility(View.VISIBLE);
+        mLayoutSwitchEnglish.setVisibility(View.VISIBLE);
+        mLayoutSwitchNotif.setVisibility(View.INVISIBLE);
+        mLayoutTimePicker.setVisibility(View.INVISIBLE);
+        mLayoutOk.setVisibility(View.INVISIBLE);
+    }
+
+    private void initVisibiliy() {
+        mLayoutSwitchNotif.setVisibility(View.INVISIBLE);
+        mLayoutTimePicker.setVisibility(View.INVISIBLE);
+        mLayoutOk.setVisibility(View.INVISIBLE);
+        mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
+        mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
+    }
 
 
     private void chooseYourLanguage() {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG ,Context.MODE_PRIVATE);
         String mLang  = mSharedPreferences.getString(LANG,"en");
         if (mLang.equals("en"))
-        {mSwitchEN.setChecked(true);}
-        else {mSwitchFR.setChecked(true);}
+        {mSwitchEnglish.setChecked(true);}
+        else {mSwitchFrench.setChecked(true);}
 
-        mSwitchFR.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        mSwitchFrench.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 mSharedPreferences.edit().putString(LANG, "fr").apply();
-                mSwitchEN.setChecked(false);
+                mSwitchEnglish.setChecked(false);
                 Intent refresh = new Intent(getContext(), mainactivity.class);
                 startActivity(refresh);
             }
         });
-        mSwitchEN.setOnCheckedChangeListener(((buttonView, isChecked) -> {
-         if (isChecked) {
-             mSharedPreferences.edit().putString(LANG, "en").apply();
-             mSwitchFR.setChecked(false);
-             Intent refresh = new Intent(getContext(), mainactivity.class);
-             startActivity(refresh);
-
-         }
-
+        mSwitchEnglish.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            if (isChecked) {
+                mSharedPreferences.edit().putString(LANG, "en").apply();
+                mSwitchFrench.setChecked(false);
+                Intent refresh = new Intent(getContext(), mainactivity.class);
+                startActivity(refresh);
+            }
         }));
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void clickonNotif() {
         mLayoutNotif.setOnClickListener(v ->
                 displayNotif());
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void displayNotif(){
-        mLayoutSwitch.setVisibility(View.VISIBLE);
-        mSwitch.setVisibility(View.VISIBLE);
-        mLayoutLangPicker.setVisibility(View.INVISIBLE);
+        invisibleLang();
         checkStateSwitch();
         initSwitch();
-
-
     }
 
+    public void invisibleLang(){
+        mLayoutSwitchNotif.setVisibility(View.VISIBLE);
+        mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
+        mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
+        mLayoutLanguage.setVisibility(View.INVISIBLE);
+    }
 
     private void initWindowsTransprent() {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
         Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
-
     }
 
-    private void initVisibiliy() {
-        mLayoutButton.setVisibility(View.INVISIBLE);
-        mLayoutTimePicker.setVisibility(View.INVISIBLE);
-        mLayoutLangPicker.setVisibility(View.INVISIBLE);
-        mLayoutSwitch.setVisibility(View.INVISIBLE);
-    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkStateSwitch() {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREFS ,Context.MODE_PRIVATE);
         Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
         if (mStatNotif.equals(true))
-        {mSwitch.setChecked(true);
-            mLayoutSwitch.setVisibility(View.VISIBLE);
-          mLayoutTimePicker.setVisibility(View.VISIBLE);
-              mTimePicker.setVisibility(View.VISIBLE);
-        initPicker();}
+        {mSwitchNotif.setChecked(true);
+            mLayoutNotif.setVisibility(View.VISIBLE);
+            mLayoutTimePicker.setVisibility(View.VISIBLE);
+            mWidgetTimePicker.setVisibility(View.VISIBLE);
+            initPicker();}
         Log.e("Shared P State ------>", mStatNotif.toString());
 
     }
@@ -211,15 +201,15 @@ public class SettingsFragment extends DialogFragment {
     @SuppressLint("ResourceAsColor")
     public void initSwitch() {
 
-        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        mSwitchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     mLayoutTimePicker.setVisibility(View.VISIBLE);
-                    mTimePicker.setVisibility(View.VISIBLE);
+                    mWidgetTimePicker.setVisibility(View.VISIBLE);
                     initPicker();
                 }
                 else { mLayoutTimePicker.setVisibility(View.VISIBLE);
-                    mTimePicker.setVisibility(View.VISIBLE);}
+                    mWidgetTimePicker.setVisibility(View.VISIBLE);}
 
             } else {
                 WorkManager.getInstance().cancelAllWork();
@@ -230,8 +220,9 @@ public class SettingsFragment extends DialogFragment {
                         .remove(TIMETONOTIF)
                         .apply();
                 mLayoutTimePicker.setVisibility(View.INVISIBLE);
-                mTimePicker.setVisibility(View.INVISIBLE);
-                mLayoutButton.setVisibility(View.INVISIBLE);
+                mWidgetTimePicker.setVisibility(View.INVISIBLE);
+                mButtonSwitchOk.setVisibility(View.INVISIBLE);
+                mLayoutOk.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -240,20 +231,21 @@ public class SettingsFragment extends DialogFragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ResourceAsColor")
     private void initPicker() {
-        mTimePicker.is24HourView();
-        mTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
+        mWidgetTimePicker.is24HourView();
+        mWidgetTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
             Calendar cal = Calendar.getInstance();
 
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
-           initButton(cal);
+            initButton(cal);
         });
     }
 
     private void initButton(Calendar calendar) {
 
-        mLayoutButton.setVisibility(View.VISIBLE);
-        mButtonTime.setOnClickListener(v -> {
+        mLayoutOk.setVisibility(View.VISIBLE);
+        mButtonSwitchOk.setVisibility(View.VISIBLE);
+        mButtonSwitchOk.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setAlarm(calendar);
             }
@@ -262,7 +254,7 @@ public class SettingsFragment extends DialogFragment {
     }
 
     private void initCloseButton() {
-        mCloseButton.setOnClickListener(v -> onDestroyView());
+        mButtonClose.setOnClickListener(v -> onDestroyView());
     }
     @Override
     public void onDestroyView() {
@@ -280,7 +272,7 @@ public class SettingsFragment extends DialogFragment {
 
         mSharedPreferences
                 .edit()
-               .putBoolean(STATNOTIF, true)
+                .putBoolean(STATNOTIF, true)
                 .putLong(TIMETONOTIF, (cal.getTimeInMillis()))
                 .apply();
 
@@ -304,5 +296,7 @@ public class SettingsFragment extends DialogFragment {
 
 
 }
+
+
 
 
