@@ -1,4 +1,4 @@
-package com.m.sofiane.go4lunch.fragment;
+package com.m.sofiane.go4lunch.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

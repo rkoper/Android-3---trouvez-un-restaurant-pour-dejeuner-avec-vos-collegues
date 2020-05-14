@@ -95,9 +95,6 @@ public class WorkFragment extends Fragment {
                 });
 
 
-
-
-
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

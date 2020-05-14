@@ -32,6 +32,7 @@ import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
 import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.utils.Utils;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
@@ -112,12 +113,8 @@ public class subactivity extends AppCompatActivity{
         ButterKnife.bind(this);
         isBackFromB=false;
         mPlaceId = getIntent().getStringExtra("I");
-
         build_retrofit_and_get_response();
         initRV();
-
-       // mLike.setVisibility(View.INVISIBLE);
-
         mAdapter.notifyDataSetChanged();
 
     }
@@ -194,20 +191,8 @@ public class subactivity extends AppCompatActivity{
 
 
     private void ratingRestaurantCalling(Result mShortCut) {
-        mRating = mShortCut.getRating();
-        if (mRating == null) {
-            mRate3.setVisibility(View.INVISIBLE);
-            mRate2.setVisibility(View.INVISIBLE);
-            mRate1.setVisibility(View.INVISIBLE);
-        } else {
-            if (mRating < 4) {
-                mRate3.setVisibility(View.INVISIBLE);
-            } else if (mRating < 2) {
-                mRate3.setVisibility(View.INVISIBLE);
-                mRate2.setVisibility(View.INVISIBLE);
-                mRate1.setVisibility(View.INVISIBLE);
-            }
-        }
+     mRating = mShortCut.getRating();
+        Utils.displayStarsforSub(mRating, this);
     }
 
     private void adresseRestaurantCallig(Result mShortCut) {

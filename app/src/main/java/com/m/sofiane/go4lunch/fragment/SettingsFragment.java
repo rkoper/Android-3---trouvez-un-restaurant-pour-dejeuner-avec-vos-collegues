@@ -88,7 +88,7 @@ public class SettingsFragment extends DialogFragment {
     public static final String STATNOTIF= "StateNotif";
     public static final String LANG = "language";
 
-    Animation mAnimLeftRight,mAnimRightLeft,mAnimFadeIn,mAnimFadeOut,mAnimZoomIn,mAnimZoomOut,mAnimSimple,mAnimBottom;
+    Animation mAnimLeftRight,mAnimFadeOut,mAnimZoomOut,mAnimSimple,mAnimBottom;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
@@ -105,14 +105,10 @@ public class SettingsFragment extends DialogFragment {
 
     private void initAnim() {
         mAnimLeftRight  = AnimationUtils.loadAnimation(getContext(),R.anim.lefttoright);
-        mAnimRightLeft  = AnimationUtils.loadAnimation(getContext(),R.anim.righttoleft);
-        mAnimFadeIn  = AnimationUtils.loadAnimation(getContext(),R.anim.fade_in);
         mAnimFadeOut  = AnimationUtils.loadAnimation(getContext(),R.anim.fadeout);
-        mAnimZoomIn  = AnimationUtils.loadAnimation(getContext(),R.anim.zoomin);
         mAnimZoomOut  = AnimationUtils.loadAnimation(getContext(),R.anim.zoomout);
         mAnimSimple = AnimationUtils.loadAnimation(getContext(),R.anim.sample_anim);
         mAnimBottom = AnimationUtils.loadAnimation(getContext(),R.anim.inbottom);
-
     }
 
     private void clickonLangauge() {
@@ -125,7 +121,6 @@ public class SettingsFragment extends DialogFragment {
         chooseYourLanguage();
     }
 
-
     @SuppressLint("ResourceAsColor")
     public void invisibleNotif(){
         mLayoutSwitchFrench.startAnimation(mAnimLeftRight);
@@ -136,9 +131,7 @@ public class SettingsFragment extends DialogFragment {
         mLayoutOk.setVisibility(View.INVISIBLE);
         mLayoutTimePicker.setVisibility(View.INVISIBLE);
         mLayoutSwitchNot.setVisibility(View.INVISIBLE);
-
     }
-
 
     private void chooseYourLanguage() {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG ,Context.MODE_PRIVATE);
@@ -161,6 +154,7 @@ public class SettingsFragment extends DialogFragment {
                 mSwitchFrench.setChecked(false);
                 Intent refresh = new Intent(getContext(), mainactivity.class);
                 startActivity(refresh);
+
             }
         }));
     }
@@ -179,20 +173,15 @@ public class SettingsFragment extends DialogFragment {
     }
 
     public void invisibleLang(){
-
         mLayoutSwitchNot.setVisibility(View.VISIBLE);
         mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
         mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
-
-
     }
 
     private void initWindowsTransprent() {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
         Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkStateSwitch() {
@@ -203,25 +192,20 @@ public class SettingsFragment extends DialogFragment {
             mLayoutTimePicker.setVisibility(View.VISIBLE);
             initPicker();}
         Log.e("Shared P State ------>", mStatNotif.toString());
-
     }
 
     @SuppressLint("ResourceAsColor")
     public void initSwitch() {
-
         mSwitchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     mLayoutTimePicker.setVisibility(View.VISIBLE);
-                    mWidgetTimePicker.setVisibility(View.VISIBLE);
                     initPicker();
                 }
                 else {    mLayoutTimePicker.startAnimation(mAnimSimple);
 
                     mLayoutTimePicker.setVisibility(View.VISIBLE);
-                    mWidgetTimePicker.setVisibility(View.VISIBLE);}
-
+                }
             } else {
                 WorkManager.getInstance().cancelAllWork();
                 Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
@@ -230,7 +214,6 @@ public class SettingsFragment extends DialogFragment {
                         .putBoolean(STATNOTIF, false)
                         .remove(TIMETONOTIF)
                         .apply();
-
             }
         });
     }
@@ -241,7 +224,6 @@ public class SettingsFragment extends DialogFragment {
         mWidgetTimePicker.is24HourView();
         mWidgetTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
             Calendar cal = Calendar.getInstance();
-
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
             initButton(cal);
@@ -251,7 +233,6 @@ public class SettingsFragment extends DialogFragment {
     private void initButton(Calendar calendar) {
         mLayoutOk.startAnimation(mAnimBottom);
         mLayoutOk.setVisibility(View.VISIBLE);
-        mButtonSwitchOk.setVisibility(View.VISIBLE);
         mButtonSwitchOk.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setAlarm(calendar);
@@ -261,8 +242,10 @@ public class SettingsFragment extends DialogFragment {
     }
 
     private void initCloseButton() {
-        mButtonClose.setOnClickListener(v -> onDestroyView());
+        mButtonClose.setOnClickListener(v ->
+                onDestroyView());
     }
+
     @Override
     public void onDestroyView() {
         mLayoutG.startAnimation(mAnimZoomOut);
@@ -283,25 +266,7 @@ public class SettingsFragment extends DialogFragment {
                 .putBoolean(STATNOTIF, true)
                 .putLong(TIMETONOTIF, (cal.getTimeInMillis()))
                 .apply();
-
-        // TEST
-        boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
-        long mTimeNotif = mSharedPreferences.getLong(TIMETONOTIF, 666);
-        Log.e("1 Sha P Click ------>", Boolean.toString(mStatNotif));
-        Log.e("1 Sha P Time ------>", Long.toString(mTimeNotif));
     }
-
-    public void showD() {
-        // Set a theme on the dialog builder constructor!
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity(), R.style.MyCustomTheme );
-
-        builder
-                .setTitle( "Your title" )
-                .setMessage( "Your message" )
-                .setPositiveButton( "OK" , (dialog, which) -> dismiss());
-
-    }
-
 
 }
 

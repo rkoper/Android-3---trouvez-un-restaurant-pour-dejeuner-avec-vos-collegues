@@ -45,6 +45,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
+import com.m.sofiane.go4lunch.adapter.SearchMapAdapter;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.services.Singleton;
