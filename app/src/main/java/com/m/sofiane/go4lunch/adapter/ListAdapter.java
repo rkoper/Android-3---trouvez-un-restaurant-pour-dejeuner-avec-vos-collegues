@@ -12,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
+import com.m.sofiane.go4lunch.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,17 +65,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     Double mRate;
 
 
+
     public ListAdapter(ArrayList<Result> mData, Context mContext, FragmentManager fragmentManager, CharSequence mKeyName, ArrayList<String> mTest ) {
         this.mData = mData;
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
         this.mKeyName = mKeyName;
         this.mTest = mTest;
-
-        //   Log.e("ADAPTER ID", String.valueOf(mTest));
-        // Log.e("ADAPTER NAME", String.valueOf(mKeyName));
-
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -100,29 +100,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
 
         for (String item: mTest) {
 
-            if (countMap.containsKey(item))
-                countMap.put(item, countMap.get(item) + 1);
-            else
-                countMap.put(item, 1);
+            if (countMap.containsKey(item)) { countMap.put(item, countMap.get(item) + 1);
+            } else { countMap.put(item, 1); }
         }
 
-        Log.e("COUNT MAP", countMap.toString());
-
-        if (countMap.get(mNameOfRestaurant)==null)
-        {
-            h.R_place_people_count.setText("(" + "0" +")");
-        }
-
-        else
-        {
-            h.R_place_people_count.setText("("+ Objects.requireNonNull(countMap.get(mNameOfRestaurant)).toString()+")");
-        }
+        if (countMap.get(mNameOfRestaurant)==null) { h.R_place_people_count.setText("(" + "0" +")"); }
+        else { h.R_place_people_count.setText("("+ Objects.requireNonNull(countMap.get(mNameOfRestaurant)).toString()+")"); }
     }
 
     public void clickAndSendData(ViewHolder h, int i ){
-
         h.R_button.setOnClickListener(view -> {
-
             Intent intent= new Intent(mContext, subactivity.class);
             intent.putExtra("I", mData.get(i).getPlaceId());
             mContext.startActivity(intent);
@@ -156,14 +143,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
 
         {mDistance = "";}
         else {
-
             Location locationA = new Location("A");
             locationA.setLatitude(mLatitude);
             locationA.setLongitude(mLongitude);
 
             double mLat = Singleton.getInstance().getmLatitude();
             double mLng = Singleton.getInstance().getmLongitude();
-
 
             Location locationB = new Location("B");
             locationB.setLatitude(mLat);
@@ -180,28 +165,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private void rateCalling(ViewHolder h, int i) {
         if (mData.get(i).getRating() != null) {
             h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
-            mRate = mData.get(i).getRating();
-            if (mRate<3.6){
-                h.R_rate1.setVisibility(View.INVISIBLE);
-            } else if (mRate<1.3) {
-                h.R_rate1.setVisibility(View.INVISIBLE);
-                h.R_rate2.setVisibility(View.INVISIBLE);
-            }}
+          float r =   Utils.findrating(mData.get(i).getRating());
+            h.mRatingRestaurant.setRating(r);
+        }
 
-        else {
-            h.R_rate1.setVisibility(View.INVISIBLE) ;
-            h.R_rate2.setVisibility(View.INVISIBLE) ;
-            h.R_rate3.setVisibility(View.INVISIBLE);}
-            }
+        else { h.mRatingRestaurant.setRating(0);}
+    }
 
     private void adresseCalling(@NonNull ListAdapter.ViewHolder h, int i ) {
-        mAdress = mData.get(i).getVicinity();
-        if (mAdress == null)
-        {mLoadAdress = "";}
-        else {
-            mLoadAdress = mAdress.split("\\,", 2)[0];
+       mLoadAdress = Utils.formatAdressForList(mData.get(i).getVicinity());
             h.R_adress.setText(mLoadAdress);
-        }
     }
 
     private void nameCalling(@NonNull ListAdapter.ViewHolder h, int i ) {
@@ -209,16 +182,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         if (mNameOfRestaurant == null) {
             mNameOfRestaurant = "";
         } else {
-            h.R_name.setText(mNameOfRestaurant);
-        }
+            h.R_name.setText(mNameOfRestaurant); }
     }
 
     private void imageCalling(@NonNull ListAdapter.ViewHolder h, int i) {
         if (mData.get(i).getPhotos().isEmpty())
         {UrlPhoto = DEFAUTPHOTO;}
-        else { refPhoto = mData.get(i).getPhotos().get(0).getPhotoReference();
-
-            UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + refPhoto + KEY + API_KEY;
+        else { UrlPhoto = Utils.urlPhotoForList(mData.get(i).getPhotos().get(0).getPhotoReference());
             RequestManager glide = Glide.with(mContext);
             if (!(UrlPhoto == null)) {
                 glide.load(UrlPhoto).into(h.R_photo);
@@ -244,41 +214,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
                     List<Result> filteredList = new ArrayList<>();
                     for (Result name : mData) {
                         if (name.getName().toLowerCase().contains(mQueryString.toLowerCase())) {
-                            filteredList.add(name);
-                        }
-                        mDataList = filteredList;
-                    }
-
+                            filteredList.add(name); }
+                        mDataList = filteredList; }
                 }
                 FilterResults results = new FilterResults();
                 results.values = mDataList;
-                return results;
-            }
+                return results; }
 
             @Override
             public void publishResults(CharSequence constraint, FilterResults results1) {
                 mData = (List<Result>) results1.values;
-                notifyDataSetChanged();
-            }
+                notifyDataSetChanged(); }
         };
-
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.place_name)
         TextView R_name;
         @BindView(R.id.place_address)
         TextView R_adress;
         @BindView(R.id.place_photo)
         ImageView R_photo;
-        @BindView(R.id.place_rating_icon1)
-        ImageView R_rate1;
-        @BindView(R.id.place_rating_icon2)
-        ImageView R_rate2;
-        @BindView(R.id.place_rating_icon3)
-        ImageView R_rate3;
         @BindView(R.id.RateTxt)
         TextView R_rateTxt;
         @BindView(R.id.place_distance)
@@ -289,14 +245,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         ImageButton R_button;
         @BindView(R.id.place_people_count)
         TextView R_place_people_count;
-
-
+        @BindView(R.id.ratingRestaurantDetails)
+        public RatingBar mRatingRestaurant;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ButterKnife.bind(this, itemView);
-        }
-
+            ButterKnife.bind(this, itemView); }
     }
 }

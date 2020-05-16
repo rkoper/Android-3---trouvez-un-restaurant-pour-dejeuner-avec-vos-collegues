@@ -7,17 +7,17 @@
         android:radius="10dp" />
 
     <solid
-        android:color="#FFFFFF" />
+        android:color="#FF4444" />
 
     <size
-        android:width="80dp"
-        android:height="18dp" />
+        android:width="50dp"
+        android:height="50dp" />
 
     <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
     to add dashes to your stroke-->
     <stroke
         android:width="2dp"
-        android:color="#FFFFFF" />
+        android:color="@color/fui_transparent" />
 
     <!--If you want to add padding-->
     <!-- <padding

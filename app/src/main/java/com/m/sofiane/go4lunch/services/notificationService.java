@@ -16,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.mainactivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
+import com.m.sofiane.go4lunch.utils.Utils;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.Objects;
@@ -43,13 +44,13 @@ public class notificationService extends BroadcastReceiver {
                     NameOfResto l = document.toObject(NameOfResto.class);
 
                     if (Objects.requireNonNull(l).getId().equals("2"))
-                    {mNameForNotif = "No restaurant chosen for today";}
-                    else {mNameForNotif = "You are expected" + " @ " + l.getNameOfResto();}
+                    {mNameForNotif = mContext.getString(R.string.nochoicenotif);}
+                    else {mNameForNotif = mContext.getString(R.string.choicenotif) + l.getNameOfResto();}
 
                     createNotification(intent, mNameForNotif) ;
                 }
 
-                else {mNameForNotif = "No restaurant chosen for today"; }
+                else {mNameForNotif = mContext.getString(R.string.nochoicenotif); }
             }});
 
     }

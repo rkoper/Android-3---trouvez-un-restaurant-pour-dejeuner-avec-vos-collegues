@@ -54,4 +54,20 @@
          <item name="android:windowEnterAnimation">@anim/slider_left</item>
          <item name="android:windowExitAnimation">@anim/slider_right</item>
      </style>
+
+     <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+         <item name="android:textColorPrimaryDisableOnly">#00838f</item>
+         <item name="colorAccent">#e91e63</item>
+     </style>
+
+     <style name="abirStyle" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+         <item name="android:textColor">@color/colorPrimary</item>
+         <item name="android:background">@null</item>
+         <item name="android:textColorPrimary">@color/colorPrimary</item>
+     </style>
+
+     <style name="RatingBAr" parent="@style/Widget.AppCompat.RatingBar.Indicator">
+         <item name="colorControlNormal">@color/fui_transparent</item>
+         <item name="colorControlActivated">@color/ColorYellow</item>
+     </style>
  </resources>

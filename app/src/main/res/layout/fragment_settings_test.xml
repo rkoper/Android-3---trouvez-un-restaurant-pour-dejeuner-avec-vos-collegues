@@ -11,172 +11,175 @@
     android:maxHeight="500dp"
     android:maxWidth="900dp">
 
-    <LinearLayout
-        android:id="@+id/e1_english"
-        android:layout_width="125dp"
+    <Switch
+        android:id="@+id/switch_lang_fr"
+        style="@style/MySwitch"
+        android:layout_width="280dp"
         android:layout_height="75dp"
-        android:layout_marginTop="00dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:background="@drawable/dialog_square_white"
+        android:orientation="horizontal"
+        android:paddingStart="60sp"
+        android:paddingEnd="60sp"
+        android:text="French"
+        android:textColor="#F44444"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:thumb="@drawable/ic_round_small_red" />
 
-        <Switch
-            android:id="@+id/fourL_switchEN"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:text="@string/anglais"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
-    </LinearLayout>
+    <Switch
+        android:id="@+id/switch_lang_en"
+        style="@style/MySwitch"
+        android:layout_width="280dp"
+        android:layout_height="75sp"
+        android:layout_marginTop="75sp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="horizontal"
+        android:paddingStart="60sp"
+        android:paddingEnd="60sp"
+        android:text="English"
+        android:textColor="#F44444"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:thumb="@drawable/ic_round_small_red" />
 
-    <LinearLayout
-        android:id="@+id/e1_french"
-        android:layout_width="125dp"
-        android:layout_height="75dp"
-        android:layout_marginLeft="125dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical"
-        android:visibility="invisible">
+    <Switch
+        android:id="@+id/switch_notif"
+        style="@style/MySwitch"
+        android:layout_width="280sp"
+        android:layout_height="75sp"
+        android:layout_marginTop="225sp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="horizontal"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:text="Notification"
+        android:textColor="#F44444"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:thumb="@drawable/ic_round_small_red" />
 
-        <Switch
-            android:id="@+id/fourL_switchFR"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:text="@string/fran_ais"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/e2_language"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/twoL_txt_language_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/fui_transparent"
-            android:gravity="center"
-            android:text="@string/language"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="22sp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_cancel_white" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/e3_notification"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="160dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/twoR_txt_notif_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/fui_transparent"
-            android:gravity="center"
-            android:text="@string/notification"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="22sp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_cancel_white" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/e4_switch_notif"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="230dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-        <Switch
-            android:id="@+id/three_switchNotif"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/active_notification"
-            android:textAppearance="@style/TextAppearance"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            android:visibility="visible" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/e5_time_picker"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="300dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-        <TextView
-            android:id="@+id/e5_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:paddingLeft="30dp"
-            android:text="@string/choose_time_to_notification"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="16sp" />
-
-        <TimePicker
-            android:id="@+id/e5_widget_time_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center"
-            android:inputType="time"
-            android:textAppearance="@style/TextAppearance"
-            android:textColor="@color/colorWhite"
-            android:timePickerMode="spinner"
-
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/e6_ok"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="88dp"
-        android:layout_marginTop="450dp"
-        android:background="@drawable/dialog_triangle_2"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-        <ImageButton
-            android:id="@+id/e6_button_ok"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:background="@color/fui_transparent"
-            android:text="@string/time_picker"
-            app:srcCompat="@drawable/ic_check_circle_white"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
+    <TimePicker
+        android:id="@+id/widget_time_picker"
+        android:layout_width="280sp"
+        android:layout_height="130sp"
+        android:layout_marginTop="300sp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="horizontal"
+        android:timePickerMode="spinner"
+        android:visibility="visible"
+        tools:visibility="visible" />
 
     <ImageButton
+        android:id="@+id/button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_baseline_check_box_24"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/title_notif"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="150sp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center|top"
+            android:text="Notification"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/check_notif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40sp"
+            android:layout_marginTop="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/button_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="135dp"
-        android:background="@drawable/dialog_rounded_bg"
-        app:srcCompat="@drawable/ic_cancel_white" />
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="113dp"
+        android:layout_marginTop="160sp"
+        android:background="@drawable/ic_cancel_black_24dp"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/title_lang"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="168dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center|top"
+            android:text="Languages"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/check_lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40sp"
+            android:layout_marginTop="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lfrench"
+        android:layout_width="280dp"
+        android:layout_height="75dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
+        tools:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/lenglish"
+        android:layout_width="280dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
+        tools:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/lnotif"
+        android:layout_width="280dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="225dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
+        tools:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/ltime_p"
+        android:layout_width="280dp"
+        android:layout_height="130sp"
+        android:layout_marginTop="300sp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
+        tools:visibility="invisible" />
 
 </RelativeLayout>

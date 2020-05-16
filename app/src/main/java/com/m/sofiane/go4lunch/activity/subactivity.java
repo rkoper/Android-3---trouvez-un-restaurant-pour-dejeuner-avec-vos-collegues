@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +73,6 @@ public class subactivity extends AppCompatActivity{
     Double mRating;
     SubAdapter mAdapter;
     RecyclerView mRecyclerView;
-    final String APIKEY = BuildConfig.APIKEY;
     ArrayList listDataName,listDataPhoto;
     FragmentManager mFragmentManager;
 
@@ -96,14 +96,10 @@ public class subactivity extends AppCompatActivity{
     TextView mCallView;
     @BindView(R.id.buttonlike)
     ImageButton mLike;
-    @BindView(R.id.placeSub_rating_icon1)
-    ImageView mRate1;
-    @BindView(R.id.placeSub_rating_icon2)
-    ImageView mRate2;
-    @BindView(R.id.placeSub_rating_icon3)
-    ImageView mRate3;
     @BindView(R.id.floatingActionButton)
     FloatingActionButton mActionButton;
+    @BindView(R.id.ratingRestaurantSub)
+    RatingBar mRatingBar;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -149,19 +145,31 @@ public class subactivity extends AppCompatActivity{
             @SuppressLint("WrongViewCast")
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                assert response.body() != null;
-                Result mShortCut = response.body().getListDetail();
+                Result mShortCut;
+                if( response.body() != null)
+                {
+                    mShortCut = response.body().getListDetail();
 
-
+                if (response.body().getListDetail() !=null) {
                 ratingRestaurantCalling(mShortCut);
                 photoRestaurantCalling(mShortCut);
                 nameRestaurantCalling(mShortCut);
                 phoneNumberRestaurantCalling(mShortCut);
                 webSiteRestaurantCalling(mShortCut);
-
                 adresseRestaurantCallig(mShortCut);
-                clickOnRestaurant();
+                clickOnRestaurant();}
 
+                else {
+                    System.out.println("------------// error1");
+                    Toast.makeText(getApplicationContext(), R.string.Errorc, Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
+                }
+                else {
+                    System.out.println("------------// error2");
+                    Toast.makeText(mContext, "Error connexion", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
             }
 
             @Override
@@ -175,36 +183,26 @@ public class subactivity extends AppCompatActivity{
 
     private void photoRestaurantCalling(Result mShortCut) {
         if (mShortCut.getPhotos() != null) {
-            mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
-            UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + mPhotoN + KEY + APIKEY;
-            System.out.println(UrlPhoto);
-            Glide
-                    .with(subactivity.this)
-                    .load(UrlPhoto).into(mPhotoSub);
+           UrlPhoto = Utils.urlPhotoForSubactivity(mShortCut);
+            Glide.with(subactivity.this).load(UrlPhoto).into(mPhotoSub);
         } else {
             Toast.makeText(subactivity.this, "No photo", Toast.LENGTH_LONG).show();
-            Glide
-                    .with(subactivity.this)
-                    .load(DEFAUTPHOTO).into(mPhotoSub);
+            Glide.with(subactivity.this).load(DEFAUTPHOTO).into(mPhotoSub);
         }
     }
 
 
     private void ratingRestaurantCalling(Result mShortCut) {
-     mRating = mShortCut.getRating();
-        Utils.displayStarsforSub(mRating, this);
+        if (mShortCut.getRating() != null) {
+            float r =   Utils.findrating(mShortCut.getRating());
+            mRatingBar.setRating(r);
+        }
+
+        else {mRatingBar.setRating(0);}
     }
 
     private void adresseRestaurantCallig(Result mShortCut) {
-        mAdressV2 = mShortCut.getAddressComponents().get(0).getLongName();
-        mAdressV3 = mShortCut.getAddressComponents().get(1).getLongName();
-
-        if (mAdressV2 == null || mAdressV3 == null) {
-            mAdressDef = "";
-        } else {
-            mAdressDef = mAdressV2 + " " + mAdressV3;
-            mAdressSub.setText(mAdressDef);
-        }
+        mAdressSub.setText(Utils.AdressForSubactivty(mShortCut));
     }
 
     private void webSiteRestaurantCalling(Result mShortCut) {
@@ -295,9 +293,6 @@ public class subactivity extends AppCompatActivity{
                         if (list.contains(mDisplayNameOfResto))
                         { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));}
                         LikeRestaurantCalling(mDisplayNameOfResto, list);
-
-                    } else {
-
                     }
                 });
     }
@@ -307,21 +302,19 @@ public class subactivity extends AppCompatActivity{
             if (list.contains(mDisplayNameOfResto))
             { myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show());
 
-            mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
+                mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
                 finish();
                 startActivity(getIntent()); }
             else { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
 
-                    Map<String, Object> mDataMap = new HashMap<>();
-                    mDataMap.put("Name", mDisplayNameOfResto);
-                    mDataMap.put("Adress", mAdressDef);
-                    mDataMap.put("Photo", UrlPhoto);
-                    mDataMap.put("FireStoreID", getTaskId());
+                Map<String, Object> mDataMap = new HashMap<>();
+                mDataMap.put("Name", mDisplayNameOfResto);
+                mDataMap.put("Adress", mAdressDef);
+                mDataMap.put("Photo", UrlPhoto);
+                mDataMap.put("FireStoreID", getTaskId());
 
-                    myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
-                    finish();
-                    startActivity(getIntent());
-                }
+                myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
+            }
         });
     }
 

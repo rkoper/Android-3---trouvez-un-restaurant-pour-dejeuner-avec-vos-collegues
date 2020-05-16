@@ -2,11 +2,13 @@ package com.m.sofiane.go4lunch.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -51,10 +53,13 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-                h.txtname.setText(listDataName.get(i).getUserName() + " GO GO GO");
+        Resources res = h.itemView.getContext().getResources();
+        if (listDataName==null)
+        { Toast.makeText(mContext, R.string.error, Toast.LENGTH_SHORT).show(); }
+        else { h.txtname.setText(String.format("%s %s", listDataName.get(i).getUserName(), res.getString((R.string.comingg))));}
 
         Glide
                 .with(getApplicationContext())
@@ -71,9 +76,9 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.sub_name_profilgo)
+        @BindView(R.id.sub_name_profil)
         TextView txtname;
-        @BindView(R.id.sub_photo_profilgo)
+        @BindView(R.id.sub_photo_profil)
         ImageView urlphoto;
 
 

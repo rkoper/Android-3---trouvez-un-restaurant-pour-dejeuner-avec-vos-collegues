@@ -72,38 +72,25 @@ public class SettingsFragment extends DialogFragment {
     Switch mSwitchEnglish;
 
     Boolean mStatNotif;
-
-    Animation mASD;
-    Animation mASU;
-    Animation mAup;
-    Animation mASD2;
-    Animation mASU2;
-    Animation mASD3;
-    Animation mASU3;
-
+    Animation mASD, mASU, mAup, mASD2, mASU2, mASD3, mASU3;
     SharedPreferences mSharedPreferences;
+
     public static final String PREFS = "666";
     public static final String TIMETONOTIF = "TimeToNotif";
     public static final String STATNOTIF = "StateNotif";
     public static final String LANG = "language";
 
-    public SettingsFragment() {
-    }
+    public SettingsFragment() { }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_settings_test, null);
         initAnimation();
         ButterKnife.bind(this, view);
-
-        Window window = Objects.requireNonNull(getDialog()).getWindow();
-        Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
-
+        initWindowsTransprent();
         initLang();
         initNotif();
         initCloseButton();
-
         return view;
     }
 
@@ -133,13 +120,10 @@ public class SettingsFragment extends DialogFragment {
             if (mCheckLang.isChecked()) {
                 mLenglish.startAnimation(mASU);
                 mLfrench.startAnimation(mASU);
-                chooseYourLanguage();
-                Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
-            } else {
+                chooseYourLanguage(); }
+            else {
                 mLenglish.startAnimation(mASD);
-                mLfrench.startAnimation(mASD);
-                Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-            }
+                mLfrench.startAnimation(mASD);}
         });
     }
 
@@ -147,10 +131,9 @@ public class SettingsFragment extends DialogFragment {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG, Context.MODE_PRIVATE);
         String mLang = mSharedPreferences.getString(LANG, "en");
         if (mLang.equals("en")) {
-            mSwitchEnglish.setChecked(true);
-        } else {
-            mSwitchFrench.setChecked(true);
-        }
+            mSwitchEnglish.setChecked(true); }
+        else {
+            mSwitchFrench.setChecked(true); }
 
         mSwitchFrench.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -165,9 +148,7 @@ public class SettingsFragment extends DialogFragment {
                 mSharedPreferences.edit().putString(LANG, "en").apply();
                 mSwitchFrench.setChecked(false);
                 Intent refresh = new Intent(getContext(), mainactivity.class);
-                startActivity(refresh);
-
-            }
+                startActivity(refresh); }
         }));
     }
 
@@ -175,14 +156,9 @@ public class SettingsFragment extends DialogFragment {
     private void initNotif() {
         mCheckNotif.setOnClickListener(v -> {
             if (mCheckNotif.isChecked()) {
-
                 mLactiveNotif.startAnimation(mASU2);
-                LoadNotifSwitch();
-              //  initSwitchO();
-            }
-            else
-                { mLactiveNotif.startAnimation(mASD2);
-            }
+                LoadNotifSwitch(); }
+            else  { mLactiveNotif.startAnimation(mASD2); }
         });
     }
 
@@ -192,6 +168,7 @@ public class SettingsFragment extends DialogFragment {
         if (mStatNotif.equals(true)) {
             mSwNotif.setChecked(true);
             mLTimePicker.startAnimation(mASU3);
+            initPicker();
         } else {mSwNotif.setChecked(false);}
         mSwNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
         if (mSwNotif.isChecked()) {
@@ -246,6 +223,11 @@ public class SettingsFragment extends DialogFragment {
                 .putBoolean(STATNOTIF, true)
                 .putLong(TIMETONOTIF, (cal.getTimeInMillis()))
                 .apply();
+    }
+
+    private void initWindowsTransprent() {
+        Window window = Objects.requireNonNull(getDialog()).getWindow();
+        Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
     }
 
 }
@@ -389,10 +371,7 @@ public class SettingsFragment extends DialogFragment {
         mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
     }
 
-    private void initWindowsTransprent() {
-        Window window = Objects.requireNonNull(getDialog()).getWindow();
-        Objects.requireNonNull(window).setBackgroundDrawableResource(android.R.color.transparent);
-    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void mASD4StateSwitch() {

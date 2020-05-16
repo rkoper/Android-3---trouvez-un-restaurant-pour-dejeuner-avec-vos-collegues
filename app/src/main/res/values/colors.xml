@@ -13,6 +13,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#9e9e9e</color>
     <color name="colorDivider">#bdbdbd</color>
+    <color name="ColorYellow">#fcbf49</color>
 
     <color name="colorTint">#a0000000</color>
 </resources>

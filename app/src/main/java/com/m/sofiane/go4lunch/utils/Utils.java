@@ -1,90 +1,47 @@
 package com.m.sofiane.go4lunch.utils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.location.Location;
-import android.os.Build;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.bumptech.glide.Glide;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.mainactivity;
-import com.m.sofiane.go4lunch.adapter.ListAdapter;
-import com.m.sofiane.go4lunch.adapter.SearchMapAdapter;
+import com.m.sofiane.go4lunch.activity.subactivity;
+import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
+import com.m.sofiane.go4lunch.models.pojoDetail.Result;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.m.sofiane.go4lunch.BuildConfig.APIKEY;
+import static com.m.sofiane.go4lunch.adapter.ListAdapter.KEY;
+import static com.m.sofiane.go4lunch.adapter.ListAdapter.MAX_HEIGHT;
+import static com.m.sofiane.go4lunch.adapter.ListAdapter.MAX_WIDTH;
+import static com.m.sofiane.go4lunch.adapter.ListAdapter.PHOTOREF;
+import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLPHOTO;
+
 public class Utils extends AppCompatActivity {
-
-
-    public static void displayStarsforSub(Double mRating, Activity activity) {
-        ImageView mRate3 = activity.findViewById(R.id.placeSub_rating_icon3);
-        ImageView mRate2 = activity.findViewById(R.id.placeSub_rating_icon2);
-        ImageView mRate1 = activity.findViewById(R.id.placeSub_rating_icon1);
-
-        if (mRating == null) {
-            mRate3.setVisibility(View.INVISIBLE);
-            mRate2.setVisibility(View.INVISIBLE);
-            mRate1.setVisibility(View.INVISIBLE);
-        } else {
-            if (mRating < 4) {
-                mRate3.setVisibility(View.INVISIBLE);
-            } else if (mRating < 2) {
-                mRate3.setVisibility(View.INVISIBLE);
-                mRate2.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-
-    public static String findDistance(Double mLatitude, Double mLongitude) {
-        String mDistance;
-        if (mLatitude == null || mLongitude == null)
-
-        {mDistance = "";}
-        else {
-            Location locationA = new Location("A");
-            locationA.setLatitude(mLatitude);
-            locationA.setLongitude(mLongitude);
-
-            double mLat = Singleton.getInstance().getmLatitude();
-            double mLng = Singleton.getInstance().getmLongitude();
-
-            Location locationB = new Location("B");
-            locationB.setLatitude(mLat);
-            locationB.setLongitude(mLng);
-            mDistance = String.valueOf(
-                    (Math.round
-                            (locationA.distanceTo(locationB))));}
-
-        return mDistance;
-    }
 
 
     public static void colorSearch(SearchView searchView, Toolbar t){
@@ -119,5 +76,62 @@ public class Utils extends AppCompatActivity {
         return call;
     }
 
+    public Animation mA (){
+        Animation animFadeIn, animFadeOut;
+        animFadeIn = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
+        return animFadeIn;
+    }
+
+
+    public static String urlPhotoForSubactivity(Result mShortCut){
+       String  mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
+       String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + mPhotoN + KEY + APIKEY;
+       return UrlPhoto;
+    }
+
+    public static String AdressForSubactivty(Result mShortCut) {
+        String mAdressDef;
+
+        if (mShortCut.getAddressComponents().get(0).getLongName() == null || mShortCut.getAddressComponents().get(1).getLongName() == null) {
+            mAdressDef = "";
+        } else {
+            mAdressDef = mShortCut.getAddressComponents().get(0).getLongName() + " " + mShortCut.getAddressComponents().get(1).getLongName();
+        }
+
+        return mAdressDef;
+    }
+
+
+    public static String formatAdressForList( String mAdress){
+        String mLoadAdress;
+        if (mAdress == null)
+        {mLoadAdress = "";}
+        else {
+            mLoadAdress = mAdress.split("\\,", 2)[0];
+        }
+        return mLoadAdress;
+    }
+
+
+    public static String urlPhotoForList( String refPhoto){
+        String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + refPhoto + KEY + APIKEY;
+        return UrlPhoto;
+    }
+
+    public static float findrating(double x) {
+        double y = (x / 5) * 3;
+
+        float arrondi = (float) ((Math.round(x / 5) * 3));
+        System.out.println(y);
+        System.out.println(arrondi);
+
+        System.out.println("Y --------------> " + y);
+        System.out.println("ARRONDI --------------> " + arrondi);
+
+        return arrondi;
+
+      //  System.out.println("LAT 2 --------------> " + mLatitude);
+    }
 
 }

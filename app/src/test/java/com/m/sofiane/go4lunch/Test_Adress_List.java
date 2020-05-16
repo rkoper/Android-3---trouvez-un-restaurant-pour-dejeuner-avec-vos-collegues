@@ -1,23 +1,22 @@
 package com.m.sofiane.go4lunch;
 
+import com.m.sofiane.go4lunch.models.pojoMaps.Result;
+import com.m.sofiane.go4lunch.utils.Utils;
+
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class Test_Adress_List {
-@Test
+    @Test
     public void Test_Adress_List() {
-                String mAdressToApi;
-                String mAdressToDisplay = "77 Rue Ordener";;
-                String mAdressResult;
+        String mAdressToDisplay = "77 Rue Ordener";
+        String mAdressAPI = "77 Rue Ordener, Paris";
 
-                mAdressToApi = "77 Rue Ordener, Paris";
-
-
-    mAdressToDisplay =  mAdressToApi.split("\\,", 2)[0];
-    mAdressResult = mAdressToDisplay;
-    assertEquals("77 Rue Ordener", mAdressResult);
-
+        mAdressToDisplay = Utils.formatAdressForList(mAdressAPI);
+        assertEquals("77 Rue Ordener", mAdressToDisplay);
 
     }
 
