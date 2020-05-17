@@ -14,7 +14,6 @@
         android:layout_width="66dp"
         android:layout_height="66dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
         android:background="@color/colorWhite"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"

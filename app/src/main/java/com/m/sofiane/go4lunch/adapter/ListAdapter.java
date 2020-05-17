@@ -165,7 +165,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private void rateCalling(ViewHolder h, int i) {
         if (mData.get(i).getRating() != null) {
             h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
-          float r =   Utils.findrating(mData.get(i).getRating());
+          int r =   Utils.findrating(mData.get(i).getRating());
             h.mRatingRestaurant.setRating(r);
         }
 

@@ -14,9 +14,9 @@ import retrofit2.http.Query;
  */
 public interface googleInterface {
     String api_KEY = BuildConfig.APIKEY;
-     String mUrl = "api/place/nearbysearch/json?&sessiontoken=19840521&key=";
-    String mUrlDetail = "api/place/details/json?fields=photos,international_phone_number,name,address_components,formatted_address,rating,website,place_id&sessiontoken=19840521&key=";
-    String mUrlAutoComplete = "api/place/autocomplete/json?types=establishment&sessiontoken=19840521&fields=name,place_id&strictbounds&radius=50&sessiontoken=19840521&key=";
+     String mUrl = "api/place/nearbysearch/json?&sessiontoken=19840521&key=0";
+    String mUrlDetail = "api/place/details/json?fields=photos,international_phone_number,name,address_components,formatted_address,rating,website,place_id&sessiontoken=19840521&key=0";
+    String mUrlAutoComplete = "api/place/autocomplete/json?types=establishment&sessiontoken=19840521&fields=name,place_id&strictbounds&radius=50&sessiontoken=19840521&key=0";
 
 
     @GET(mUrl+api_KEY)

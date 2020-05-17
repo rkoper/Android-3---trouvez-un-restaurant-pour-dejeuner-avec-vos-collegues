@@ -11,6 +11,7 @@
         android:id="@+id/Test"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <!-- Restaurant Card Top -->
@@ -30,13 +31,13 @@
                 android:layout_marginTop="220dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/colorWhite"
-                app:srcCompat="@drawable/ic_check_circle_green_24dp"
                 app:backgroundTint="@color/colorWhite"
                 app:elevation="10dp"
                 app:hoveredFocusedTranslationZ="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/PhotoConstraint"
                 app:layout_constraintTop_toTopOf="@+id/PhotoConstraint"
-                app:maxImageSize="35dp" />
+                app:maxImageSize="35dp"
+                app:srcCompat="@drawable/ic_check_circle_green_24dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/PhotoConstraint"
@@ -71,8 +72,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/PhotoConstraint"
-               >
+                app:layout_constraintTop_toBottomOf="@+id/PhotoConstraint">
 
 
                 <LinearLayout
@@ -103,14 +103,19 @@
                         android:paddingLeft="20sp">
 
                         <RatingBar
-                            android:layout_marginTop="2dp"
                             android:id="@+id/ratingRestaurantSub"
                             style="@style/RatingBAr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginRight="2dp"
                             android:isIndicator="true"
+                            android:maxHeight="32dp"
+                            android:minHeight="12dp"
                             android:numStars="3"
                             android:progressTint="@color/ColorYellow"
+                            android:rating="1"
                             android:rotation="180"
                             android:scaleY="-1"
                             android:stepSize="1"
@@ -121,10 +126,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="40dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="0dp" >
+                    tools:layout_editor_absoluteX="0dp">
 
                     <TextView
                         android:id="@+id/subAdress"
@@ -159,7 +164,8 @@
                 android:id="@+id/activity_restaurant_card_option_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin">
+                android:layout_marginTop="@dimen/top_margin"
+                android:background="@color/colorWhite">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/linearLayoutCompat"
@@ -264,12 +270,13 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/sub_recyclerView"
-                android:name="com.m.sofiane.go4lunch.fragment.UserInfoFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sub_recyclerView"
+                    android:name="com.m.sofiane.go4lunch.fragment.UserInfoFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

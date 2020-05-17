@@ -194,7 +194,7 @@ public class subactivity extends AppCompatActivity{
 
     private void ratingRestaurantCalling(Result mShortCut) {
         if (mShortCut.getRating() != null) {
-            float r =   Utils.findrating(mShortCut.getRating());
+            int r =   Utils.findrating(mShortCut.getRating());
             mRatingBar.setRating(r);
         }
 

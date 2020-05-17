@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemRecyclerView"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="80dp"
     android:background="@color/colorWhite"
     android:padding="5dp"
     android:visibility="visible">
@@ -14,7 +14,6 @@
         android:layout_width="66dp"
         android:layout_height="66dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
         android:background="@color/colorWhite"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,30 +29,20 @@
         android:text="@string/profil_name"
         android:textAppearance="@style/TextAppearanceBlack"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@id/sub_photo_profilgo"
-        app:layout_constraintTop_toTopOf="@id/sub_photo_profilgo"
         app:layout_constraintBottom_toBottomOf="@id/sub_photo_profilgo"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sub_photo_profilgo"
+        app:layout_constraintTop_toTopOf="@id/sub_photo_profilgo" />
 
     <Button
         android:id="@+id/buttonClick"
-        android:layout_width="376dp"
-        android:layout_height="94dp"
+        android:layout_width="391dp"
+        android:layout_height="68dp"
         android:background="@android:color/transparent"
         android:visibility="visible"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="4dp"
-        tools:visibility="visible"
-        tools:ignore="MissingConstraints" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/Red"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/buttonClick"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="5dp"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

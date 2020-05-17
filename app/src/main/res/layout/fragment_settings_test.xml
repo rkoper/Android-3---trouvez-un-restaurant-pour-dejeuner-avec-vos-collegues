@@ -11,15 +11,30 @@
     android:maxHeight="500dp"
     android:maxWidth="900dp">
 
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="150dp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="vertical"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/dialog_square_white"
+        android:orientation="vertical"
+        tools:visibility="visible" />
+
     <Switch
         android:id="@+id/switch_lang_fr"
         style="@style/MySwitch"
-        android:layout_width="280dp"
-        android:layout_height="75dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/dialog_square_white"
         android:orientation="horizontal"
-        android:paddingStart="60sp"
-        android:paddingEnd="60sp"
         android:text="French"
         android:textColor="#F44444"
         android:textSize="20sp"
@@ -29,13 +44,12 @@
     <Switch
         android:id="@+id/switch_lang_en"
         style="@style/MySwitch"
-        android:layout_width="280dp"
-        android:layout_height="75sp"
-        android:layout_marginTop="75sp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="85sp"
         android:background="@drawable/dialog_square_white"
         android:orientation="horizontal"
-        android:paddingStart="60sp"
-        android:paddingEnd="60sp"
         android:text="English"
         android:textColor="#F44444"
         android:textSize="20sp"
@@ -45,13 +59,12 @@
     <Switch
         android:id="@+id/switch_notif"
         style="@style/MySwitch"
-        android:layout_width="280sp"
-        android:layout_height="75sp"
-        android:layout_marginTop="225sp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="225dp"
         android:background="@drawable/dialog_square_white"
         android:orientation="horizontal"
-        android:paddingStart="60dp"
-        android:paddingEnd="60dp"
         android:text="Notification"
         android:textColor="#F44444"
         android:textSize="20sp"
@@ -60,25 +73,31 @@
 
     <TimePicker
         android:id="@+id/widget_time_picker"
-        android:layout_width="280sp"
-        android:layout_height="130sp"
-        android:layout_marginTop="300sp"
-        android:background="@drawable/dialog_square_white"
-        android:orientation="horizontal"
-        android:timePickerMode="spinner"
-        android:visibility="visible"
-        tools:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/button_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="420dp"
+        android:layout_width="250dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="280dp"
         android:background="@drawable/dialog_square_white"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_baseline_check_box_24"
+        android:timePickerMode="spinner"
+        android:visibility="invisible"
+        tools:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/lfrench"
+        android:layout_width="280dp"
+        android:layout_height="225dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/lnotif"
+        android:layout_width="280dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/dialog_square"
+        android:orientation="vertical"
         tools:visibility="visible" />
 
     <LinearLayout
@@ -110,15 +129,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/button_close"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="113dp"
-        android:layout_marginTop="160sp"
-        android:background="@drawable/ic_cancel_black_24dp"
-        android:orientation="horizontal"></LinearLayout>
-
-    <LinearLayout
         android:id="@+id/title_lang"
         android:layout_width="112dp"
         android:layout_height="75dp"
@@ -148,38 +158,24 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lfrench"
-        android:layout_width="280dp"
-        android:layout_height="75dp"
-        android:background="@drawable/dialog_square"
-        android:orientation="vertical"
-        tools:visibility="invisible" />
+        android:id="@+id/button_close"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="113dp"
+        android:layout_marginTop="160sp"
+        android:background="@drawable/ic_cancel_black_24dp"
+        android:orientation="horizontal" />
 
-    <LinearLayout
-        android:id="@+id/lenglish"
-        android:layout_width="280dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/dialog_square"
+    <ImageButton
+        android:id="@+id/button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="420dp"
+        android:background="@drawable/dialog_square_white"
         android:orientation="vertical"
-        tools:visibility="invisible" />
-
-    <LinearLayout
-        android:id="@+id/lnotif"
-        android:layout_width="280dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="225dp"
-        android:background="@drawable/dialog_square"
-        android:orientation="vertical"
-        tools:visibility="invisible" />
-
-    <LinearLayout
-        android:id="@+id/ltime_p"
-        android:layout_width="280dp"
-        android:layout_height="130sp"
-        android:layout_marginTop="300sp"
-        android:background="@drawable/dialog_square"
-        android:orientation="vertical"
-        tools:visibility="invisible" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_baseline_check_box_24"
+        tools:visibility="visible" />
 
 </RelativeLayout>

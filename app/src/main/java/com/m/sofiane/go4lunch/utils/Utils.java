@@ -119,17 +119,10 @@ public class Utils extends AppCompatActivity {
         return UrlPhoto;
     }
 
-    public static float findrating(double x) {
-        double y = (x / 5) * 3;
+    public static int findrating(double x) {
+        int arrondi = (int) (((x / 5) * 3));
 
-        float arrondi = (float) ((Math.round(x / 5) * 3));
-        System.out.println(y);
-        System.out.println(arrondi);
-
-        System.out.println("Y --------------> " + y);
-        System.out.println("ARRONDI --------------> " + arrondi);
-
-        return arrondi;
+        return Math.round(arrondi);
 
       //  System.out.println("LAT 2 --------------> " + mLatitude);
     }

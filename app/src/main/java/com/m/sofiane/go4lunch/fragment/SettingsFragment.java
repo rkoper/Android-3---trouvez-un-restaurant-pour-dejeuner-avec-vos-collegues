@@ -51,12 +51,8 @@ public class SettingsFragment extends DialogFragment {
     @BindView(R.id.check_lang)
     CheckBox mCheckLang;
     @BindView(R.id.lfrench)
-    LinearLayout mLenglish;
-    @BindView(R.id.lenglish)
     LinearLayout mLfrench;
     @BindView(R.id.lnotif)
-    LinearLayout mLactiveNotif;
-    @BindView(R.id.ltime_p)
     LinearLayout mLTimePicker;
     @BindView(R.id.switch_notif)
     Switch mSwNotif;
@@ -118,11 +114,9 @@ public class SettingsFragment extends DialogFragment {
     private void initLang() {
         mCheckLang.setOnClickListener(v -> {
             if (mCheckLang.isChecked()) {
-                mLenglish.startAnimation(mASU);
                 mLfrench.startAnimation(mASU);
                 chooseYourLanguage(); }
             else {
-                mLenglish.startAnimation(mASD);
                 mLfrench.startAnimation(mASD);}
         });
     }
@@ -156,9 +150,9 @@ public class SettingsFragment extends DialogFragment {
     private void initNotif() {
         mCheckNotif.setOnClickListener(v -> {
             if (mCheckNotif.isChecked()) {
-                mLactiveNotif.startAnimation(mASU2);
+                mLTimePicker.startAnimation(mASU2);
                 LoadNotifSwitch(); }
-            else  { mLactiveNotif.startAnimation(mASD2); }
+            else  { mLTimePicker.startAnimation(mASD2); }
         });
     }
 
@@ -167,38 +161,38 @@ public class SettingsFragment extends DialogFragment {
         mStatNotif = mSharedPreferences.getBoolean(STATNOTIF, false);
         if (mStatNotif.equals(true)) {
             mSwNotif.setChecked(true);
-            mLTimePicker.startAnimation(mASU3);
+            mWidgetTimePicker.setVisibility(VISIBLE);
             initPicker();
         } else {mSwNotif.setChecked(false);}
         mSwNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
-        if (mSwNotif.isChecked()) {
-            initPicker();
-            mLTimePicker.startAnimation(mASU3);
-            mCheckNotif.setEnabled(false); }
-        else {
-            WorkManager.getInstance().cancelAllWork();
-            mSharedPreferences
-                    .edit()
-                    .putBoolean(STATNOTIF, false)
-                    .apply();
-            mLTimePicker.startAnimation(mASD3);
-            mButtonOK.setVisibility(GONE);
-            mCheckNotif.setEnabled(true); }});
+            if (mSwNotif.isChecked()) {
+                initPicker();
+                mWidgetTimePicker.setVisibility(VISIBLE);
+                mCheckNotif.setEnabled(false); }
+            else {
+                WorkManager.getInstance().cancelAllWork();
+                mSharedPreferences
+                        .edit()
+                        .putBoolean(STATNOTIF, false)
+                        .apply();
+                mWidgetTimePicker.setVisibility(INVISIBLE);
+                mButtonOK.setVisibility(GONE);
+                mCheckNotif.setEnabled(true); }});
 
         Log.e("Shared P State ------>", mStatNotif.toString());
     }
 
-        private void initPicker() {
-                mWidgetTimePicker.is24HourView();
-                mWidgetTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                    cal.set(Calendar.MINUTE, minute);
-                    mButtonOK.setVisibility(VISIBLE);
-                    mButtonOK.startAnimation(mAup);
-                    initButtonOK(cal);
-                });
-            }
+    private void initPicker() {
+        mWidgetTimePicker.is24HourView();
+        mWidgetTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            cal.set(Calendar.MINUTE, minute);
+            mButtonOK.setVisibility(VISIBLE);
+            mButtonOK.startAnimation(mAup);
+            initButtonOK(cal);
+        });
+    }
 
     private void initButtonOK(Calendar cal) {
         mButtonOK.setOnClickListener(v -> {
@@ -231,221 +225,3 @@ public class SettingsFragment extends DialogFragment {
     }
 
 }
-
-
-
-
-
-/*
-
-    @BindView(R.id.e1_english)
-    LinearLayout mLayoutSwitchEnglish;
-    @BindView(R.id.fourL_switchEN)
-    Switch mSwitchEnglish;
-    @BindView(R.id.e1_french)
-    LinearLayout mLayoutSwitchFrench;
-    @BindView(R.id.fourL_switchFR)
-    Switch mSwitchFrench;
-    @BindView(R.id.e2_language)
-    LinearLayout mLayoutLanguage;
-    @BindView(R.id.e3_notification)
-    LinearLayout mLayoutNotif;
-    @BindView(R.id.e4_switch_notif)
-    LinearLayout mLayoutSwitchNot;
-    @BindView(R.id.three_switchNotif)
-    Switch mSwitchNotif;
-    @BindView(R.id.e5_time_picker)
-    LinearLayout mLayoutTimePicker;
-    @BindView(R.id.e5_widget_time_picker)
-    TimePicker mWidgetTimePicker;
-    @BindView(R.id.e6_ok)
-    LinearLayout mLayoutOk;
-    @BindView(R.id.e6_button_ok)
-    ImageButton mButtonSwitchOk;
-    @BindView(R.id.button_close)
-    ImageButton mButtonClose;
-    @BindView(R.id.Layout)
-    RelativeLayout mLayoutG;
-
-    public SettingsFragment() {}
-
-
-    private int h;
-    private int m;
-
-    Resources mTest;
-    Boolean mStatNotif;
-    SharedPreferences mSharedPreferences;
-    public static final String PREFS ="666";
-    public static final String TIMETONOTIF= "TimeToNotif";
-    public static final String STATNOTIF= "StateNotif";
-    public static final String LANG = "language";
-
-    Animation mAnimLeftRight,mAnimFadeOut,mAnimZoomOut,mAnimSimple,mAnimBottom;
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, null);
-        initAnim();
-        ButterKnife.bind(this, view);
-        initCloseButton();
-        initWindowsTransprent();
-        clickonNotif();
-        clickonLangauge();
-        return view;
-    }
-
-    private void initAnim() {
-        mAnimLeftRight  = AnimationUtils.loadAnimation(getContext(),R.anim.lefttoright);
-        mAnimFadeOut  = AnimationUtils.loadAnimation(getContext(),R.anim.fadeout);
-        mAnimZoomOut  = AnimationUtils.loadAnimation(getContext(),R.anim.zoomout);
-        mAnimSimple = AnimationUtils.loadAnimation(getContext(),R.anim.sample_anim);
-        mAnimBottom = AnimationUtils.loadAnimation(getContext(),R.anim.inbottom);
-    }
-
-    private void clickonLangauge() {
-        mLayoutLanguage.setOnClickListener(v ->
-                displayLang());
-    }
-
-    private void displayLang(){
-        invisibleNotif();
-        chooseYourLanguage();
-    }
-
-    @SuppressLint("ResourceAsColor")
-    public void invisibleNotif(){
-        mLayoutSwitchFrench.startAnimation(mAnimLeftRight);
-        mLayoutSwitchFrench.setVisibility(View.VISIBLE);
-        mLayoutSwitchEnglish.startAnimation(mAnimLeftRight);
-        mLayoutSwitchEnglish.setVisibility(View.VISIBLE);
-
-        mLayoutOk.setVisibility(View.INVISIBLE);
-        mLayoutTimePicker.setVisibility(View.INVISIBLE);
-        mLayoutSwitchNot.setVisibility(View.INVISIBLE);
-    }
-
-    private void chooseYourLanguage() {
-        mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG ,Context.MODE_PRIVATE);
-        String mLang  = mSharedPreferences.getString(LANG,"en");
-        if (mLang.equals("en"))
-        {mSwitchEnglish.setChecked(true);}
-        else {mSwitchFrench.setChecked(true);}
-
-        mSwitchFrench.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                mSharedPreferences.edit().putString(LANG, "fr").apply();
-                mSwitchEnglish.setChecked(false);
-                Intent refresh = new Intent(getContext(), mainactivity.class);
-                startActivity(refresh);
-            }
-        });
-        mSwitchEnglish.setOnCheckedChangeListener(((buttonView, isChecked) -> {
-            if (isChecked) {
-                mSharedPreferences.edit().putString(LANG, "en").apply();
-                mSwitchFrench.setChecked(false);
-                Intent refresh = new Intent(getContext(), mainactivity.class);
-                startActivity(refresh);
-
-            }
-        }));
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void clickonNotif() {
-        mLayoutNotif.setOnClickListener(v ->
-                displayNotif());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void displayNotif(){
-        invisibleLang();
-        checkStateSwitch();
-        initSwitch();
-    }
-
-    public void invisibleLang(){
-        mLayoutSwitchNot.setVisibility(View.VISIBLE);
-        mLayoutSwitchEnglish.setVisibility(View.INVISIBLE);
-        mLayoutSwitchFrench.setVisibility(View.INVISIBLE);
-    }
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void mASD4StateSwitch() {
-        mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREFS ,Context.MODE_PRIVATE);
-        Boolean mStatNotif  = mSharedPreferences.getBoolean(STATNOTIF,false);
-        if (mStatNotif.equals(true))
-        {mSwitchNotif.setChecked(true);
-            mLayoutTimePicker.setVisibility(View.VISIBLE);
-            initPicker();}
-        Log.e("Shared P State ------>", mStatNotif.toString());
-    }
-
-    @SuppressLint("ResourceAsColor")
-    public void initSwitch() {
-        mSwitchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mLayoutTimePicker.setVisibility(View.VISIBLE);
-                    initPicker();
-                }
-                else {    mLayoutTimePicker.startAnimation(mAnimSimple);
-
-                    mLayoutTimePicker.setVisibility(View.VISIBLE);
-                }
-            } else {
-                WorkManager.getInstance().cancelAllWork();
-                Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
-                mSharedPreferences
-                        .edit()
-                        .putBoolean(STATNOTIF, false)
-                        .remove(TIMETONOTIF)
-                        .apply();
-            }
-        });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @SuppressLint("ResourceAsColor")
-    private void initPicker() {
-        mWidgetTimePicker.is24HourView();
-        mWidgetTimePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            cal.set(Calendar.MINUTE, minute);
-            initButton(cal);
-        });
-    }
-
-    private void initButton(Calendar calendar) {
-        mLayoutOk.startAnimation(mAnimBottom);
-        mLayoutOk.setVisibility(View.VISIBLE);
-        mButtonSwitchOk.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                setAlarm(calendar);
-            }
-            onDestroyView();
-        });
-    }
-
-    private void initCloseButton() {
-        mButtonClose.setOnClickListener(v ->
-                onDestroyView());
-    }
-
-    @Override
-    public void onDestroyView() {
-        mLayoutG.startAnimation(mAnimZoomOut);
-        super.onDestroyView();
-    }
-
-
-
-}
-
-
-
-*/
