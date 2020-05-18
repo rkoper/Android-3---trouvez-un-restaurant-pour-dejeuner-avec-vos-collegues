@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,12 +45,9 @@ public class ListFragment extends Fragment  {
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
     ArrayList<String> mTest;
-
     @BindView(R.id.List_recyclerView)
     RecyclerView mRecyclerView;
-
     final String mKeyName = "1";
-    private FrameLayout frameLayout;
 
     @Nullable
     @Override
@@ -59,8 +57,8 @@ public class ListFragment extends Fragment  {
         setHasOptionsMenu(true);
         uploadToolbar();
         ButterKnife.bind(this, view);
-        initRecyclerView();
-        this.configureRecyclerView(view);
+     //   readFireBase();
+        // configureRecyclerView();
         return view;
     }
 
@@ -68,7 +66,6 @@ public class ListFragment extends Fragment  {
     private void uploadToolbar() {
         TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
         mTitleText.setText(R.string.i_m_hungry);
-
     }
 
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -82,7 +79,6 @@ public class ListFragment extends Fragment  {
         searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
         searchView.setOnCloseListener(() -> {
             mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
-            initRecyclerView();
             return false;
         });
 
@@ -100,7 +96,7 @@ public class ListFragment extends Fragment  {
                 } else {
                     Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
-                    initRecyclerView();
+                    readFireBase();
                 }
                 return false;
             }
@@ -108,9 +104,7 @@ public class ListFragment extends Fragment  {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
-
-    private void configureRecyclerView(View view) {
+    private void configureRecyclerView() {
         this.listData = new ArrayList<>();
         ArrayList<Result> mData = new ArrayList<>();
         this.mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest );
@@ -120,13 +114,8 @@ public class ListFragment extends Fragment  {
 
     }
 
-    private void initRecyclerView() {
+    private void readFireBase() {
         ArrayList<Result> mData = Singleton.getInstance().getArrayList();
-            readFireBase(mData);
-
-                }
-
-    private void readFireBase(ArrayList<Result> mData) {
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -146,6 +135,14 @@ public class ListFragment extends Fragment  {
             mTest.add(listData.get(i).getNameOfResto());
             mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
             mRecyclerView.setAdapter(mAdapter);
+
         }
+    }
+
+    @Override
+    public void onResume() {
+        configureRecyclerView();
+        readFireBase();
+        super.onResume();
     }
 }

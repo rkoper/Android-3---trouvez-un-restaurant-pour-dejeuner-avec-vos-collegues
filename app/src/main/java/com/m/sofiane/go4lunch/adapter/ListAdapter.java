@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -89,6 +90,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         countCall(h,i);
         clickAndSendData(h,i);
     }
+
+
+
 
     private void countCall(ViewHolder h, int i) {
         Map<String, Integer> countMap = new HashMap<>();
