@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:ignore="ExtraText">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_choice_name"
         android:layout_width="120sp"
         android:layout_height="120sp"
@@ -17,40 +17,41 @@
         android:background="@drawable/dialog_rounded_bg"
         android:minWidth="350dp"
         android:orientation="vertical"
-        android:padding="0dp"
-        app:layout_constraintCircleRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/frag_choice_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="bottom|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/mychoicename"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="15sp"
+            android:gravity="center"
+            android:textAppearance="@style/TxtViewWhite"
             android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/frag_choice_adress"
+
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/frag_choice_adress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="35sp"
-            android:layout_weight="2"
             android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/frag_choice_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/frag_choice_adress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/mychoiceadress"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="12sp"
-            tools:layout_editor_absoluteX="0dp" />
+            android:textStyle="italic"
+            android:textAppearance="@style/TxtViewWhite" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/layout_choice_title"
@@ -66,19 +67,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/frag_choice_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="10dp"
+            android:textStyle="bold"
             android:text="@string/my_choice"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorWhite"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TxtViewWhite" />
     </LinearLayout>
 
     <LinearLayout
@@ -130,11 +129,8 @@
             android:id="@+id/frag_choice_no_choice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/fui_transparent"
-            android:gravity="center"
             android:text="@string/no_restaurant_choosen"
-            android:textAppearance="@style/TextAppearance"
-            android:textSize="25sp" />
+            android:textAppearance="@style/TxtViewWhite" />
     </LinearLayout>
 
     <LinearLayout
@@ -150,8 +146,6 @@
         android:padding="0dp"
         app:layout_constraintCircleRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toEndOf="@+id/layout_choice_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
@@ -169,8 +163,8 @@
         android:id="@+id/layout_choice_close"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="105dp"
         android:background="@drawable/dialog_rounded_bg"
         android:minWidth="350dp"
         android:orientation="vertical"

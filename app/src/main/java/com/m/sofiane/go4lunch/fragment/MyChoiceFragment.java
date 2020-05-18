@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -39,7 +40,7 @@ public class MyChoiceFragment extends DialogFragment {
     @BindView(R.id.layout_choice_close)
     LinearLayout mLLclose;
     @BindView(R.id.layout_choice_name)
-    LinearLayout mLLname;
+    ConstraintLayout mLLname;
     @BindView(R.id.layout_choice_photo)
     LinearLayout mLLphoto;
     @BindView(R.id.layout_choice_title)
@@ -62,6 +63,8 @@ public class MyChoiceFragment extends DialogFragment {
     ImageButton mChoiceClose;
     @BindView(R.id.image_b_cancel_choice)
     ImageButton mCancelChoice;
+
+    static final String DEFAUTPHOTO = "https://bit.ly/3cIGQsK";
 
     final Fragment mapFragment = new MapFragment();
 
@@ -128,15 +131,22 @@ public class MyChoiceFragment extends DialogFragment {
     private void callMyChoice(String mName, String mAdress, String mPhotoResto) {
         mChoiceName.setText(mName);
         mChoiceAdress.setText(mAdress);
-        if (getContext() != null){
-            Glide
+        if (getContext() != null)
+        {
+            if (mPhotoResto != null) {
+                Glide
+                        .with(getContext())
+                        .load(mPhotoResto)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(mChoicePhoto); }
+            else {   Glide
                     .with(getContext())
-                    .load(mPhotoResto)
+                    .load(DEFAUTPHOTO)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(mChoicePhoto);}
-        else {
-            Log.d("TAG", "No such document");
-        }
+                    .into(mChoicePhoto); } }
+
+        else { Log.d("TAG", "No such document"); }
+
     }
 
     private void cancelChoice() {

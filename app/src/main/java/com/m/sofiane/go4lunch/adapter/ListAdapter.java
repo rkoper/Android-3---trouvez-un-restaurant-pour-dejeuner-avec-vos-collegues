@@ -159,8 +159,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
 
     private void rateCalling(ViewHolder h, int i) {
         if (mData.get(i).getRating() != null) {
-            h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
-           long z = Utils.findrating(mData.get(i).getRating());
+//            h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
+            long z = Utils.findrating(mData.get(i).getRating());
             h.mRatingRestaurant.setRating(z);
 
         }
@@ -169,8 +169,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     }
 
     private void adresseCalling(@NonNull ListAdapter.ViewHolder h, int i ) {
-       mLoadAdress = Utils.formatAdressForList(mData.get(i).getVicinity());
-            h.R_adress.setText(mLoadAdress);
+        mLoadAdress = Utils.formatAdressForList(mData.get(i).getVicinity());
+        h.R_adress.setText(mLoadAdress);
     }
 
     private void nameCalling(@NonNull ListAdapter.ViewHolder h, int i ) {
@@ -185,8 +185,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         if (mData.get(i).getPhotos().isEmpty())
         {UrlPhoto = DEFAUTPHOTOFORLIST;}
         else { UrlPhoto = Utils.urlPhotoForList(mData.get(i).getPhotos().get(0).getPhotoReference());}
-            RequestManager glide = Glide.with(mContext);
-            glide.load(UrlPhoto).into(h.R_photo);
+        RequestManager glide = Glide.with(mContext);
+        glide.load(UrlPhoto).into(h.R_photo);
 
     }
 
@@ -228,8 +228,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         TextView R_adress;
         @BindView(R.id.place_photo)
         ImageView R_photo;
-        @BindView(R.id.RateTxt)
-        TextView R_rateTxt;
         @BindView(R.id.place_distance)
         TextView R_prox;
         @BindView(R.id.place_open)

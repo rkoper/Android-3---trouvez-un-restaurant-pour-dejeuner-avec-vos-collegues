@@ -93,13 +93,12 @@
 
         <TextView
             android:id="@+id/radioButton2"
+            style="@style/TxtViewWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7sp"
-            android:fontFamily="@font/montserrat"
-            android:gravity="center|top"
             android:text="Notification"
-            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <CheckBox
@@ -122,13 +121,12 @@
 
         <TextView
             android:id="@+id/radioButton3"
+            style="@style/TxtViewWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7sp"
-            android:fontFamily="@font/montserrat"
-            android:gravity="center|top"
             android:text="Languages"
-            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <CheckBox

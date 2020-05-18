@@ -202,7 +202,7 @@ public class subactivity extends AppCompatActivity{
     }
 
     private void adresseRestaurantCallig(Result mShortCut) {
-        mAdressDef = Utils.AdressForSubactivty(mShortCut);
+        mAdressDef = Utils.formatAdressForList(mShortCut.getFormattedAddress());
         mAdressSub.setText(mAdressDef);
     }
 

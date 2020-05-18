@@ -26,6 +26,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/profil_name"
         android:textAppearance="@style/TxtViewSub"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/sub_photo_profilgo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sub_photo_profilgo"
