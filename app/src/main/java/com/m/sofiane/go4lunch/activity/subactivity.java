@@ -261,7 +261,6 @@ public class subactivity extends AppCompatActivity{
         }
 
         readDataFromFirebase(mDisplayNameOfResto);
-
         searchFavList(mDisplayNameOfResto);
         searchChoiceList(mDisplayNameOfResto);
     }
@@ -337,6 +336,9 @@ public class subactivity extends AppCompatActivity{
 
             mychoiceHelper.createMyChoice(mDataMap);
 
+            listDataName.clear();
+            readDataFromFirebase(mDisplayNameOfResto);
+
         });
     }
 
@@ -359,6 +361,7 @@ public class subactivity extends AppCompatActivity{
                     }
                 });
     }
+
     @Override
     protected void onPause(){
         mAdapter.notifyDataSetChanged();
