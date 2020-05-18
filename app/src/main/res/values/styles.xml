@@ -56,7 +56,7 @@
      </style>
 
      <style name="RatingBAr" parent="@style/Widget.AppCompat.RatingBar.Indicator">
-         <item name="colorControlNormal">@color/fui_transparent</item>
+         <item name="colorControlNormal">@color/ColorRed</item>
          <item name="colorControlActivated">@color/ColorYellow</item>
      </style>
 
