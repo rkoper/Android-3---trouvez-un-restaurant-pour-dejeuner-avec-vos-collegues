@@ -1,4 +1,4 @@
- <resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -19,8 +19,8 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/colorGray</item>
-        <item name="colorControlActivated">@color/colorStar</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="colorControlActivated">@color/ColorYellow</item>
     </style>
 
     <style name="NoBar">
@@ -55,17 +55,6 @@
          <item name="android:windowExitAnimation">@anim/slider_right</item>
      </style>
 
-     <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
-         <item name="android:textColorPrimaryDisableOnly">#00838f</item>
-         <item name="colorAccent">#e91e63</item>
-     </style>
-
-     <style name="abirStyle" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
-         <item name="android:textColor">@color/colorPrimary</item>
-         <item name="android:background">@null</item>
-         <item name="android:textColorPrimary">@color/colorPrimary</item>
-     </style>
-
      <style name="RatingBAr" parent="@style/Widget.AppCompat.RatingBar.Indicator">
          <item name="colorControlNormal">@color/fui_transparent</item>
          <item name="colorControlActivated">@color/ColorYellow</item>
@@ -76,4 +65,40 @@
          <item name="android:minHeight">36dp</item>
          <item name="android:maxHeight">36dp</item>
      </style>
+
+     <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+         <item name="android:textColorPrimaryDisableOnly">#00838f</item>
+         <item name="colorAccent">#e91e63</item>
+         <item name="android:textSize">20sp</item>
+         <item name="android:orientation">horizontal</item>
+         <item name="android:textColor">#F44444</item>
+         <item name="android:background">@drawable/dialog_square_white</item>
+         <item name="android:thumb">@drawable/ic_round_small_red</item>
+         <item name="android:textStyle">bold</item>
+     </style>
+
+     <style name="TxtViewPrincipal" parent="@style/TextAppearanceBlack">
+         <item name="android:textSize">17sp</item>
+         <item name="fontFamily">@font/montserrat</item>
+         <item name="android:textColor">@color/colorBlack</item>
+         <item name="android:ellipsize">end</item>
+         <item name="android:gravity">center_vertical</item>
+         <item name="android:maxLines">1</item>
+         <item name="android:textStyle">bold</item>
+         <item name="android:maxLength">40</item>
+     </style>
+
+    <style name="TxtViewSub" parent="@style/TextAppearanceBlack">
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:maxLines">1</item>
+
+        <item name="android:maxLength">40</item>
+    </style>
+
+
  </resources>

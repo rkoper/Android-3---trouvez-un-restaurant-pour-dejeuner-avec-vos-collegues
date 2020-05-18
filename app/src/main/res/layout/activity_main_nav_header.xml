@@ -23,7 +23,7 @@
         android:layout_marginLeft="105dp"
         android:layout_marginTop="115dp"
         android:text="@string/name"
-        android:textColor="@color/Red"
+        android:textColor="@color/ColorRed"
         android:textSize="15sp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_marginLeft="105dp"
         android:layout_marginTop="135dp"
         android:text="@string/e_mail"
-        android:textColor="@color/Red"
+        android:textColor="@color/ColorRed"
         android:textSize="12sp"
         android:textStyle="italic" />
 

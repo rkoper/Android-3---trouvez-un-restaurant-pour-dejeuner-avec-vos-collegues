@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -48,7 +49,7 @@ public class Utils extends AppCompatActivity {
         searchView.setMaxWidth(Integer.MAX_VALUE);
         int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchPlate = searchView.findViewById(searchPlateId);
-        searchPlate.setTextColor(t.getResources().getColor(R.color.Red));
+        searchPlate.setTextColor(t.getResources().getColor(R.color.ColorRed));
         searchPlate.setBackgroundResource(R.drawable.dialog_rounded);
     }
 
@@ -120,11 +121,13 @@ public class Utils extends AppCompatActivity {
     }
 
     public static int findrating(double x) {
-        int arrondi = (int) (((x / 5) * 3));
 
-        return Math.round(arrondi);
+        double y = (double) (((x / 5) * 3));
 
-      //  System.out.println("LAT 2 --------------> " + mLatitude);
+        long z =  Math.round(y);
+
+        return Math.round(z);
+
     }
 
 }

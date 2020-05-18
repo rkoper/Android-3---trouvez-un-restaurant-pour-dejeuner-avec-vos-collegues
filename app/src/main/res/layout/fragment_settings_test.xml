@@ -33,13 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/dialog_square_white"
-        android:orientation="horizontal"
-        android:text="French"
-        android:textColor="#F44444"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:thumb="@drawable/ic_round_small_red" />
+        android:text="French" />
 
     <Switch
         android:id="@+id/switch_lang_en"
@@ -48,13 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="85sp"
-        android:background="@drawable/dialog_square_white"
-        android:orientation="horizontal"
         android:text="English"
-        android:textColor="#F44444"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:thumb="@drawable/ic_round_small_red" />
+       />
 
     <Switch
         android:id="@+id/switch_notif"
@@ -63,13 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="225dp"
-        android:background="@drawable/dialog_square_white"
-        android:orientation="horizontal"
-        android:text="Notification"
-        android:textColor="#F44444"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:thumb="@drawable/ic_round_small_red" />
+        android:text="Notification" />
 
     <TimePicker
         android:id="@+id/widget_time_picker"

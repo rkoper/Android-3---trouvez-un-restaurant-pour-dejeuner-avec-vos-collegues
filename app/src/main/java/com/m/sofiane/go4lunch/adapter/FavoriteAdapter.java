@@ -65,26 +65,29 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
     public void deleteItem(MyFavorite ld, int i ) {
         mButtonFav.setOnClickListener(v -> {
+            if (listData == null) {
+            } else {
+                String itemLabel = listData.get(i).getName();
+                listData.remove(i);
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, listData.size());
+                Toast.makeText((v.getContext()), "Removed : " + itemLabel, Toast.LENGTH_SHORT).show();
+                String t = ld.getName();
+                Log.e(t, t);
 
-            String itemLabel = listData.get(i).getName();
-            listData.remove(i);
-            notifyItemRemoved(i);
-            notifyItemRangeChanged(i,listData.size());
-            Toast.makeText((v.getContext()),"Removed : " + itemLabel,Toast.LENGTH_SHORT).show();
-            String t = ld.getName();
-            Log.e( t,t);
-
-            myfavoriteHelper.deleteMyFav(t)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                Log.d("FAv DATA 1", document.getId() + " => " + document.getData());
-                                document.getReference().delete();
+                myfavoriteHelper.deleteMyFav(t)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    Log.d("FAv DATA 1", document.getId() + " => " + document.getData());
+                                    document.getReference().delete();
+                                }
+                            } else {
+                                Log.d("FAV DATA 2", "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.d("FAV DATA 2", "Error getting documents: ", task.getException());
-                        }
-                    });
+                        });
+            }
+
         });
     }
 

@@ -3,7 +3,7 @@
  <item>
 <shape tools:ignore="ExtraText">
     <gradient
-    android:startColor="@color/Red"
+    android:startColor="@color/ColorRed"
         android:centerColor="@color/colorWhite"
     android:endColor="@color/colorWhite"
     android:angle="45"/>

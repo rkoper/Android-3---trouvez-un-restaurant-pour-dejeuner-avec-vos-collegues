@@ -48,22 +48,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public static final String MAX_WIDTH = "&maxheight=10000";
     public static final String MAX_HEIGHT = "&maxheight=10000";
     public static final String URLPHOTO = "https://maps.googleapis.com/maps/api/place/photo?";
-    public static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";
+    public static final String DEFAUTPHOTOFORLIST = "https://bit.ly/2zNfvqC";
     public static final String KEY = "&key=";
     public static final String PHOTOREF = "&photoreference=" ;
-    final String API_KEY = BuildConfig.APIKEY;
     Double mLatitude,mLongitude;
-    Location mCurrentLocation;
     Boolean mOpen;
-    String mPlaceId,mDistance,mNameOfRestaurant,mAdress,UrlPhoto,refPhoto,mLoadAdress;
+    String mPlaceId,mDistance,mNameOfRestaurant,UrlPhoto,mLoadAdress;
     List<Result> mData,mDataList;
     final Context mContext;
     final ArrayList<String> mTest;
     final FragmentManager fragmentManager;
     CharSequence mKeyName = "";
-    Location location;
-    Double mRate;
-
 
 
     public ListAdapter(ArrayList<Result> mData, Context mContext, FragmentManager fragmentManager, CharSequence mKeyName, ArrayList<String> mTest ) {
@@ -165,8 +160,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     private void rateCalling(ViewHolder h, int i) {
         if (mData.get(i).getRating() != null) {
             h.R_rateTxt.setText(String.valueOf(mData.get(i).getRating()));
-          int r =   Utils.findrating(mData.get(i).getRating());
-            h.mRatingRestaurant.setRating(r);
+           long z = Utils.findrating(mData.get(i).getRating());
+            h.mRatingRestaurant.setRating(z);
+
         }
 
         else { h.mRatingRestaurant.setRating(0);}
@@ -187,14 +183,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
 
     private void imageCalling(@NonNull ListAdapter.ViewHolder h, int i) {
         if (mData.get(i).getPhotos().isEmpty())
-        {UrlPhoto = DEFAUTPHOTO;}
-        else { UrlPhoto = Utils.urlPhotoForList(mData.get(i).getPhotos().get(0).getPhotoReference());
+        {UrlPhoto = DEFAUTPHOTOFORLIST;}
+        else { UrlPhoto = Utils.urlPhotoForList(mData.get(i).getPhotos().get(0).getPhotoReference());}
             RequestManager glide = Glide.with(mContext);
-            if (!(UrlPhoto == null)) {
-                glide.load(UrlPhoto).into(h.R_photo);
-            } else {
-                glide.load(R.drawable.ic_notifications_black_24dp).into(h.R_photo);
-            }}
+            glide.load(UrlPhoto).into(h.R_photo);
+
     }
 
     @Override

@@ -65,7 +65,7 @@ import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLPHOTO;
  */
 public class subactivity extends AppCompatActivity{
 
-    static final String DEFAUTPHOTO = "https://urlz.fr/cw4j";
+    static final String DEFAUTPHOTO = "https://bit.ly/3cIGQsK";
     boolean isBackFromB;
     private static final String TAG = "RealtimeDB";
     String mPlaceId, UrlPhoto,mPhone,mSite,mPhotoN,mAdressV2,mAdressV3,mAdressDef,mDisplayNameOfResto;
@@ -194,15 +194,16 @@ public class subactivity extends AppCompatActivity{
 
     private void ratingRestaurantCalling(Result mShortCut) {
         if (mShortCut.getRating() != null) {
-            int r =   Utils.findrating(mShortCut.getRating());
-            mRatingBar.setRating(r);
+            int z =   Utils.findrating(mShortCut.getRating());
+            mRatingBar.setRating(z);
         }
 
         else {mRatingBar.setRating(0);}
     }
 
     private void adresseRestaurantCallig(Result mShortCut) {
-        mAdressSub.setText(Utils.AdressForSubactivty(mShortCut));
+        mAdressDef = Utils.AdressForSubactivty(mShortCut);
+        mAdressSub.setText(mAdressDef);
     }
 
     private void webSiteRestaurantCalling(Result mShortCut) {

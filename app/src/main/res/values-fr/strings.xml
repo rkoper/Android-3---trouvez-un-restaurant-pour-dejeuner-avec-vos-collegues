@@ -82,7 +82,7 @@
     <string name="nochoicenotif">Pas de restaurant choisis</string>
     <string name="choicenotif"> Vous etes attendu @  </string>
     <string name="error">Erreur de connexion</string>
-    <string name="comingg"> à prévu d\'y manger !</string>
+    <string name="comingg"> a prévu d\'y manger !</string>
     <string name="Errorc">Erreur de connexion</string>
 
 </resources>

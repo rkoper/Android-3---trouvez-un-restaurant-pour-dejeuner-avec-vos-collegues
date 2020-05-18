@@ -1,94 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@color/colorWhite"
-    android:padding="5dp"
     android:visibility="visible">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="85dp"
-        android:background="@color/Red"
-        android:orientation="vertical"
-        tools:visibility="visible" />
-
-    <LinearLayout
-        android:id="@+id/place_info"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="90dp"
-        android:layout_marginEnd="100dp"
+        android:id="@+id/llnameplace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@color/fui_transparent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/place_namefav"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/fui_transparent"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLength="30"
-            android:maxLines="1"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp"
             android:text="@string/place_name"
-            android:textAppearance="@style/TextAppearanceBlack"
-            android:textSize="20sp" />
+            android:textAppearance="@style/TxtViewPrincipal" />
 
         <TextView
             android:id="@+id/place_addressfav"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="@color/fui_transparent"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearanceBlack"
-            android:maxLines="1"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp"
             android:text="@string/place_location"
-            android:textSize="16sp" />
+            android:textAppearance="@style/TxtViewSub" />
 
     </LinearLayout>
 
 
     <!-- 1 | Add an image button -->
 
-    <LinearLayout
-        android:id="@+id/place_info_2"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="10dp">
 
+    <ImageView
 
-        <ImageView
-            android:id="@+id/place_photofav"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="7dp"
-            android:background="@color/fui_transparent"
-            android:scaleType="centerCrop" />
-    </LinearLayout>
+        android:id="@+id/place_photofav"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 
     <ImageButton
+        android:layout_marginLeft="20dp"
         android:id="@+id/imageButton"
-        android:layout_width="38dp"
-        android:layout_height="42dp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@color/fui_transparent"
+        app:layout_constraintRight_toLeftOf="@+id/llnameplace"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:srcCompat="@drawable/ic_cancel_black_24dp" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

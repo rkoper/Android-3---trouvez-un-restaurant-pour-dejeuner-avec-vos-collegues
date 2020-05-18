@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="99dp"
-        android:background="@color/Red"
+        android:background="@color/ColorRed"
         android:orientation="vertical"
         tools:visibility="visible" />
 
@@ -30,28 +30,21 @@
             android:id="@+id/place_name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
             android:maxLength="30"
             android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="@string/place_name"
-            android:textSize="20sp"
-            android:textAppearance="@style/TextAppearanceBlack"/>
+            android:textAppearance="@style/TxtViewPrincipal"/>
 
         <TextView
             android:id="@+id/place_address"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:ellipsize="end"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:maxLines="1"
             android:paddingTop="1dp"
             android:paddingBottom="1dp"
             android:text="@string/place_location"
-            android:textAppearance="@style/TextAppearanceBlack"
+            android:textAppearance="@style/TxtViewSub"
           />
 
         <TextView
