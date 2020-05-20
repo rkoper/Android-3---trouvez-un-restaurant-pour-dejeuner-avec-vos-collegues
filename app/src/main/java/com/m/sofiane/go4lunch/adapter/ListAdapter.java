@@ -27,6 +27,7 @@ import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
+import com.m.sofiane.go4lunch.services.latAndLngSingleton;
 import com.m.sofiane.go4lunch.utils.Utils;
 
 import java.util.ArrayList;
@@ -146,8 +147,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             locationA.setLatitude(mLatitude);
             locationA.setLongitude(mLongitude);
 
-            double mLat = Singleton.getInstance().getmLatitude();
-            double mLng = Singleton.getInstance().getmLongitude();
+            double mLat = latAndLngSingleton.getInstance().getmLatitude();
+            double mLng = latAndLngSingleton.getInstance().getmLongitude();
 
             Location locationB = new Location("B");
             locationB.setLatitude(mLat);

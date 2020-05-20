@@ -57,7 +57,7 @@ public class ListFragment extends Fragment  {
         setHasOptionsMenu(true);
         uploadToolbar();
         ButterKnife.bind(this, view);
-     //   readFireBase();
+        //   readFireBase();
         // configureRecyclerView();
         return view;
     }

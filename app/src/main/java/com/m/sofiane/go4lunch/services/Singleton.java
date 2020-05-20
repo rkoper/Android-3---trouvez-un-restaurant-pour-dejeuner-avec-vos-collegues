@@ -6,47 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Singleton {
-            private static Singleton uniqInstance;
-            public ArrayList<Result> results = new ArrayList<>();
-            public double mLatitude;
-            public double mLongitude;
-
-            public Singleton() {
-            }
-            public static Singleton getInstance() {
-                if (uniqInstance == null)
-                    uniqInstance = new Singleton();
-                return uniqInstance;
-            }
-
-            public void setArrayList(ArrayList<Result> results)
-            {
-                this.results = results;
-            }
-            public ArrayList<Result> getArrayList()
-            {
-                return this.results;
-
-            }
-
-    public void setLatitude(double mLatitude)
-    {
-        this.mLatitude = mLatitude;
+    private static Singleton uniqInstance;
+    public ArrayList<Result> results = new ArrayList<>();
+    public Singleton() {
+    }
+    public static Singleton getInstance() {
+        if (uniqInstance == null)
+            uniqInstance = new Singleton();
+        return uniqInstance;
     }
 
-    public double getmLatitude()
+    public void setArrayList(ArrayList<Result> results)
     {
-        return this.mLatitude;
+        this.results = results;
+    }
+    public ArrayList<Result> getArrayList()
+    {
+        return this.results;
+
     }
 
-    public void setLongitude(double mLongitude)
-    {
-        this.mLongitude = mLongitude;
-    }
-
-    public double getmLongitude()
-    {
-        return this.mLongitude;
-    }
 
 }

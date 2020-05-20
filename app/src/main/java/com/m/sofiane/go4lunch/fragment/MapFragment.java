@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,41 +41,29 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.adapter.SearchMapAdapter;
-import com.m.sofiane.go4lunch.adapter.WorkAdapter;
-import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
+import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.services.latAndLngSingleton;
 import com.m.sofiane.go4lunch.utils.Utils;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -86,23 +73,15 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     Marker mRestoMarker;
     LatLng mLatLng;
     LatLng mLatLngForAll;
-    String placeId;
     String placeIdToCompare;
-    View view;
-    String m;
     String apiKey = BuildConfig.APIKEY;
     @BindView(R.id.recyclerview_for_maps)
     RecyclerView mRecyclerView;
-    ArrayList<NameOfResto> listData;
     SearchMapAdapter mAdapter;
     ArrayList<Prediction> listdataForSearch;
     FragmentManager mFragmentManager;
-    Map<String, LatLng> mMapToCompare;
-    String placeIdToCompareMyChoice;
     ArrayList<String> ld;
-    ArrayList<String> mListToGreen;
-    String nameResto;
-    String IdResto;
+    ArrayList<Result> mResults;
 
     @Nullable
     @Override
@@ -213,10 +192,11 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     private void compareToUpdateMarkers(String placeIdToCompare) {
         for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
-            if (placeIdToCompare.equals(Singleton.getInstance().getArrayList().get(i).getReference())) {
+            mResults = Singleton.getInstance().getArrayList();
+            if (placeIdToCompare.equals(mResults.get(i).getReference())) {
                 mMap.clear();
-                Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
-                Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
+                Double mLatForAll = mResults.get(i).getGeometry().getLocation().getLat();
+                Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
                 mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
             }
             MarkerOptions markerOptions = new MarkerOptions();
@@ -250,8 +230,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
-        } else {
-        }
+        } else { Log.e("error", "with permission");}
     }
 
     private void CheckGooglePlayServices() {
@@ -260,8 +239,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(getActivity(), result,
-                        0).show();
-            }
+                        0).show(); }
         }
     }
 
@@ -269,17 +247,13 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
-
-            //    mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().isTiltGesturesEnabled();
             mMap.setMyLocationEnabled(true);
             mMap.setMinZoomPreference(5.0f);
             mMap.setMaxZoomPreference(20.0f);
         }
-
         loadDatawithSingleTon();
     }
 
@@ -290,24 +264,18 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     private void initRestaurantPosition() {
         for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
-            Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
-            Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
+            mResults = Singleton.getInstance().getArrayList();
+            Double mLatForAll = mResults.get(i).getGeometry().getLocation().getLat();
+            Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
             mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
-            String placeId = Singleton.getInstance().getArrayList().get(i).getPlaceId();
-            String NoR = Singleton.getInstance().getArrayList().get(i).getName();
-            readDataFromFirebaseForGreen(mLatLngForAll, placeId, NoR);
-
-
+            String placeId = mResults.get(i).getPlaceId();
+            readDataFromFirebaseForGreen(mLatLngForAll, placeId);
         }
-
     }
 
     private void initMyPosition() {
-        double mLat = Singleton.getInstance().getmLatitude();
-        double mLng = Singleton.getInstance().getmLongitude();
-
-        Log.e("LOC in Map---------", mLat + "/" + mLng);
-
+        double mLat = latAndLngSingleton.getInstance().getmLatitude();
+        double mLng = latAndLngSingleton.getInstance().getmLongitude();
         mLatLng = new LatLng(mLat, mLng);
         loadMapCamera(mLatLng);
     }
@@ -328,18 +296,18 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
 
 
-    public void readDataFromFirebaseForGreen(LatLng mLatLngForAll, String placeId, String NoR) {
+    public void readDataFromFirebaseForGreen(LatLng mLatLngForAll, String placeId) {
         ld = new ArrayList<>();
         mychoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             NameOfResto l = document.toObject(NameOfResto.class);
-                            ld.add(l.getNameOfResto());
+                            ld.add(l.getPlaceID());
                         }
                     }
-                    if (ld.contains(NoR)) {
-                        System.out.println("Account-----******* found" + NoR);
+                    if (ld.contains(placeId)) {
+                        System.out.println("Account-----******* found" + placeId);
                         markerAllRestaurantGreen(mLatLngForAll, placeId);
                     } else {
                         System.out.println("Account -----******* not found");
@@ -354,7 +322,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         markerOptions.snippet(placeId);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
         mRestoMarker = mMap.addMarker(markerOptions);
-
         Onclick();
     }
 
@@ -364,7 +331,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         markerOptions.snippet(placeId);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icgreen32));
         mRestoMarker = mMap.addMarker(markerOptions);
-
         Onclick();
     }
 

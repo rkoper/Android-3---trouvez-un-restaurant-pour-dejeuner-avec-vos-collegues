@@ -1,33 +1,22 @@
 package com.m.sofiane.go4lunch.utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Typeface;
-import android.location.Location;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
-import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.services.latAndLngSingleton;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
@@ -56,8 +45,8 @@ public class Utils extends AppCompatActivity {
 
 
     public static  Call<AutoComplete> retrofitforMaps(String input) {
-        Double mLat = Singleton.getInstance().getmLatitude();
-        double mLng = Singleton.getInstance().getmLongitude();
+        double mLat = latAndLngSingleton.getInstance().getmLatitude();
+        double mLng = latAndLngSingleton.getInstance().getmLongitude();
 
         String url = "https://maps.googleapis.com/maps/";
 
@@ -87,9 +76,9 @@ public class Utils extends AppCompatActivity {
 
 
     public static String urlPhotoForSubactivity(Result mShortCut){
-       String  mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
-       String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + mPhotoN + KEY + APIKEY;
-       return UrlPhoto;
+        String  mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
+        String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + mPhotoN + KEY + APIKEY;
+        return UrlPhoto;
     }
 
     public static String AdressForSubactivty(Result mShortCut) {

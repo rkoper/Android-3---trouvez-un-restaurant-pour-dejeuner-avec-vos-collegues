@@ -46,6 +46,7 @@ import com.m.sofiane.go4lunch.fragment.WorkFragment;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.services.latAndLngSingleton;
 import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 import com.m.sofiane.go4lunch.utils.myuserhelper;
@@ -153,8 +154,8 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             longitude = 0.0;
         }
 
-        Singleton.getInstance().setLatitude(latitude);
-        Singleton.getInstance().setLongitude(longitude);
+        latAndLngSingleton.getInstance().setLatitude(latitude);
+        latAndLngSingleton.getInstance().setLongitude(longitude);
 
         build_retrofit_and_get_response(latitude, longitude);
 
