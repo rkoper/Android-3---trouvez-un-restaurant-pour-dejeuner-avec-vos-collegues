@@ -8,8 +8,8 @@ public class Test_Adress_sub {
     @Test
     public void Test_Adress_sub() {
         String mAdressV2;
-        String mAdressV3;;
-        String mAdressV4;;
+        String mAdressV3;
+        String mAdressV4;
         String mAdressToDisplay;
         String mAdressResult;
 

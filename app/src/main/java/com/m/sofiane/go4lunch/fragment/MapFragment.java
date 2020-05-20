@@ -82,6 +82,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     FragmentManager mFragmentManager;
     ArrayList<String> ld;
     ArrayList<Result> mResults;
+    String placeId;
 
     @Nullable
     @Override
@@ -190,25 +191,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         });
     }
 
-    private void compareToUpdateMarkers(String placeIdToCompare) {
-        for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
-            mResults = Singleton.getInstance().getArrayList();
-            if (placeIdToCompare.equals(mResults.get(i).getReference())) {
-                mMap.clear();
-                Double mLatForAll = mResults.get(i).getGeometry().getLocation().getLat();
-                Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
-                mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
-            }
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(mLatLngForAll);
-            markerOptions.snippet(placeIdToCompare);
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
-            mRestoMarker = mMap.addMarker(markerOptions);
-        }
-        Onclick();
-    }
-
-
     private void loadMap() {
         SupportMapFragment mMFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.containermap);
 
@@ -268,7 +250,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             Double mLatForAll = mResults.get(i).getGeometry().getLocation().getLat();
             Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
             mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
-            String placeId = mResults.get(i).getPlaceId();
+            placeId = mResults.get(i).getPlaceId();
             readDataFromFirebaseForGreen(mLatLngForAll, placeId);
         }
     }
@@ -294,8 +276,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
     }
 
-
-
     public void readDataFromFirebaseForGreen(LatLng mLatLngForAll, String placeId) {
         ld = new ArrayList<>();
         mychoiceHelper.getMyChoice()
@@ -314,6 +294,20 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                         markerAllRestaurantOrange(mLatLngForAll, placeId);
                     }
                 });
+    }
+
+    private void compareToUpdateMarkers(String placeIdToCompare) {
+        for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
+            mResults = Singleton.getInstance().getArrayList();
+            if (placeIdToCompare.equals(mResults.get(i).getReference())) {
+                mMap.clear();
+                Double mLatForAll = mResults.get(i).getGeometry().getLocation().getLat();
+                Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
+                mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
+            }
+           readDataFromFirebaseForGreen(mLatLngForAll, placeIdToCompare);
+        }
+        Onclick();
     }
 
     private void markerAllRestaurantOrange(LatLng mLatLngForAll, String placeId) {

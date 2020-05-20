@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/searchicon"
-        android:tint="@color/quantum_grey"/>
+        android:tint="@color/quantum_grey"
+        android:contentDescription="TODO" />
 
     <EditText
         android:id="@+id/edittext_autocomplete"
@@ -19,6 +20,7 @@
         android:hint="@string/test"
         android:background="@android:color/transparent"
         android:inputType="text"
-        android:layout_marginStart="35dp"/>
+        android:layout_marginStart="35dp"
+        android:autofillHints="" />
 
 </LinearLayout>

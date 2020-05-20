@@ -103,7 +103,8 @@
             app:layout_constraintEnd_toStartOf="@+id/place_people_count"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/place_people_count"
-            app:srcCompat="@drawable/ic_person_outline_black_24dp" />
+            app:srcCompat="@drawable/ic_person_outline_black_24dp"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/place_people_count"
@@ -150,16 +151,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/place_people_count"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- 1 | Add an image button -->
     <ImageButton
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/buttonForClick"
         android:layout_width="407dp"
         android:layout_height="96dp"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        android:contentDescription="TODO" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

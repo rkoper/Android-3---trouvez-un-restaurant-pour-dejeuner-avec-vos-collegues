@@ -28,9 +28,6 @@ public class Result {
     @SerializedName("formatted_phone_number")
     @Expose
     private String formattedPhoneNumber;
-    @SerializedName("geometry")
-    @Expose
-    private Geometry geometry;
     @SerializedName("icon")
     @Expose
     private String icon;
@@ -49,9 +46,6 @@ public class Result {
     @SerializedName("place_id")
     @Expose
     private String placeId;
-    @SerializedName("plus_code")
-    @Expose
-    private PlusCode plusCode;
     @SerializedName("rating")
     @Expose
     private Double rating;
@@ -113,13 +107,6 @@ public class Result {
         this.formattedPhoneNumber = formattedPhoneNumber;
     }
 
-    public Geometry getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
 
     public String getIcon() {
         return icon;
@@ -167,14 +154,6 @@ public class Result {
 
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
-    }
-
-    public PlusCode getPlusCode() {
-        return plusCode;
-    }
-
-    public void setPlusCode(PlusCode plusCode) {
-        this.plusCode = plusCode;
     }
 
     public Double getRating() {

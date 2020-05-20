@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
-        android:text="French" />
+        android:text="@string/french" />
 
     <Switch
         android:id="@+id/switch_lang_en"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="85sp"
-        android:text="English"
+        android:text="@string/english"
        />
 
     <Switch
@@ -52,13 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="225dp"
-        android:text="Notification" />
+        android:text="@string/notification" />
 
     <TimePicker
         android:id="@+id/widget_time_picker"
         android:layout_width="250dp"
         android:layout_height="140dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="280dp"
         android:background="@drawable/dialog_square_white"
         android:orientation="vertical"
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7sp"
-            android:text="Notification"
+            android:text="@string/notification"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
         android:id="@+id/title_lang"
         android:layout_width="112dp"
         android:layout_height="75dp"
-        android:layout_marginLeft="168dp"
+        android:layout_marginStart="168dp"
         android:layout_marginTop="150dp"
         android:background="@drawable/dialog_square"
         android:orientation="vertical">
@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7sp"
-            android:text="Languages"
+            android:text="@string/language"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
         android:id="@+id/button_close"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginLeft="113dp"
+        android:layout_marginStart="113dp"
         android:layout_marginTop="160sp"
         android:background="@drawable/ic_cancel_black_24dp"
         android:orientation="horizontal" />
@@ -157,6 +157,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:srcCompat="@drawable/ic_baseline_check_box_24"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        android:contentDescription="TODO" />
 
 </RelativeLayout>

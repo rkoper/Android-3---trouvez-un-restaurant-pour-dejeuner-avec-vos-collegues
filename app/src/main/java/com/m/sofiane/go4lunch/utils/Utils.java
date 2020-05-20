@@ -112,7 +112,7 @@ public class Utils extends AppCompatActivity {
 
     public static int findrating(double x) {
 
-        double y = (double) (((x / 5) * 3));
+        double y = ((x / 5) * 3);
 
         long z =  Math.round(y);
 

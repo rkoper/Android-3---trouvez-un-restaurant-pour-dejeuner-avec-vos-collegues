@@ -69,8 +69,8 @@
     <string name="workmats">Collègues disponibles</string>
     <string name="favfrag">Mes favoris</string>
     <string name="choose_your_language">Choisis ta langue</string>
-    <string name="anglais">Anglais</string>
-    <string name="fran_ais">Français</string>
+    <string name="english">Anglais</string>
+    <string name="french">Français</string>
     <string name="language">Langue</string>
 
     <string name="facebook_application_id">525610718262133</string>

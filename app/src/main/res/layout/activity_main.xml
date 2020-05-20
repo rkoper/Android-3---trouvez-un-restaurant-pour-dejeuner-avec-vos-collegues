@@ -107,7 +107,7 @@
         android:clickable="true"
         app:menu="@menu/activity_main_menu_drawer"
         app:theme="@style/TextAppearance"
-        >
+        android:focusable="true">
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

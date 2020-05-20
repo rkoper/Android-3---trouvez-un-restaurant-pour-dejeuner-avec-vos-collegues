@@ -60,7 +60,8 @@
                     tools:layout_conversion_absoluteHeight="0dp"
                     tools:layout_conversion_absoluteWidth="0dp"
                     tools:layout_editor_absoluteX="206dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    android:contentDescription="TODO" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,7 +102,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:paddingLeft="20sp">
+                        android:paddingStart="20dp"
+                        android:paddingEnd="60dp">
 
                         <RatingBar
                             android:id="@+id/ratingRestaurantSub"
@@ -185,7 +187,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_call_black_24dp"
-                        android:backgroundTint="@android:color/holo_red_light" />
+                        android:backgroundTint="@android:color/holo_red_light"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/activity_restaurant_call_text"
@@ -214,7 +217,8 @@
                         android:id="@+id/buttonlike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_star_border_black_24dp" />
+                        android:background="@drawable/ic_star_border_black_24dp"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/activity_restaurant_like_text"
@@ -242,7 +246,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/iconmap"
-                        android:backgroundTint="@android:color/holo_red_light" />
+                        android:backgroundTint="@android:color/holo_red_light"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/activity_restaurant_web_site_text"

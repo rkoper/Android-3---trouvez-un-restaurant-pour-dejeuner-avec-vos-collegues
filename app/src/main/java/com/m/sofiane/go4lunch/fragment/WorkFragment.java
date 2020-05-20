@@ -48,7 +48,7 @@ public class WorkFragment extends Fragment {
     RecyclerView mRecyclerView;
     Context mContext;
     ArrayList<String>  mMatchMap;
-    
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -88,7 +88,7 @@ public class WorkFragment extends Fragment {
                             list.add(document.getId());
                         }
                         for (int i = 0; i < list.size(); i ++){
-                        Log.d("TAG))))))))))))))))", list.get(i).toString());}
+                        Log.d("TAG))))))))))))))))", list.get(i));}
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
                     }
