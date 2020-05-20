@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
@@ -128,6 +129,47 @@ public class Utils extends AppCompatActivity {
 
         return Math.round(z);
 
+    }
+
+    public static ArrayList<String> removeDuplicates(ArrayList<String> list) {
+
+        // Create a new ArrayList
+        ArrayList<String> newList = new ArrayList<String>();
+
+        // Traverse through the first list
+        for (String element : list) {
+
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+
+                newList.add(element);
+            }
+        }
+
+        // return the new list
+        return newList;
+    }
+
+    public static ArrayList<String> readDataFromFirebaseForGreen() {
+        String placeIdToCompareMyChoice;
+        ArrayList<String> ld;
+        ArrayList<String> mListToGreen = null;
+        String nameResto;
+        String IdResto;
+        ld = new ArrayList<>();
+        mychoiceHelper.getMyChoice()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            NameOfResto l = document.toObject(NameOfResto.class);
+                            ld.add(l.getPlaceID());
+
+                        }
+                        System.out.println("-------removeDuplicates---------" + ld);
+                    }
+                });
+        return ld;
     }
 
 }

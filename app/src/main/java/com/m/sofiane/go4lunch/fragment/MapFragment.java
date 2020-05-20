@@ -42,17 +42,29 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.activity.subactivity;
 import com.m.sofiane.go4lunch.adapter.SearchMapAdapter;
+import com.m.sofiane.go4lunch.adapter.WorkAdapter;
+import com.m.sofiane.go4lunch.models.MyChoice;
+import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.services.Singleton;
 import com.m.sofiane.go4lunch.services.googleInterface;
 import com.m.sofiane.go4lunch.utils.Utils;
+import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -67,7 +79,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapFragment extends Fragment implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener  {
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -77,14 +89,20 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     String placeId;
     String placeIdToCompare;
     View view;
+    String m;
     String apiKey = BuildConfig.APIKEY;
     @BindView(R.id.recyclerview_for_maps)
     RecyclerView mRecyclerView;
-
+    ArrayList<NameOfResto> listData;
     SearchMapAdapter mAdapter;
-    ArrayList<Prediction> listdataForSearch ;
+    ArrayList<Prediction> listdataForSearch;
     FragmentManager mFragmentManager;
     Map<String, LatLng> mMapToCompare;
+    String placeIdToCompareMyChoice;
+    ArrayList<String> ld;
+    ArrayList<String> mListToGreen;
+    String nameResto;
+    String IdResto;
 
     @Nullable
     @Override
@@ -93,7 +111,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         uploadToolbar();
         ButterKnife.bind(this, view);
         configureRecyclerView();
-        ArrayList<Prediction> mT =new ArrayList<>();
+        ArrayList<Prediction> mT = new ArrayList<>();
         setHasOptionsMenu(true);
         loadMap();
         setRetainInstance(true);
@@ -134,13 +152,13 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         });
     }
 
-        public void DoAfterClickOnSearch(Toolbar mToolbar, SearchView searchView){
-            mToolbar.setNavigationIcon(null);
-            initQuery(searchView);
+    public void DoAfterClickOnSearch(Toolbar mToolbar, SearchView searchView) {
+        mToolbar.setNavigationIcon(null);
+        initQuery(searchView);
 
-        }
+    }
 
-    public void initQuery(SearchView searchView){
+    public void initQuery(SearchView searchView) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -152,9 +170,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 Toast.makeText(getContext(), "QUERY", Toast.LENGTH_SHORT).show();
                 if (item.length() != 0) {
                     System.out.println("1-------->");
-                    build_retrofit_and_get_responseForSearch(item);}
-
-                else{
+                    build_retrofit_and_get_responseForSearch(item);
+                } else {
                     mRecyclerView.setVisibility(View.GONE);
                     Toolbar mToolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_toolbar);
                     mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
@@ -170,30 +187,31 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         return super.onOptionsItemSelected(item);
     }
 
-    private void build_retrofit_and_get_responseForSearch (String input) {
-         Call<AutoComplete> call =   Utils.retrofitforMaps(input);
+    private void build_retrofit_and_get_responseForSearch(String input) {
+        Call<AutoComplete> call = Utils.retrofitforMaps(input);
 
-            call.enqueue(new Callback<AutoComplete>() {
-                @SuppressLint({"RestrictedApi", "LongLogTag"})
-                @Override
-                public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
-                    listdataForSearch = new ArrayList<>();
-                    for (int i = 0; i < Objects.requireNonNull(place.body()).getPredictions().size(); i++) {
-                        listdataForSearch.add(place.body().getPredictions().get(i));
-                        placeIdToCompare = place.body().getPredictions().get(i).getPlaceId();
-                        mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
-                        mRecyclerView.setAdapter(mAdapter);
-                        compareToUpdateMarkers(placeIdToCompare);
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                    }
+        call.enqueue(new Callback<AutoComplete>() {
+            @SuppressLint({"RestrictedApi", "LongLogTag"})
+            @Override
+            public void onResponse(Call<AutoComplete> call, Response<AutoComplete> place) {
+                listdataForSearch = new ArrayList<>();
+                for (int i = 0; i < Objects.requireNonNull(place.body()).getPredictions().size(); i++) {
+                    listdataForSearch.add(place.body().getPredictions().get(i));
+                    placeIdToCompare = place.body().getPredictions().get(i).getPlaceId();
+                    mAdapter = new SearchMapAdapter(listdataForSearch, mFragmentManager, getContext());
+                    mRecyclerView.setAdapter(mAdapter);
+                    compareToUpdateMarkers(placeIdToCompare);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
-                @Override
-                public void onFailure(Call<AutoComplete> call, Throwable t) {
-                }
-            });
-        }
+            }
 
-    private void compareToUpdateMarkers( String placeIdToCompare) {
+            @Override
+            public void onFailure(Call<AutoComplete> call, Throwable t) {
+            }
+        });
+    }
+
+    private void compareToUpdateMarkers(String placeIdToCompare) {
         for (int i = 0; i < Singleton.getInstance().getArrayList().size(); i++) {
             if (placeIdToCompare.equals(Singleton.getInstance().getArrayList().get(i).getReference())) {
                 mMap.clear();
@@ -201,29 +219,29 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
                 mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
             }
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(mLatLngForAll);
-                markerOptions.snippet(placeIdToCompare);
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
-                mRestoMarker = mMap.addMarker(markerOptions);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(mLatLngForAll);
+            markerOptions.snippet(placeIdToCompare);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icorange32));
+            mRestoMarker = mMap.addMarker(markerOptions);
         }
         Onclick();
     }
 
 
-    private void loadMap () {
+    private void loadMap() {
         SupportMapFragment mMFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.containermap);
 
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                checkPermissions();
-                FragmentManager mFragmentManager = getFragmentManager();
-                FragmentTransaction mFragmentTransaction = Objects.requireNonNull(mFragmentManager).beginTransaction();
-                mMFragment = SupportMapFragment.newInstance();
-                mFragmentTransaction.replace(R.id.containermap, mMFragment).commit();
-            }
-            Objects.requireNonNull(mMFragment).getMapAsync(this);
-            CheckGooglePlayServices();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermissions();
+            FragmentManager mFragmentManager = getFragmentManager();
+            FragmentTransaction mFragmentTransaction = Objects.requireNonNull(mFragmentManager).beginTransaction();
+            mMFragment = SupportMapFragment.newInstance();
+            mFragmentTransaction.replace(R.id.containermap, mMFragment).commit();
         }
+        Objects.requireNonNull(mMFragment).getMapAsync(this);
+        CheckGooglePlayServices();
+    }
 
     public void checkPermissions() {
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
@@ -255,7 +273,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
 
-        //    mMap.getUiSettings().setZoomControlsEnabled(true);
+            //    mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings().isTiltGesturesEnabled();
             mMap.setMyLocationEnabled(true);
             mMap.setMinZoomPreference(5.0f);
@@ -275,10 +293,10 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             Double mLatForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLat();
             Double mLngForAll = Singleton.getInstance().getArrayList().get(i).getGeometry().getLocation().getLng();
             mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
-
-
             String placeId = Singleton.getInstance().getArrayList().get(i).getPlaceId();
-            markerAllRestaurant(mLatLngForAll, placeId, i );
+            String NoR = Singleton.getInstance().getArrayList().get(i).getName();
+            readDataFromFirebaseForGreen(mLatLngForAll, placeId, NoR);
+
 
         }
 
@@ -308,7 +326,29 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
     }
 
-    private void markerAllRestaurant(LatLng mLatLngForAll, String placeId, int i) {
+
+
+    public void readDataFromFirebaseForGreen(LatLng mLatLngForAll, String placeId, String NoR) {
+        ld = new ArrayList<>();
+        mychoiceHelper.getMyChoice()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            NameOfResto l = document.toObject(NameOfResto.class);
+                            ld.add(l.getNameOfResto());
+                        }
+                    }
+                    if (ld.contains(NoR)) {
+                        System.out.println("Account-----******* found" + NoR);
+                        markerAllRestaurantGreen(mLatLngForAll, placeId);
+                    } else {
+                        System.out.println("Account -----******* not found");
+                        markerAllRestaurantOrange(mLatLngForAll, placeId);
+                    }
+                });
+    }
+
+    private void markerAllRestaurantOrange(LatLng mLatLngForAll, String placeId) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(mLatLngForAll);
         markerOptions.snippet(placeId);
@@ -318,6 +358,15 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         Onclick();
     }
 
+    private void markerAllRestaurantGreen(LatLng mLatLngForAll, String placeId) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(mLatLngForAll);
+        markerOptions.snippet(placeId);
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icgreen32));
+        mRestoMarker = mMap.addMarker(markerOptions);
+
+        Onclick();
+    }
 
     public void Onclick() {
         mMap.setOnMarkerClickListener(marker -> {
@@ -342,8 +391,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     public void onConnectionSuspended(int i) {
 
     }
-
-
 
 
 
