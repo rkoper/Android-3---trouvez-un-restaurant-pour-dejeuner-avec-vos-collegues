@@ -275,6 +275,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
                     .addOnCompleteListener(task -> {
                         Intent intent = new Intent(this, loginactivity.class);
                         startActivity(intent);
+                        finish();
                     })
                     .addOnFailureListener(e -> Toast.makeText(mainactivity.this, "Test3 ", Toast.LENGTH_LONG).show());
 
@@ -316,7 +317,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
         googleInterface service = retrofit.create(googleInterface.class);
 
-        Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 50, "restaurant");
+        Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 200, "restaurant");
 
         call.enqueue(new Callback<Result>() {
             @SuppressLint({"RestrictedApi", "LongLogTag"})

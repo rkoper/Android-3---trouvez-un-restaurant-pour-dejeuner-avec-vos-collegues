@@ -355,8 +355,7 @@ public class subactivity extends AppCompatActivity{
                                 Log.e("no", "match");
                             }
 
-                            mAdapter = new SubAdapter(listDataName, listDataPhoto,  mFragmentManager, mContext);
-                            mRecyclerView.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
                         }
                     }
                 });

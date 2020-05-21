@@ -55,6 +55,7 @@ public class loginactivity extends AppCompatActivity {
             IdpResponse mResponse = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 launchMainActivity();
+                finish();
 
             } else {
                 Toast.makeText(this, R.string.Error_to_login, Toast.LENGTH_LONG).show();

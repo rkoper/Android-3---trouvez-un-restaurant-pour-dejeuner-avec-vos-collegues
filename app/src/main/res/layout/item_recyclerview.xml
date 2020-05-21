@@ -34,6 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:ellipsize="end"
+            android:singleLine="true"
             android:paddingTop="1dp"
             android:text="@string/place_name"
             android:textAppearance="@style/TxtViewPrincipal"
