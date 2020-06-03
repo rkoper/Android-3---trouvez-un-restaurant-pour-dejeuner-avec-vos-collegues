@@ -40,7 +40,6 @@ import butterknife.ButterKnife;
 
 public class ListFragment extends Fragment  {
 
-
     private ListAdapter mAdapter;
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
@@ -57,8 +56,6 @@ public class ListFragment extends Fragment  {
         setHasOptionsMenu(true);
         uploadToolbar();
         ButterKnife.bind(this, view);
-        //   readFireBase();
-        // configureRecyclerView();
         return view;
     }
 
@@ -76,7 +73,6 @@ public class ListFragment extends Fragment  {
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         Utils.colorSearch(searchView, mToolbar);
 
-        searchView.setOnSearchClickListener(v -> mToolbar.setNavigationIcon(null));
         searchView.setOnCloseListener(() -> {
             mToolbar.setNavigationIcon(R.drawable.ic_dehaze_black_24dp);
             return false;

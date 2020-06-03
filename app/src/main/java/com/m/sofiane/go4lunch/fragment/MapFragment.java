@@ -133,9 +133,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     public void DoAfterClickOnSearch(Toolbar mToolbar, SearchView searchView) {
-        mToolbar.setNavigationIcon(null);
         initQuery(searchView);
-
     }
 
     public void initQuery(SearchView searchView) {
