@@ -1,11 +1,8 @@
 package com.m.sofiane.go4lunch;
 
-import com.m.sofiane.go4lunch.models.pojoMaps.Result;
 import com.m.sofiane.go4lunch.utils.Utils;
 
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

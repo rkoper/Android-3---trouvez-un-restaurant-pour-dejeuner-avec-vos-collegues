@@ -10,7 +10,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -44,19 +43,18 @@ import com.m.sofiane.go4lunch.fragment.MyChoiceFragment;
 import com.m.sofiane.go4lunch.fragment.SettingsFragment;
 import com.m.sofiane.go4lunch.fragment.WorkFragment;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
+import com.m.sofiane.go4lunch.services.GoogleInterface;
+import com.m.sofiane.go4lunch.services.LatAndLngSingleton;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.services.googleInterface;
-import com.m.sofiane.go4lunch.services.latAndLngSingleton;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
-import com.m.sofiane.go4lunch.utils.myuserhelper;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
+import com.m.sofiane.go4lunch.utils.MyFavoriteHelper;
+import com.m.sofiane.go4lunch.utils.MyUserHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,7 +69,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.m.sofiane.go4lunch.R.string.navigation_drawer_close;
 
 
-public class mainactivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    public static final String LANG = "language";
+    final Fragment mapFragment = new MapFragment();
+    final Fragment listFragment = new ListFragment();
+    final Fragment workFragment = new WorkFragment();
+    final Fragment mFavFrag = new FavoriteFragment();
+    final FragmentManager fm = getSupportFragmentManager();
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.activity_main_toolbar)
@@ -82,21 +86,10 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     NavigationView mNavigationView;
     @BindView(R.id.constraitForCont)
     View mdeco;
-
-    final Fragment mapFragment = new MapFragment();
-    final Fragment listFragment = new ListFragment();
-    final Fragment workFragment = new WorkFragment();
-    final Fragment mFavFrag = new FavoriteFragment();
-
     Location gps_loc, network_loc, final_loc;
     double longitude, latitude;
     HeaderViewHolder mHeaderViewHolder;
-
-    final FragmentManager fm = getSupportFragmentManager();
-
     SharedPreferences mSharedPreferences;
-    public static final String PREFS = "666";
-    public static final String LANG = "language";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,19 +104,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         createFireStoreUser();
         loadOpenFragement();
 
-    }
-
-    protected static class HeaderViewHolder {
-        @BindView(R.id.profiltextnameBis)
-        TextView navUsername;
-        @BindView(R.id.profiltextmailBis)
-        TextView navUserMail;
-        @BindView(R.id.profilimage)
-        ImageView navProfilPic;
-
-        HeaderViewHolder(View headerView) {
-            ButterKnife.bind(this, headerView);
-        }
     }
 
     private void loadOpenFragement() {
@@ -154,8 +134,8 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             longitude = 0.0;
         }
 
-        latAndLngSingleton.getInstance().setLatitude(latitude);
-        latAndLngSingleton.getInstance().setLongitude(longitude);
+        LatAndLngSingleton.getInstance().setLatitude(latitude);
+        LatAndLngSingleton.getInstance().setLongitude(longitude);
 
         build_retrofit_and_get_response(latitude, longitude);
 
@@ -179,7 +159,6 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         initSettingsDrawer();
         initMyChoiceDrawer();
     }
-
 
     public void InitBottomNav(boolean isHidden) {
         mBottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -230,14 +209,13 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
     public void loadUserProfil() {
         View header = mNavigationView.getHeaderView(0);
         mHeaderViewHolder = new HeaderViewHolder(header);
-        mHeaderViewHolder.navUsername.setText(myuserhelper.getProfilName());
-        mHeaderViewHolder.navUserMail.setText(myuserhelper.getProfilEmail());
+        mHeaderViewHolder.navUsername.setText(MyUserHelper.getProfilName());
+        mHeaderViewHolder.navUserMail.setText(MyUserHelper.getProfilEmail());
         Glide.with(this)
-                .load((myuserhelper.getProfilPhoto()))
+                .load((MyUserHelper.getProfilPhoto()))
                 .apply(RequestOptions.circleCropTransform())
                 .into(mHeaderViewHolder.navProfilPic);
     }
@@ -271,13 +249,13 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
     private void initLogout() {
         mNavigationView.getMenu().findItem(R.id.drawer_logout).setOnMenuItemClickListener(menuItem -> {
             AuthUI.getInstance()
-                    .signOut(mainactivity.this)
+                    .signOut(MainActivity.this)
                     .addOnCompleteListener(task -> {
-                        Intent intent = new Intent(this, loginactivity.class);
+                        Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     })
-                    .addOnFailureListener(e -> Toast.makeText(mainactivity.this, "Test3 ", Toast.LENGTH_LONG).show());
+                    .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Test3 ", Toast.LENGTH_LONG).show());
 
             return true;
         });
@@ -285,19 +263,19 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
 
     public void createFireStoreUser() {
         Map<String, Object> mDataMap = new HashMap<>();
-        mDataMap.put("NameUser", myuserhelper.getProfilName());
-        mDataMap.put("PhotoUser", myuserhelper.getProfilPhoto());
+        mDataMap.put("NameUser", MyUserHelper.getProfilName());
+        mDataMap.put("PhotoUser", MyUserHelper.getProfilPhoto());
 
-        myuserhelper.createMyUser().set(mDataMap);
+        MyUserHelper.createMyUser().set(mDataMap);
 
-        mychoiceHelper.readMyChoice()
+        MyChoiceHelper.readMyChoice()
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (Objects.requireNonNull(document).exists()) {
                 } else {
-                    mychoiceHelper.initMyChoice();
-                    myfavoriteHelper.getMyFavoriteCollection();
+                    MyChoiceHelper.initMyChoice();
+                    MyFavoriteHelper.getMyFavoriteCollection();
                 }
             }
         });
@@ -315,7 +293,7 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
                 .client(client)
                 .build();
 
-        googleInterface service = retrofit.create(googleInterface.class);
+        GoogleInterface service = retrofit.create(GoogleInterface.class);
 
         Call<Result> call = service.getNearbyPlaces((latitude + "," + longitude), 200, "restaurant");
 
@@ -351,6 +329,19 @@ public class mainactivity extends AppCompatActivity implements BottomNavigationV
             conf.locale = new Locale("fr");
 
             res.updateConfiguration(conf, dm);
+        }
+    }
+
+    protected static class HeaderViewHolder {
+        @BindView(R.id.profiltextnameBis)
+        TextView navUsername;
+        @BindView(R.id.profiltextmailBis)
+        TextView navUserMail;
+        @BindView(R.id.profilimage)
+        ImageView navProfilPic;
+
+        HeaderViewHolder(View headerView) {
+            ButterKnife.bind(this, headerView);
         }
     }
 }

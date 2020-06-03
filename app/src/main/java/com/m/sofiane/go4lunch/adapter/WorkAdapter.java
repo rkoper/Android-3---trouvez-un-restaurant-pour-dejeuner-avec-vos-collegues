@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.mainactivity;
-import com.m.sofiane.go4lunch.activity.subactivity;
+import com.m.sofiane.go4lunch.activity.MainActivity;
+import com.m.sofiane.go4lunch.activity.SubActivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 
 import java.util.ArrayList;
@@ -34,12 +34,9 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  * created by Sofiane M. 26/04/2020
  */
 public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
-    public mainactivity activity;
-    private final ArrayList<NameOfResto> listData;
     final Context mContext;
     final FragmentManager mFragmentManager;
-
-
+    private final ArrayList<NameOfResto> listData;
 
     public WorkAdapter(ArrayList<NameOfResto> listData, FragmentManager mFragmentManager, Context mContext) {
         this.listData = listData;
@@ -48,8 +45,6 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
 
         notifyDataSetChanged();
     }
-
-
 
     @NonNull
     @Override
@@ -62,18 +57,17 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
         Resources res = h.itemView.getContext().getResources();
-        if (listData.get(i).getId().equals("2"))
-        {   String d =res.getString(R.string.nochoice);
+        if (listData.get(i).getId().equals("2")) {
+            String d = res.getString(R.string.nochoice);
             h.txtname.setTextColor(0xffbdbdbd);
             h.txtname.setTypeface(h.txtname.getTypeface(), Typeface.BOLD_ITALIC);
-            h.txtname.setText(listData.get(i).getUserName() + " "+ " " + d);
+            h.txtname.setText(listData.get(i).getUserName() + " " + " " + d);
 
+        } else {
+            String t = res.getString(R.string.choice);
+            h.txtname.setText(listData.get(i).getUserName() + " " + t + " " + listData.get(i).getNameOfResto());
+            clickOnItem(h, listData.get(i).getPlaceID());
         }
-        else
-            { String t = res.getString(R.string.choice);
-              h.txtname.setText(listData.get(i).getUserName() + " " +t + " " +listData.get(i).getNameOfResto());
-                clickOnItem(h, listData.get(i).getPlaceID());
-            }
 
         Glide
                 .with(getApplicationContext())
@@ -87,7 +81,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
 
         h.mButton.setOnClickListener(view -> {
 
-            @SuppressLint("RestrictedApi") Intent intent= new Intent(getApplicationContext(), subactivity.class);
+            @SuppressLint("RestrictedApi") Intent intent = new Intent(getApplicationContext(), SubActivity.class);
             intent.putExtra("I", mPlaceID);
             getApplicationContext().startActivity(intent);
         });
@@ -100,19 +94,18 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.sub_name_profilgo)
-    TextView txtname;
-    @BindView(R.id.sub_photo_profilgo)
-    ImageView urlphoto;
-    @BindView(R.id.buttonClick)
-    Button mButton;
+        @BindView(R.id.sub_name_profilgo)
+        TextView txtname;
+        @BindView(R.id.sub_photo_profilgo)
+        ImageView urlphoto;
+        @BindView(R.id.buttonClick)
+        Button mButton;
 
-
-    public ViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
-}
 
 
 }

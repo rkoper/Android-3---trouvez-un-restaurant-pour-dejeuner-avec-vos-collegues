@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class loginactivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 777;
 
     FirebaseAuth mAuth;
@@ -31,20 +31,20 @@ public class loginactivity extends AppCompatActivity {
         createSignInIntent();
     }
 
-        public void createSignInIntent () {
-            List<AuthUI.IdpConfig> mProviders = Arrays.asList(
-                    new AuthUI.IdpConfig.FacebookBuilder().build(),
-                    new AuthUI.IdpConfig.GoogleBuilder().build(),
-                    new AuthUI.IdpConfig.TwitterBuilder().build(),
-                    new AuthUI.IdpConfig.EmailBuilder().build()
-            );
-            startActivityForResult(
-                    AuthUI.getInstance().createSignInIntentBuilder()
-                            .setAvailableProviders(mProviders)
-                            .setTheme(R.style.MyTheme)
-                            .setIsSmartLockEnabled(true)
-                            .build(), MY_REQUEST_CODE);
-        }
+    public void createSignInIntent() {
+        List<AuthUI.IdpConfig> mProviders = Arrays.asList(
+                new AuthUI.IdpConfig.FacebookBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new AuthUI.IdpConfig.TwitterBuilder().build(),
+                new AuthUI.IdpConfig.EmailBuilder().build()
+        );
+        startActivityForResult(
+                AuthUI.getInstance().createSignInIntentBuilder()
+                        .setAvailableProviders(mProviders)
+                        .setTheme(R.style.MyTheme)
+                        .setIsSmartLockEnabled(true)
+                        .build(), MY_REQUEST_CODE);
+    }
 
 
     @Override
@@ -66,7 +66,7 @@ public class loginactivity extends AppCompatActivity {
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(this, mainactivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

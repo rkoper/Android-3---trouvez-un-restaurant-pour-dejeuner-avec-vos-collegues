@@ -14,13 +14,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,8 +27,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.work.WorkManager;
 
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.mainactivity;
-import com.m.sofiane.go4lunch.services.notificationService;
+import com.m.sofiane.go4lunch.activity.MainActivity;
+import com.m.sofiane.go4lunch.services.NotificationService;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -38,7 +36,9 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.view.View.*;
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 /**
  * created by Sofiane M. 23/04/2020
@@ -46,6 +46,10 @@ import static android.view.View.*;
 
 public class SettingsFragment extends DialogFragment {
 
+    public static final String PREFS = "666";
+    public static final String TIMETONOTIF = "TimeToNotif";
+    public static final String STATNOTIF = "StateNotif";
+    public static final String LANG = "language";
     @BindView(R.id.check_notif)
     CheckBox mCheckNotif;
     @BindView(R.id.check_lang)
@@ -66,17 +70,12 @@ public class SettingsFragment extends DialogFragment {
     Switch mSwitchFrench;
     @BindView(R.id.switch_lang_en)
     Switch mSwitchEnglish;
-
     Boolean mStatNotif;
     Animation mASD, mASU, mAup, mASD2, mASU2, mASD3, mASU3;
     SharedPreferences mSharedPreferences;
 
-    public static final String PREFS = "666";
-    public static final String TIMETONOTIF = "TimeToNotif";
-    public static final String STATNOTIF = "StateNotif";
-    public static final String LANG = "language";
-
-    public SettingsFragment() { }
+    public SettingsFragment() {
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,9 +114,10 @@ public class SettingsFragment extends DialogFragment {
         mCheckLang.setOnClickListener(v -> {
             if (mCheckLang.isChecked()) {
                 mLfrench.startAnimation(mASU);
-                chooseYourLanguage(); }
-            else {
-                mLfrench.startAnimation(mASD);}
+                chooseYourLanguage();
+            } else {
+                mLfrench.startAnimation(mASD);
+            }
         });
     }
 
@@ -125,15 +125,16 @@ public class SettingsFragment extends DialogFragment {
         mSharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(LANG, Context.MODE_PRIVATE);
         String mLang = mSharedPreferences.getString(LANG, "en");
         if (mLang.equals("en")) {
-            mSwitchEnglish.setChecked(true); }
-        else {
-            mSwitchFrench.setChecked(true); }
+            mSwitchEnglish.setChecked(true);
+        } else {
+            mSwitchFrench.setChecked(true);
+        }
 
         mSwitchFrench.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 mSharedPreferences.edit().putString(LANG, "fr").apply();
                 mSwitchEnglish.setChecked(false);
-                Intent refresh = new Intent(getContext(), mainactivity.class);
+                Intent refresh = new Intent(getContext(), MainActivity.class);
                 startActivity(refresh);
             }
         });
@@ -141,8 +142,9 @@ public class SettingsFragment extends DialogFragment {
             if (isChecked) {
                 mSharedPreferences.edit().putString(LANG, "en").apply();
                 mSwitchFrench.setChecked(false);
-                Intent refresh = new Intent(getContext(), mainactivity.class);
-                startActivity(refresh); }
+                Intent refresh = new Intent(getContext(), MainActivity.class);
+                startActivity(refresh);
+            }
         }));
     }
 
@@ -151,8 +153,10 @@ public class SettingsFragment extends DialogFragment {
         mCheckNotif.setOnClickListener(v -> {
             if (mCheckNotif.isChecked()) {
                 mLTimePicker.startAnimation(mASU2);
-                LoadNotifSwitch(); }
-            else  { mLTimePicker.startAnimation(mASD2); }
+                LoadNotifSwitch();
+            } else {
+                mLTimePicker.startAnimation(mASD2);
+            }
         });
     }
 
@@ -163,13 +167,15 @@ public class SettingsFragment extends DialogFragment {
             mSwNotif.setChecked(true);
             mWidgetTimePicker.setVisibility(VISIBLE);
             initPicker();
-        } else {mSwNotif.setChecked(false);}
+        } else {
+            mSwNotif.setChecked(false);
+        }
         mSwNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (mSwNotif.isChecked()) {
                 initPicker();
                 mWidgetTimePicker.setVisibility(VISIBLE);
-                mCheckNotif.setEnabled(false); }
-            else {
+                mCheckNotif.setEnabled(false);
+            } else {
                 WorkManager.getInstance().cancelAllWork();
                 mSharedPreferences
                         .edit()
@@ -177,7 +183,9 @@ public class SettingsFragment extends DialogFragment {
                         .apply();
                 mWidgetTimePicker.setVisibility(INVISIBLE);
                 mButtonOK.setVisibility(GONE);
-                mCheckNotif.setEnabled(true); }});
+                mCheckNotif.setEnabled(true);
+            }
+        });
 
         Log.e("Shared P State ------>", mStatNotif.toString());
     }
@@ -204,8 +212,8 @@ public class SettingsFragment extends DialogFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setAlarm( Calendar cal) {
-        Intent notificationIntent = new Intent(getActivity(), notificationService.class);
+    private void setAlarm(Calendar cal) {
+        Intent notificationIntent = new Intent(getActivity(), NotificationService.class);
         PendingIntent broadcast = PendingIntent.getBroadcast(getActivity(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(Context.ALARM_SERVICE);
 

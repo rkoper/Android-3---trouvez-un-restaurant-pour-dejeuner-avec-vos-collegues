@@ -11,35 +11,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
-public class myfavoriteHelper extends AppCompatActivity {
+public class MyFavoriteHelper extends AppCompatActivity {
 
-    public static CollectionReference getMyFavoriteCollection(){
+    public static CollectionReference getMyFavoriteCollection() {
         String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
         return FirebaseFirestore.getInstance().collection("MyFavorite").document(Objects.requireNonNull(mProfilName)).collection("MyFavoriteList");
     }
 
-
-    public static DocumentReference createMyFavorite(  String mNameOfResto) {
-        return myfavoriteHelper.getMyFavoriteCollection().document(mNameOfResto);
+    public static DocumentReference createMyFavorite(String mNameOfResto) {
+        return MyFavoriteHelper.getMyFavoriteCollection().document(mNameOfResto);
     }
 
+    public static Task<QuerySnapshot> getMyFav() {
+        return MyFavoriteHelper.getMyFavoriteCollection().get();
+    }
 
-
-
-
-
-    // --- READ ---
-    public static Task<QuerySnapshot> getMyFav(){
-        return myfavoriteHelper.getMyFavoriteCollection().get();}
-
-
-
-
-
-    // --- DELETE ---
-    public static Task<QuerySnapshot> deleteMyFav(String t){
-        return myfavoriteHelper.getMyFavoriteCollection().whereEqualTo("Name", t).get();}
-
-
-
+    public static Task<QuerySnapshot> deleteMyFav(String t) {
+        return MyFavoriteHelper.getMyFavoriteCollection().whereEqualTo("Name", t).get();
+    }
 }

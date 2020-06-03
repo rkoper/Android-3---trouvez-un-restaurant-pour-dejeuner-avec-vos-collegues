@@ -11,38 +11,34 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
-public class myuserhelper {
-    public static CollectionReference getMyUserCollection(){
+public class MyUserHelper {
+    public static CollectionReference getMyUserCollection() {
         return FirebaseFirestore.getInstance().collection("MyUser");
     }
 
-    // --- CREATE ---
-
     public static DocumentReference createMyUser() {
         String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
-        return myuserhelper.getMyUserCollection().document(Objects.requireNonNull(mProfilName));
+        return MyUserHelper.getMyUserCollection().document(Objects.requireNonNull(mProfilName));
     }
 
-    // --- READ ---
-    public static Task<QuerySnapshot> getMyUser(){
-        return myuserhelper.getMyUserCollection().get();}
+    public static Task<QuerySnapshot> getMyUser() {
+        return MyUserHelper.getMyUserCollection().get();
+    }
 
+    public static Task<QuerySnapshot> deleteMyUser(String t) {
+        return MyUserHelper.getMyUserCollection().whereEqualTo("Name", t).get();
+    }
 
-
-    // --- DELETE ---
-    public static Task<QuerySnapshot> deleteMyUser(String t){
-        return myuserhelper.getMyUserCollection().whereEqualTo("Name", t).get();}
-
-        public static String getProfilName() {
-            return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    public static String getProfilName() {
+        return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
     }
 
     public static String getProfilPhoto() {
         Uri mProfilImage = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhotoUrl();
-        return mProfilImage.toString();
+        return Objects.requireNonNull(mProfilImage).toString();
     }
 
     public static String getProfilEmail() {
-        return FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
     }
 }

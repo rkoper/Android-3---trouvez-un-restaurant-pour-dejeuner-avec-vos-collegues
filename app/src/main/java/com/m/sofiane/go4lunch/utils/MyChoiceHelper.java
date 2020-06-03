@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class mychoiceHelper {
+public class MyChoiceHelper {
 
-    public static CollectionReference getMyCHoiceCollection(){
+    public static CollectionReference getMyCHoiceCollection() {
         return FirebaseFirestore.getInstance().collection("MyChoice");
     }
 
@@ -21,30 +21,30 @@ public class mychoiceHelper {
         Map<String, Object> mDataMapForFav = new HashMap<>();
         mDataMapForFav.put("NameOfResto", "0");
         mDataMapForFav.put("PlaceID", "0");
-        mDataMapForFav.put("UserName", myuserhelper.getProfilName());
-        mDataMapForFav.put("UserPhoto", myuserhelper.getProfilPhoto());
+        mDataMapForFav.put("UserName", MyUserHelper.getProfilName());
+        mDataMapForFav.put("UserPhoto", MyUserHelper.getProfilPhoto());
         mDataMapForFav.put("RestoPhoto", "0");
         mDataMapForFav.put("Adress", "0");
         mDataMapForFav.put("Id", "2");
         String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMapForFav);
+        return MyChoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMapForFav);
     }
 
-    public static Task<Void> createMyChoice(  Map<String, Object> mDataMap) {
+    public static Task<Void> createMyChoice(Map<String, Object> mDataMap) {
         String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMap);
+        return MyChoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName)).set(mDataMap);
     }
 
-    public static Task<QuerySnapshot> getMyChoice(){
-        return mychoiceHelper.getMyCHoiceCollection().get();
+    public static Task<QuerySnapshot> getMyChoice() {
+        return MyChoiceHelper.getMyCHoiceCollection().get();
     }
 
     public static DocumentReference readMyChoice() {
         String mProfilName = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
-        return mychoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName));
+        return MyChoiceHelper.getMyCHoiceCollection().document(Objects.requireNonNull(mProfilName));
     }
 
     public static Task<Void> deleteMyChoice(String mProfilName) {
-        return mychoiceHelper.getMyCHoiceCollection().document(mProfilName).delete();
+        return MyChoiceHelper.getMyCHoiceCollection().document(mProfilName).delete();
     }
 }

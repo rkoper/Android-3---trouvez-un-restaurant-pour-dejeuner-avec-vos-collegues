@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.FavoriteAdapter;
 import com.m.sofiane.go4lunch.models.MyFavorite;
-import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
+import com.m.sofiane.go4lunch.utils.MyFavoriteHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +31,11 @@ import java.util.Objects;
 
 
 public class FavoriteFragment extends Fragment {
+    final Fragment mapFragment = new MapFragment();
     FavoriteAdapter mAdapter;
     List<MyFavorite> listData;
     RecyclerView mRecyclerView;
     Context mContext;
-    final Fragment mapFragment = new MapFragment();
     FragmentManager mFragmentManager;
 
     @Nullable
@@ -64,15 +64,14 @@ public class FavoriteFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
                 System.out.println("BACK = " + "To the future");
-            } return true;
+            }
+            return true;
         });
     }
-
 
     private void uploadToolbar() {
         TextView mTitleText = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
         mTitleText.setText(R.string.favfrag);
-
     }
 
     @Override
@@ -92,7 +91,7 @@ public class FavoriteFragment extends Fragment {
 
 
     public void readDataFromFirebase() {
-        myfavoriteHelper.getMyFav()
+        MyFavoriteHelper.getMyFav()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {

@@ -8,11 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,13 +20,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.ListAdapter;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
-import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.services.Singleton;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
 import com.m.sofiane.go4lunch.utils.Utils;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -38,15 +35,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ListFragment extends Fragment  {
+public class ListFragment extends Fragment {
 
-    private ListAdapter mAdapter;
+    final String mKeyName = "1";
     FragmentManager mFragmentManager;
     ArrayList<MyChoice> listData;
     ArrayList<String> mTest;
     @BindView(R.id.List_recyclerView)
     RecyclerView mRecyclerView;
-    final String mKeyName = "1";
+    private ListAdapter mAdapter;
 
     @Nullable
     @Override
@@ -81,9 +78,10 @@ public class ListFragment extends Fragment  {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e("TAG", "onQueryTextSubmitList: "+query );
+                Log.e("TAG", "onQueryTextSubmitList: " + query);
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() != 0) {
@@ -103,7 +101,7 @@ public class ListFragment extends Fragment  {
     private void configureRecyclerView() {
         this.listData = new ArrayList<>();
         ArrayList<Result> mData = new ArrayList<>();
-        this.mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest );
+        this.mAdapter = new ListAdapter(mData, getContext(), mFragmentManager, mKeyName, mTest);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
@@ -112,20 +110,21 @@ public class ListFragment extends Fragment  {
 
     private void readFireBase() {
         ArrayList<Result> mData = Singleton.getInstance().getArrayList();
-        mychoiceHelper.getMyChoice()
+        MyChoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             document.getData();
                             MyChoice l = document.toObject(MyChoice.class);
-                            listData.add(l); }
+                            listData.add(l);
+                        }
                         uploadRecyclerView(mData, listData);
                     }
                 });
     }
 
 
-    private void uploadRecyclerView(ArrayList<Result> mData,  ArrayList<MyChoice> listData ) {
+    private void uploadRecyclerView(ArrayList<Result> mData, ArrayList<MyChoice> listData) {
         ArrayList<String> mTest = new ArrayList<>();
         for (int i = 0; i < listData.size(); i++) {
             mTest.add(listData.get(i).getNameOfResto());

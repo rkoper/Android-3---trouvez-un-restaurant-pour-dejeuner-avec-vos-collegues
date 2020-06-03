@@ -1,11 +1,5 @@
 package com.m.sofiane.go4lunch;
 
-import android.graphics.Typeface;
-
-import com.m.sofiane.go4lunch.adapter.FavoriteAdapter;
-import com.m.sofiane.go4lunch.adapter.ListAdapter;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

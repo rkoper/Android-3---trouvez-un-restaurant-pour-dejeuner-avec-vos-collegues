@@ -1,23 +1,16 @@
 package com.m.sofiane.go4lunch.utils;
 
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
-import com.m.sofiane.go4lunch.services.googleInterface;
-import com.m.sofiane.go4lunch.services.latAndLngSingleton;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import com.m.sofiane.go4lunch.services.GoogleInterface;
+import com.m.sofiane.go4lunch.services.LatAndLngSingleton;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -35,7 +28,7 @@ import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLPHOTO;
 public class Utils extends AppCompatActivity {
 
 
-    public static void colorSearch(SearchView searchView, Toolbar t){
+    public static void colorSearch(SearchView searchView, Toolbar t) {
         searchView.setMaxWidth(Integer.MAX_VALUE);
         int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchPlate = searchView.findViewById(searchPlateId);
@@ -43,10 +36,9 @@ public class Utils extends AppCompatActivity {
         searchPlate.setBackgroundResource(R.drawable.dialog_rounded);
     }
 
-
-    public static  Call<AutoComplete> retrofitforMaps(String input) {
-        double mLat = latAndLngSingleton.getInstance().getmLatitude();
-        double mLng = latAndLngSingleton.getInstance().getmLongitude();
+    public static Call<AutoComplete> retrofitforMaps(String input) {
+        double mLat = LatAndLngSingleton.getInstance().getmLatitude();
+        double mLng = LatAndLngSingleton.getInstance().getmLongitude();
 
         String url = "https://maps.googleapis.com/maps/";
 
@@ -60,23 +52,15 @@ public class Utils extends AppCompatActivity {
                 .client(client)
                 .build();
 
-        googleInterface service = retrofit.create(googleInterface.class);
+        GoogleInterface service = retrofit.create(GoogleInterface.class);
 
         Call<AutoComplete> call = service.getNearbyPlacesAutoComplete(mLat + "," + mLng, input);
 
         return call;
     }
 
-    public Animation mA (){
-        Animation animFadeIn, animFadeOut;
-        animFadeIn = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-
-        return animFadeIn;
-    }
-
-
-    public static String urlPhotoForSubactivity(Result mShortCut){
-        String  mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
+    public static String urlPhotoForSubactivity(Result mShortCut) {
+        String mPhotoN = mShortCut.getPhotos().get(0).getPhotoReference();
         String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + mPhotoN + KEY + APIKEY;
         return UrlPhoto;
     }
@@ -93,19 +77,17 @@ public class Utils extends AppCompatActivity {
         return mAdressDef;
     }
 
-
-    public static String formatAdressForList( String mAdress){
+    public static String formatAdressForList(String mAdress) {
         String mLoadAdress;
-        if (mAdress == null)
-        {mLoadAdress = "";}
-        else {
+        if (mAdress == null) {
+            mLoadAdress = "";
+        } else {
             mLoadAdress = mAdress.split("\\,", 2)[0];
         }
         return mLoadAdress;
     }
 
-
-    public static String urlPhotoForList( String refPhoto){
+    public static String urlPhotoForList(String refPhoto) {
         String UrlPhoto = URLPHOTO + MAX_WIDTH + MAX_HEIGHT + PHOTOREF + refPhoto + KEY + APIKEY;
         return UrlPhoto;
     }
@@ -114,51 +96,10 @@ public class Utils extends AppCompatActivity {
 
         double y = ((x / 5) * 3);
 
-        long z =  Math.round(y);
+        long z = Math.round(y);
 
         return Math.round(z);
 
-    }
-
-    public static ArrayList<String> removeDuplicates(ArrayList<String> list) {
-
-        // Create a new ArrayList
-        ArrayList<String> newList = new ArrayList<String>();
-
-        // Traverse through the first list
-        for (String element : list) {
-
-            // If this element is not present in newList
-            // then add it
-            if (!newList.contains(element)) {
-
-                newList.add(element);
-            }
-        }
-
-        // return the new list
-        return newList;
-    }
-
-    public static ArrayList<String> readDataFromFirebaseForGreen() {
-        String placeIdToCompareMyChoice;
-        ArrayList<String> ld;
-        ArrayList<String> mListToGreen = null;
-        String nameResto;
-        String IdResto;
-        ld = new ArrayList<>();
-        mychoiceHelper.getMyChoice()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            NameOfResto l = document.toObject(NameOfResto.class);
-                            ld.add(l.getPlaceID());
-
-                        }
-                        System.out.println("-------removeDuplicates---------" + ld);
-                    }
-                });
-        return ld;
     }
 
 }

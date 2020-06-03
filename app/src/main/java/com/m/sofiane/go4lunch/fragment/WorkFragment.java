@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -18,16 +17,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.WorkAdapter;
 import com.m.sofiane.go4lunch.models.NameOfResto;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +34,6 @@ import butterknife.BindView;
 
 
 public class WorkFragment extends Fragment {
-
     @BindView(R.id.menu_search)
     MenuItem mSearch;
 
@@ -47,9 +42,7 @@ public class WorkFragment extends Fragment {
     ArrayList<NameOfResto> listData;
     RecyclerView mRecyclerView;
     Context mContext;
-    ArrayList<String>  mMatchMap;
-
-
+    ArrayList<String> mMatchMap;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -60,7 +53,6 @@ public class WorkFragment extends Fragment {
         this.configureRecyclerView(view);
         readDataFromFirebase();
         return view;
-
     }
 
     private void configureRecyclerView(View view) {
@@ -80,22 +72,23 @@ public class WorkFragment extends Fragment {
                 .collection("MyFavorite")
                 .document(Objects.requireNonNull(mProfilName))
                 .collection("MyFavoriteList")
-               .get()
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<String> list = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             list.add(document.getId());
                         }
-                        for (int i = 0; i < list.size(); i ++){
-                        Log.d("TAG))))))))))))))))", list.get(i));}
+                        for (int i = 0; i < list.size(); i++) {
+                            Log.d("TAG))))))))))))))))", list.get(i));
+                        }
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
                     }
                 });
 
 
-        mychoiceHelper.getMyChoice()
+        MyChoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
@@ -104,10 +97,10 @@ public class WorkFragment extends Fragment {
 
                             listData.add(l);
 
-                            Collections.sort(listData, (rhs,lhs) -> {
+                            Collections.sort(listData, (rhs, lhs) -> {
                                 int a = Integer.parseInt(rhs.getId());
                                 int b = Integer.parseInt(lhs.getId());
-                                return Integer.compare(a,b);
+                                return Integer.compare(a, b);
                             });
                         }
                         mAdapter = new WorkAdapter(listData, mFragmentManager, mContext);

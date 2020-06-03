@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.m.sofiane.go4lunch.R;
 
 import butterknife.BindView;
@@ -12,7 +13,7 @@ import butterknife.BindView;
 /**
  * created by Sofiane M. 2020-04-06
  */
-public class webviewactivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
     String mUrlSite;
     @BindView(R.id.webView)

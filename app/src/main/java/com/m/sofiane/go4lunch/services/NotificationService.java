@@ -14,21 +14,19 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.mainactivity;
+import com.m.sofiane.go4lunch.activity.MainActivity;
 import com.m.sofiane.go4lunch.models.NameOfResto;
-import com.m.sofiane.go4lunch.utils.Utils;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
 
 import java.util.Objects;
 
 /**
  * created by Sofiane M. 26/04/2020
  */
-public class notificationService extends BroadcastReceiver {
+public class NotificationService extends BroadcastReceiver {
 
     Context mContext;
     String mNameForNotif;
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,27 +34,30 @@ public class notificationService extends BroadcastReceiver {
         readDataFromFirebase(intent);
     }
 
-    public void readDataFromFirebase(Intent intent){
-        mychoiceHelper.readMyChoice().get().addOnCompleteListener(task -> {
+    public void readDataFromFirebase(Intent intent) {
+        MyChoiceHelper.readMyChoice().get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (Objects.requireNonNull(document).exists()) {
                     NameOfResto l = document.toObject(NameOfResto.class);
 
-                    if (Objects.requireNonNull(l).getId().equals("2"))
-                    {mNameForNotif = mContext.getString(R.string.nochoicenotif);}
-                    else {mNameForNotif = mContext.getString(R.string.choicenotif) + l.getNameOfResto();}
+                    if (Objects.requireNonNull(l).getId().equals("2")) {
+                        mNameForNotif = mContext.getString(R.string.nochoicenotif);
+                    } else {
+                        mNameForNotif = mContext.getString(R.string.choicenotif) + l.getNameOfResto();
+                    }
 
-                    createNotification(intent, mNameForNotif) ;
+                    createNotification(intent, mNameForNotif);
+                } else {
+                    mNameForNotif = mContext.getString(R.string.nochoicenotif);
                 }
-
-                else {mNameForNotif = mContext.getString(R.string.nochoicenotif); }
-            }});
+            }
+        });
 
     }
 
     private void createNotification(Intent intent, String mNameForNotif) {
-        Intent intent1 = new Intent(mContext, mainactivity.class);
+        Intent intent1 = new Intent(mContext, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent1, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -89,11 +90,9 @@ public class notificationService extends BroadcastReceiver {
         deleteFirebaseitem();
     }
 
-
-
     private void deleteFirebaseitem() {
-        mychoiceHelper.initMyChoice();
+        MyChoiceHelper.initMyChoice();
 
     }
 
-    }
+}

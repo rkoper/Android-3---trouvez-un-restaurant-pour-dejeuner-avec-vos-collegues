@@ -12,25 +12,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.subactivity;
+import com.m.sofiane.go4lunch.activity.SubActivity;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 
 import java.util.ArrayList;
 
 
 public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.ViewHolder> {
-
-    private final ArrayList<Prediction> listdataForSearch;
     final Context mContext;
     final FragmentManager mFragmentManager;
+    private final ArrayList<Prediction> listdataForSearch;
 
     public SearchMapAdapter(ArrayList<Prediction> listdataForSearch, FragmentManager mFragmentManager, Context mContext) {
         this.listdataForSearch = listdataForSearch;
         this.mFragmentManager = mFragmentManager;
         this.mContext = mContext;
     }
-
 
     @NonNull
     @Override
@@ -39,21 +38,20 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.View
         return new ViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-         String ld = listdataForSearch.get(i).getStructuredFormatting().getMainText();
+        String ld = listdataForSearch.get(i).getStructuredFormatting().getMainText();
         h.txtname.setText(ld);
 
-        clickAndSendData(h,i);
+        clickAndSendData(h, i);
     }
 
     private void clickAndSendData(ViewHolder h, int i) {
         h.mButton.setOnClickListener(view -> {
-            @SuppressLint("RestrictedApi") Intent intent= new Intent(mContext, subactivity.class);
+            @SuppressLint("RestrictedApi") Intent intent = new Intent(mContext, SubActivity.class);
             intent.putExtra("I", listdataForSearch.get(i).getPlaceId());
             mContext.startActivity(intent);
-    });
+        });
     }
 
     @Override
@@ -66,12 +64,10 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.View
         final TextView txtname;
         final Button mButton;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
             txtname = itemView.findViewById(R.id.place_name_for_maps);
             mButton = itemView.findViewById(R.id.button_click_map_search);
-
         }
     }
 }

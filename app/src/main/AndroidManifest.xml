@@ -15,14 +15,14 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_api_key"/>
 
-        <activity android:name=".activity.mainactivity"/>
+        <activity android:name=".activity.MainActivity"/>
 
 
 
 
 
 
-        <activity android:name=".activity.loginactivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -35,10 +35,10 @@
 
 
 
-        <activity android:name=".activity.subactivity" />
-        <activity android:name=".activity.webviewactivity" />
+        <activity android:name=".activity.SubActivity" />
+        <activity android:name=".activity.WebViewActivity" />
 
-        <receiver android:name=".services.notificationService" />
+        <receiver android:name=".services.NotificationService" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

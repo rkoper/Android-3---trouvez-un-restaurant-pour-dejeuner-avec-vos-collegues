@@ -44,19 +44,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
-import com.m.sofiane.go4lunch.activity.subactivity;
+import com.m.sofiane.go4lunch.activity.SubActivity;
 import com.m.sofiane.go4lunch.adapter.SearchMapAdapter;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.AutoComplete;
 import com.m.sofiane.go4lunch.models.pojoAutoComplete.Prediction;
 import com.m.sofiane.go4lunch.models.pojoMaps.Result;
+import com.m.sofiane.go4lunch.services.LatAndLngSingleton;
 import com.m.sofiane.go4lunch.services.Singleton;
-import com.m.sofiane.go4lunch.services.latAndLngSingleton;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
 import com.m.sofiane.go4lunch.utils.Utils;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -65,10 +64,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapFragment extends Fragment implements  OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private GoogleMap mMap;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     Marker mRestoMarker;
     LatLng mLatLng;
@@ -83,6 +81,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     ArrayList<String> ld;
     ArrayList<Result> mResults;
     String placeId;
+    private GoogleMap mMap;
 
     @Nullable
     @Override
@@ -210,7 +209,9 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
-        } else { Log.e("error", "with permission");}
+        } else {
+            Log.e("error", "with permission");
+        }
     }
 
     private void CheckGooglePlayServices() {
@@ -219,7 +220,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(getActivity(), result,
-                        0).show(); }
+                        0).show();
+            }
         }
     }
 
@@ -254,8 +256,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     }
 
     private void initMyPosition() {
-        double mLat = latAndLngSingleton.getInstance().getmLatitude();
-        double mLng = latAndLngSingleton.getInstance().getmLongitude();
+        double mLat = LatAndLngSingleton.getInstance().getmLatitude();
+        double mLng = LatAndLngSingleton.getInstance().getmLongitude();
         mLatLng = new LatLng(mLat, mLng);
         loadMapCamera(mLatLng);
     }
@@ -276,7 +278,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     public void readDataFromFirebaseForGreen(LatLng mLatLngForAll, String placeId) {
         ld = new ArrayList<>();
-        mychoiceHelper.getMyChoice()
+        MyChoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
@@ -303,7 +305,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
                 Double mLngForAll = mResults.get(i).getGeometry().getLocation().getLng();
                 mLatLngForAll = new LatLng(mLatForAll, mLngForAll);
             }
-           readDataFromFirebaseForGreen(mLatLngForAll, placeIdToCompare);
+            readDataFromFirebaseForGreen(mLatLngForAll, placeIdToCompare);
         }
         Onclick();
     }
@@ -328,7 +330,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
 
     public void Onclick() {
         mMap.setOnMarkerClickListener(marker -> {
-            Intent intent = new Intent(getContext(), subactivity.class);
+            Intent intent = new Intent(getContext(), SubActivity.class);
             String mId = marker.getSnippet();
             intent.putExtra("I", mId);
             Objects.requireNonNull(getContext()).startActivity(intent);
@@ -349,7 +351,6 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Google
     public void onConnectionSuspended(int i) {
 
     }
-
 
 
 }

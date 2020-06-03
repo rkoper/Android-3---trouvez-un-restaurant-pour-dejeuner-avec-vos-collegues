@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.models.MyFavorite;
-import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
+import com.m.sofiane.go4lunch.utils.MyFavoriteHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,9 +33,9 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
-    private final List<MyFavorite> listData;
     final Context mContext;
     final FragmentManager mFragmentManager;
+    private final List<MyFavorite> listData;
     ImageButton mButtonFav;
     String name;
 
@@ -59,11 +59,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         callName(h, ld);
         callPhoto(h, ld);
         callAdress(h, ld);
-        deleteItem( ld, i);
+        deleteItem(ld, i);
     }
 
 
-    public void deleteItem(MyFavorite ld, int i ) {
+    public void deleteItem(MyFavorite ld, int i) {
         mButtonFav.setOnClickListener(v -> {
             if (listData == null) {
             } else {
@@ -75,7 +75,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                 String t = ld.getName();
                 Log.e(t, t);
 
-                myfavoriteHelper.deleteMyFav(t)
+                MyFavoriteHelper.deleteMyFav(t)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
@@ -117,9 +117,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        final ImageView urlphoto;
         private final TextView txtname;
         private final TextView txtadress;
-        final ImageView urlphoto;
 
 
         public ViewHolder(View itemView) {

@@ -3,12 +3,10 @@ package com.m.sofiane.go4lunch.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -26,16 +24,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.m.sofiane.go4lunch.BuildConfig;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.adapter.SubAdapter;
 import com.m.sofiane.go4lunch.models.MyChoice;
 import com.m.sofiane.go4lunch.models.NameOfResto;
 import com.m.sofiane.go4lunch.models.pojoDetail.Result;
-import com.m.sofiane.go4lunch.services.googleInterface;
+import com.m.sofiane.go4lunch.services.GoogleInterface;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
+import com.m.sofiane.go4lunch.utils.MyFavoriteHelper;
 import com.m.sofiane.go4lunch.utils.Utils;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
-import com.m.sofiane.go4lunch.utils.myfavoriteHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,33 +50,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.m.sofiane.go4lunch.adapter.ListAdapter.KEY;
-import static com.m.sofiane.go4lunch.adapter.ListAdapter.MAX_HEIGHT;
-import static com.m.sofiane.go4lunch.adapter.ListAdapter.MAX_WIDTH;
-import static com.m.sofiane.go4lunch.adapter.ListAdapter.PHOTOREF;
 import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLAPI;
-import static com.m.sofiane.go4lunch.adapter.ListAdapter.URLPHOTO;
 
 /**
  * created by Sofiane M. 2020-04-04
  */
-public class subactivity extends AppCompatActivity{
+public class SubActivity extends AppCompatActivity {
 
     static final String DEFAUTPHOTO = "https://bit.ly/3cIGQsK";
     boolean isBackFromB;
-    private static final String TAG = "RealtimeDB";
-    String mPlaceId, UrlPhoto,mPhone,mSite,mPhotoN,mAdressV2,mAdressV3,mAdressDef,mDisplayNameOfResto;
+    String mPlaceId, UrlPhoto, mPhone, mSite, mAdressDef, mDisplayNameOfResto;
     Context mContext;
-    Double mRating;
     SubAdapter mAdapter;
     RecyclerView mRecyclerView;
-    ArrayList listDataName,listDataPhoto;
+    ArrayList listDataName, listDataPhoto;
     FragmentManager mFragmentManager;
-
-    SharedPreferences mSharedPreferences;
-    public static final String PREFS ="999";
-    public static final String FAVSTATUS= "FaveStatus";
-
     @BindView(R.id.subName)
     TextView mNameSub;
     @BindView(R.id.SubPhoto)
@@ -107,7 +92,7 @@ public class subactivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subactivity);
         ButterKnife.bind(this);
-        isBackFromB=false;
+        isBackFromB = false;
         mPlaceId = getIntent().getStringExtra("I");
         build_retrofit_and_get_response();
         initRV();
@@ -115,7 +100,7 @@ public class subactivity extends AppCompatActivity{
 
     }
 
-    private void initRV( ) {
+    private void initRV() {
         this.listDataName = new ArrayList<>();
         this.listDataPhoto = new ArrayList<>();
         mAdapter = new SubAdapter(listDataName, listDataPhoto, mFragmentManager, mContext);
@@ -137,7 +122,7 @@ public class subactivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        googleInterface service = retrofit.create(googleInterface.class);
+        GoogleInterface service = retrofit.create(GoogleInterface.class);
         Call call = service.getNearbyPlacesDetail(mPlaceId);
         call.enqueue(new Callback<Result>() {
 
@@ -146,26 +131,23 @@ public class subactivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 Result mShortCut;
-                if( response.body() != null)
-                {
+                if (response.body() != null) {
                     mShortCut = response.body().getListDetail();
 
-                if (response.body().getListDetail() !=null) {
-                ratingRestaurantCalling(mShortCut);
-                photoRestaurantCalling(mShortCut);
-                nameRestaurantCalling(mShortCut);
-                phoneNumberRestaurantCalling(mShortCut);
-                webSiteRestaurantCalling(mShortCut);
-                adresseRestaurantCallig(mShortCut);
-                clickOnRestaurant();}
-
-                else {
-                    System.out.println("------------// error1");
-                    Toast.makeText(getApplicationContext(), R.string.Errorc, Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                }
-                }
-                else {
+                    if (response.body().getListDetail() != null) {
+                        ratingRestaurantCalling(mShortCut);
+                        photoRestaurantCalling(mShortCut);
+                        nameRestaurantCalling(mShortCut);
+                        phoneNumberRestaurantCalling(mShortCut);
+                        webSiteRestaurantCalling(mShortCut);
+                        adresseRestaurantCallig(mShortCut);
+                        clickOnRestaurant();
+                    } else {
+                        System.out.println("------------// error1");
+                        Toast.makeText(getApplicationContext(), R.string.Errorc, Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    }
+                } else {
                     System.out.println("------------// error2");
                     Toast.makeText(mContext, "Error connexion", Toast.LENGTH_SHORT).show();
                     onBackPressed();
@@ -180,25 +162,24 @@ public class subactivity extends AppCompatActivity{
     }
 
 
-
     private void photoRestaurantCalling(Result mShortCut) {
         if (mShortCut.getPhotos() != null) {
-           UrlPhoto = Utils.urlPhotoForSubactivity(mShortCut);
-            Glide.with(subactivity.this).load(UrlPhoto).into(mPhotoSub);
+            UrlPhoto = Utils.urlPhotoForSubactivity(mShortCut);
+            Glide.with(SubActivity.this).load(UrlPhoto).into(mPhotoSub);
         } else {
-            Toast.makeText(subactivity.this, "No photo", Toast.LENGTH_LONG).show();
-            Glide.with(subactivity.this).load(DEFAUTPHOTO).into(mPhotoSub);
+            Toast.makeText(SubActivity.this, "No photo", Toast.LENGTH_LONG).show();
+            Glide.with(SubActivity.this).load(DEFAUTPHOTO).into(mPhotoSub);
         }
     }
 
 
     private void ratingRestaurantCalling(Result mShortCut) {
         if (mShortCut.getRating() != null) {
-            int z =   Utils.findrating(mShortCut.getRating());
+            int z = Utils.findrating(mShortCut.getRating());
             mRatingBar.setRating(z);
+        } else {
+            mRatingBar.setRating(0);
         }
-
-        else {mRatingBar.setRating(0);}
     }
 
     private void adresseRestaurantCallig(Result mShortCut) {
@@ -219,7 +200,7 @@ public class subactivity extends AppCompatActivity{
                 if (mSite == null) {
                     Toast.makeText(this, R.string.urlError, Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(this, webviewactivity.class);
+                    Intent intent = new Intent(this, WebViewActivity.class);
                     intent.putExtra("Web", mSite);
                     this.startActivity(intent);
                 }
@@ -266,7 +247,7 @@ public class subactivity extends AppCompatActivity{
     }
 
     private void searchChoiceList(String mDisplayNameOfResto) {
-        mychoiceHelper.readMyChoice()
+        MyChoiceHelper.readMyChoice()
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -282,7 +263,7 @@ public class subactivity extends AppCompatActivity{
     }
 
     private void searchFavList(String mDisplayNameOfResto) {
-        myfavoriteHelper.getMyFav()
+        MyFavoriteHelper.getMyFav()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<String> list = new ArrayList<>();
@@ -290,22 +271,24 @@ public class subactivity extends AppCompatActivity{
                             list.add(document.getId());
                         }
 
-                        if (list.contains(mDisplayNameOfResto))
-                        { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));}
+                        if (list.contains(mDisplayNameOfResto)) {
+                            mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
+                        }
                         LikeRestaurantCalling(mDisplayNameOfResto, list);
                     }
                 });
     }
 
-    private void LikeRestaurantCalling(String mDisplayNameOfResto,List<String> list ) {
+    private void LikeRestaurantCalling(String mDisplayNameOfResto, List<String> list) {
         mLike.setOnClickListener(v -> {
-            if (list.contains(mDisplayNameOfResto))
-            { myfavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show());
+            if (list.contains(mDisplayNameOfResto)) {
+                MyFavoriteHelper.getMyFavoriteCollection().document(mDisplayNameOfResto).delete().addOnSuccessListener(aVoid -> Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show());
 
                 mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_24dp));
                 finish();
-                startActivity(getIntent()); }
-            else { mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
+                startActivity(getIntent());
+            } else {
+                mLike.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_red_full));
 
                 Map<String, Object> mDataMap = new HashMap<>();
                 mDataMap.put("Name", mDisplayNameOfResto);
@@ -313,7 +296,7 @@ public class subactivity extends AppCompatActivity{
                 mDataMap.put("Photo", UrlPhoto);
                 mDataMap.put("FireStoreID", getTaskId());
 
-                myfavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
+                MyFavoriteHelper.createMyFavorite(mDisplayNameOfResto).set(mDataMap);
             }
         });
     }
@@ -334,7 +317,7 @@ public class subactivity extends AppCompatActivity{
             mDataMap.put("Adress", mAdressDef);
             mDataMap.put("Id", "1");
 
-            mychoiceHelper.createMyChoice(mDataMap);
+            MyChoiceHelper.createMyChoice(mDataMap);
 
             listDataName.clear();
             readDataFromFirebase(mDisplayNameOfResto);
@@ -344,7 +327,7 @@ public class subactivity extends AppCompatActivity{
 
 
     private void readDataFromFirebase(String mDisplayNameOfResto) {
-        mychoiceHelper.getMyChoice()
+        MyChoiceHelper.getMyChoice()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
@@ -362,11 +345,12 @@ public class subactivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         mAdapter.notifyDataSetChanged();
         super.onPause();
 
     }
+
     @Override
     protected void onResume() {
         mAdapter.notifyDataSetChanged();
@@ -375,7 +359,7 @@ public class subactivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        android.app.FragmentManager manager =getFragmentManager();
+        android.app.FragmentManager manager = getFragmentManager();
         int count = manager.getBackStackEntryCount();
 
         if (count == 0) {

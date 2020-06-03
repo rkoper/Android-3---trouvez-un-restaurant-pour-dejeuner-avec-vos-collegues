@@ -22,7 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.m.sofiane.go4lunch.R;
 import com.m.sofiane.go4lunch.models.MyChoice;
-import com.m.sofiane.go4lunch.utils.mychoiceHelper;
+import com.m.sofiane.go4lunch.utils.MyChoiceHelper;
 
 import java.util.Objects;
 
@@ -34,9 +34,8 @@ import butterknife.ButterKnife;
  */
 public class MyChoiceFragment extends DialogFragment {
 
-    public MyChoiceFragment() { }
-
-
+    static final String DEFAUTPHOTO = "https://bit.ly/3cIGQsK";
+    final Fragment mapFragment = new MapFragment();
     @BindView(R.id.layout_choice_close)
     LinearLayout mLLclose;
     @BindView(R.id.layout_choice_name)
@@ -64,15 +63,14 @@ public class MyChoiceFragment extends DialogFragment {
     @BindView(R.id.image_b_cancel_choice)
     ImageButton mCancelChoice;
 
-    static final String DEFAUTPHOTO = "https://bit.ly/3cIGQsK";
-
-    final Fragment mapFragment = new MapFragment();
+    public MyChoiceFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_mychoice, null);
-        readFireStore(view);
+        readFireStore();
         ButterKnife.bind(this, view);
         initCloseButton();
         Window window = Objects.requireNonNull(getDialog()).getWindow();
@@ -101,8 +99,8 @@ public class MyChoiceFragment extends DialogFragment {
                 .commit();
     }
 
-    private void readFireStore(View view) {
-        mychoiceHelper.readMyChoice()
+    private void readFireStore() {
+        MyChoiceHelper.readMyChoice()
                 .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -113,16 +111,15 @@ public class MyChoiceFragment extends DialogFragment {
                     String mAdress = l.getAdress();
                     String mPhotoResto = l.getRestoPhoto();
 
-                if (mName.equals("0"))
-                {
-                    noRestaurantChoice();
-                    Log.d("TRUE----------", "get failed with ", task.getException());
-                }
-                else {
-                    callMyChoice(mName, mAdress, mPhotoResto);
-                 }
+                    if (mName.equals("0")) {
+                        noRestaurantChoice();
+                        Log.d("TRUE----------", "get failed with ", task.getException());
+                    } else {
+                        callMyChoice(mName, mAdress, mPhotoResto);
+                    }
                 } else {
-                    Log.d("TAG", "get failed with ", task.getException());}
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
 
             }
         });
@@ -131,37 +128,36 @@ public class MyChoiceFragment extends DialogFragment {
     private void callMyChoice(String mName, String mAdress, String mPhotoResto) {
         mChoiceName.setText(mName);
         mChoiceAdress.setText(mAdress);
-        if (getContext() != null)
-        {
+        if (getContext() != null) {
             if (mPhotoResto != null) {
                 Glide
                         .with(getContext())
                         .load(mPhotoResto)
                         .apply(RequestOptions.circleCropTransform())
-                        .into(mChoicePhoto); }
-            else {   Glide
-                    .with(getContext())
-                    .load(DEFAUTPHOTO)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(mChoicePhoto); } }
-
-        else { Log.d("TAG", "No such document"); }
-
+                        .into(mChoicePhoto);
+            } else {
+                Glide
+                        .with(getContext())
+                        .load(DEFAUTPHOTO)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(mChoicePhoto);
+            }
+        } else {
+            Log.d("TAG", "No such document");
+        }
     }
 
     private void cancelChoice() {
         mCancelChoice.setOnClickListener(v -> {
-            mychoiceHelper.initMyChoice();
+            MyChoiceHelper.initMyChoice();
             noRestaurantChoice();
         });
     }
 
-    private void noRestaurantChoice(){
+    private void noRestaurantChoice() {
         mLLnoChoice.setVisibility(View.VISIBLE);
         mLLphoto.setVisibility(View.INVISIBLE);
         mLLname.setVisibility(View.INVISIBLE);
         mLLcancel.setVisibility(View.INVISIBLE);
     }
-
-
 }
